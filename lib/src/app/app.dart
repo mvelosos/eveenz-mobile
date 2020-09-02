@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:party_mobile/src/app/routes.dart';
 
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
