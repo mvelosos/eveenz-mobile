@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:party_mobile/src/screens/second_screen.dart';
+import 'package:party_mobile/src/pages/second_page.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -23,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.plus_one),
-        onPressed: () => Navigator.pushNamed(context, SecondScreen.routeName),
+        onPressed: () => Navigator.pushNamed(context, SecondPage.routeName),
       ),
     );
   }

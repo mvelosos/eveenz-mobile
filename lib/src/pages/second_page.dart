@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SecondScreen extends StatelessWidget {
+class SecondPage extends StatelessWidget {
   static const routeName = '/second';
 
   @override
