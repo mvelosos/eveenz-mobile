@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:party_mobile/src/pages/second_page.dart';
+import 'package:party_mobile/app/pages/second_page.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
