@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:party_mobile/app/locator.dart';
-import 'package:party_mobile/app/services/navigation_service.dart';
-import 'package:party_mobile/app/shared/constants/route_names.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -25,10 +22,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.plus_one),
-        onPressed: () {
-          NavigationService _navigation = locator<NavigationService>();
-          _navigation.pushNamed(Routes.loginRoute);
-        },
+        onPressed: () {},
       ),
     );
   }

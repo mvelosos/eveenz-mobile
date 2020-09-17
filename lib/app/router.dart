@@ -15,11 +15,12 @@ class Router {
 
       default:
         return MaterialPageRoute(
-            builder: (_) => Scaffold(
-                  body: Center(
-                    child: Text('No route defined for ${route.name}'),
-                  ),
-                ));
+          builder: (_) => Scaffold(
+            body: Center(
+              child: Text('No route defined for ${route.name}'),
+            ),
+          ),
+        );
     }
   }
 }
