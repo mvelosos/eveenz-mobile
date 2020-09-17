@@ -15,7 +15,7 @@ class DioHttp {
   Dio withAuth() {
     _dio.interceptors.add(InterceptorsWrapper(
         onRequest: _onRequest, onResponse: _onRespose, onError: _onError));
-    print('bateu aqui');
+
     return _dio;
   }
 
