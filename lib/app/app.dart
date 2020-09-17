@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:party_mobile/app/routes.dart';
+
+import 'package:party_mobile/app/router.dart';
+import 'package:party_mobile/app/shared/constants/route_names.dart' as routes;
 
 class App extends StatelessWidget {
   @override
@@ -10,8 +12,8 @@ class App extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      onGenerateRoute: Routes.generateRoute,
+      initialRoute: routes.rootRoute,
+      onGenerateRoute: Router.generateRoute,
     );
   }
 }
