@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:party_mobile/app/pages/second_page.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.plus_one),
-        onPressed: () => Navigator.pushNamed(context, SecondPage.routeName),
+        onPressed: () {},
       ),
     );
   }
