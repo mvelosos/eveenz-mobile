@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:party_mobile/app/locator.dart';
 
 import 'package:party_mobile/app/router.dart';
-import 'package:party_mobile/app/shared/constants/route_names.dart' as routes;
+import 'package:party_mobile/app/services/navigation_service.dart';
+import 'package:party_mobile/app/shared/constants/route_names.dart';
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Party Project',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: routes.rootRoute,
+      navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: Router.generateRoute,
+      initialRoute: Routes.rootRoute,
     );
   }
 }
