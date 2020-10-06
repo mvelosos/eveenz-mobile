@@ -4,7 +4,7 @@ import 'package:party_mobile/app/pages/home/home_page.dart';
 import 'package:party_mobile/app/pages/login/login_page.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 
-class Router {
+class RouterManager {
   static Route<dynamic> generateRoute(RouteSettings route) {
     switch (route.name) {
       case Routes.rootRoute:

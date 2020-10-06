@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:party_mobile/app/locator.dart';
 
-import 'package:party_mobile/app/router.dart';
+import 'package:party_mobile/app/router_manager.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 
@@ -15,7 +15,7 @@ class App extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       navigatorKey: locator<NavigationService>().navigatorKey,
-      onGenerateRoute: Router.generateRoute,
+      onGenerateRoute: RouterManager.generateRoute,
       initialRoute: Routes.rootRoute,
     );
   }
