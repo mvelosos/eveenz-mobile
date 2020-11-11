@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'components/bezier_container.dart';
 
@@ -36,11 +37,10 @@ class _LoginPageState extends State<LoginPage> {
               fontSize: 15,
             ),
           ),
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
           TextField(
             obscureText: isPassword,
+            enableSuggestions: false,
             decoration: InputDecoration(
               border: InputBorder.none,
               fillColor: Color(0xfff3f3f4),
@@ -210,6 +210,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+
     return Scaffold(
       body: GestureDetector(
         onTap: () {
