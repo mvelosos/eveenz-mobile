@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:party_mobile/app/models/user_login_model.dart';
 
 import 'components/bezier_container.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title}) : super(key: key);
+  LoginPage({Key key}) : super(key: key);
 
-  final String title;
+  final UserLoginModel userLoginModel = UserLoginModel();
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -20,33 +21,27 @@ class _LoginPageState extends State<LoginPage> {
         fontSize: 40,
         fontWeight: FontWeight.bold,
         color: Color.fromRGBO(114, 120, 239, 1),
-      ),
-    );
-  }
-
-  Widget _entryField(String title, {bool isPassword = false}) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
+        shadows: [
+          Shadow(
+            // bottomLeft
+            offset: Offset(-1.5, -1.5),
+            color: Colors.white,
           ),
-          SizedBox(height: 10),
-          TextField(
-            obscureText: isPassword,
-            enableSuggestions: false,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              fillColor: Color(0xfff3f3f4),
-              filled: true,
-            ),
-          )
+          Shadow(
+            // bottomRight
+            offset: Offset(1.5, -1.5),
+            color: Colors.white,
+          ),
+          Shadow(
+            // topRight
+            offset: Offset(1.5, 1.5),
+            color: Colors.white,
+          ),
+          Shadow(
+            // topLeft
+            offset: Offset(-1.5, 1.5),
+            color: Colors.white,
+          ),
         ],
       ),
     );
@@ -68,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
             offset: Offset(2, 4),
             blurRadius: 5,
             spreadRadius: 2,
-          )
+          ),
         ],
         gradient: LinearGradient(
           begin: Alignment.centerLeft,
@@ -79,9 +74,14 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
-      child: Text(
-        'Login',
-        style: TextStyle(fontSize: 20, color: white),
+      child: InkWell(
+        onTap: () {
+          print(widget.userLoginModel.toJson());
+        },
+        child: Text(
+          'Login',
+          style: TextStyle(fontSize: 20, color: white),
+        ),
       ),
     );
   }
@@ -198,12 +198,61 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _emailPasswordWidget() {
-    return Column(
-      children: <Widget>[
-        _entryField("Nome de usuário ou e-mail"),
-        _entryField("Senha", isPassword: true),
-      ],
+  Widget _loginInput() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Nome de usuário ou e-mail',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+          SizedBox(height: 10),
+          TextField(
+            autocorrect: false,
+            enableSuggestions: false,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              fillColor: Color(0xfff3f3f4),
+              filled: true,
+            ),
+            onChanged: (value) {},
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _passwordInput() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Senha',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+          SizedBox(height: 10),
+          TextField(
+            obscureText: true,
+            enableSuggestions: false,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              fillColor: Color(0xfff3f3f4),
+              filled: true,
+            ),
+            onChanged: (value) {},
+          )
+        ],
+      ),
     );
   }
 
@@ -236,7 +285,8 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(height: height * .2),
                       _title(),
                       SizedBox(height: 50),
-                      _emailPasswordWidget(),
+                      _loginInput(),
+                      _passwordInput(),
                       SizedBox(height: 20),
                       _submitButton(),
                       Container(
