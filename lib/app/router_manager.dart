@@ -7,10 +7,10 @@ import 'package:party_mobile/app/shared/constants/route_names.dart';
 class RouterManager {
   static Route<dynamic> generateRoute(RouteSettings route) {
     switch (route.name) {
-      case RouteNames.rootRoute:
+      case RouteNames.root:
         return MaterialPageRoute(builder: (_) => HomePage());
 
-      case RouteNames.loginRoute:
+      case RouteNames.login:
         return MaterialPageRoute(builder: (_) => LoginPage());
 
       default:
