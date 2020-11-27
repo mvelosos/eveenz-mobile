@@ -9,7 +9,11 @@ import 'package:party_mobile/app/shared/utils/dio_http.dart';
 import '../locator.dart';
 
 class AuthRepository implements IAuthRepositoryInterface {
-  DioHttp dio = locator<DioHttp>();
+  DioHttp dio;
+
+  AuthRepository() {
+    dio = locator<DioHttp>();
+  }
 
   @override
   Future<Either<Failure, AuthUserModel>> authLogin(
