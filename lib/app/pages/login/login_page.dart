@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:party_mobile/app/models/user_login_model.dart';
+import 'package:party_mobile/app/repositories/auth_repository.dart';
 
 import 'components/bezier_container.dart';
 
@@ -47,6 +48,68 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget _loginInput() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Nome de usuário ou e-mail',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+          SizedBox(height: 10),
+          TextField(
+            autocorrect: false,
+            enableSuggestions: false,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              fillColor: Color(0xfff3f3f4),
+              filled: true,
+            ),
+            onChanged: (value) {
+              widget.userLoginModel.login = value;
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _passwordInput() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Senha',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+          SizedBox(height: 10),
+          TextField(
+            obscureText: true,
+            enableSuggestions: false,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              fillColor: Color(0xfff3f3f4),
+              filled: true,
+            ),
+            onChanged: (value) {
+              widget.userLoginModel.password = value;
+            },
+          )
+        ],
+      ),
+    );
+  }
+
   Widget _submitButton() {
     var white = Colors.white;
     return Container(
@@ -76,7 +139,10 @@ class _LoginPageState extends State<LoginPage> {
       ),
       child: InkWell(
         onTap: () {
-          print(widget.userLoginModel.toJson());
+          AuthRepository repository = AuthRepository();
+          repository.authLogin(
+              login: widget.userLoginModel.login,
+              password: widget.userLoginModel.password);
         },
         child: Text(
           'Login',
@@ -173,7 +239,6 @@ class _LoginPageState extends State<LoginPage> {
     return InkWell(
       onTap: () {},
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 20),
         padding: EdgeInsets.all(15),
         alignment: Alignment.bottomCenter,
         child: Row(
@@ -181,7 +246,10 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             Text(
               'Não tem uma conta?',
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
             ),
             SizedBox(width: 10),
             Text(
@@ -198,118 +266,63 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _loginInput() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'Nome de usuário ou e-mail',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          ),
-          SizedBox(height: 10),
-          TextField(
-            autocorrect: false,
-            enableSuggestions: false,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              fillColor: Color(0xfff3f3f4),
-              filled: true,
-            ),
-            onChanged: (value) {},
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _passwordInput() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'Senha',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          ),
-          SizedBox(height: 10),
-          TextField(
-            obscureText: true,
-            enableSuggestions: false,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              fillColor: Color(0xfff3f3f4),
-              filled: true,
-            ),
-            onChanged: (value) {},
-          )
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
     return Scaffold(
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Container(
-          height: height,
-          child: Stack(
-            children: <Widget>[
-              Positioned(
-                top: -height * .15,
-                right: -MediaQuery.of(context).size.width * .4,
-                child: BezierContainer(),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(height: height * .2),
-                      _title(),
-                      SizedBox(height: 50),
-                      _loginInput(),
-                      _passwordInput(),
-                      SizedBox(height: 20),
-                      _submitButton(),
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          'Esqueceu sua senha?',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w500),
+      body: LayoutBuilder(builder: (context, constraints) {
+        return GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Container(
+            height: constraints.maxHeight,
+            child: Stack(
+              children: <Widget>[
+                Positioned(
+                  top: -constraints.maxHeight * .15,
+                  right: -constraints.maxWidth * .4,
+                  child: BezierContainer(),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(height: constraints.maxHeight * .2),
+                        _title(),
+                        SizedBox(height: 50),
+                        _loginInput(),
+                        _passwordInput(),
+                        SizedBox(height: 20),
+                        _submitButton(),
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            'Esqueceu sua senha?',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
-                      ),
-                      _divider(),
-                      _facebookButton(),
-                      SizedBox(height: height * .055),
-                      _createAccountLabel(),
-                    ],
+                        _divider(),
+                        _facebookButton(),
+                        SizedBox(height: constraints.maxHeight * .055),
+                        _createAccountLabel(),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
