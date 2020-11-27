@@ -15,14 +15,13 @@ class AuthRepository implements IAuthRepositoryInterface {
   Future<Either<Failure, AuthUserModel>> authLogin(
       {String login, String password}) async {
     try {
-      Map<String, Map<String, String>> request = {
+      var data = {
         "user": {"login": login, "password": password}
       };
-      var user = await dio.instance.post(Endpoints.authLogin, data: request);
-      print(user);
-      // return Right(user);
+      var user = await dio.instance.post(Endpoints.authLogin, data: data);
+
+      return Right(AuthUserModel.fromJson(user.data));
     } catch (e) {
-      print(e.response);
       return Left(ErrorLogin(message: "Error login with Email"));
     }
   }
