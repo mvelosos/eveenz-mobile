@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:party_mobile/app/models/user_login_model.dart';
-import 'package:party_mobile/app/repositories/auth_repository.dart';
+import 'package:party_mobile/app/controllers/login_controller.dart';
+import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/view_models/user_login_vm.dart';
 
 import 'components/bezier_container.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
-
-  final UserLoginModel userLoginModel = UserLoginModel();
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  var userLogin = UserLoginVM();
+  var loginController = locator<LoginController>();
+
   Widget _title() {
     return Text(
       'hango',
@@ -71,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
               filled: true,
             ),
             onChanged: (value) {
-              widget.userLoginModel.login = value;
+              userLogin.login = value;
             },
           )
         ],
@@ -102,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
               filled: true,
             ),
             onChanged: (value) {
-              widget.userLoginModel.password = value;
+              userLogin.password = value;
             },
           )
         ],
@@ -139,10 +140,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       child: InkWell(
         onTap: () {
-          AuthRepository repository = AuthRepository();
-          repository.authLogin(
-              login: widget.userLoginModel.login,
-              password: widget.userLoginModel.password);
+          loginController.loginWithEmail(userLogin);
         },
         child: Text(
           'Login',
