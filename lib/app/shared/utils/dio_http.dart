@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:party_mobile/app/shared/constants/urls.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DioHttp {
   Dio _dio;
@@ -8,6 +7,7 @@ class DioHttp {
   DioHttp() {
     _dio = Dio();
     _dio.options.baseUrl = Urls().apiUrl;
+    _dio.interceptors.add(InterceptorsWrapper(onError: _onError));
   }
 
   Dio get instance => _dio;
@@ -30,8 +30,6 @@ class DioHttp {
   }
 
   _onError(DioError e) {
-    print('########## Response Error');
-    print(e.error);
     print('########## Response Error');
   }
 }

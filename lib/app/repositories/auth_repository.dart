@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:party_mobile/app/interfaces/auth_repository_interface.dart';
 import 'package:party_mobile/app/shared/constants/endpoints.dart';
 import 'package:party_mobile/app/shared/errors/errors.dart';
@@ -27,7 +26,7 @@ class AuthRepository implements IAuthRepositoryInterface {
 
       return Right(AuthUserModel.fromJson(user.data));
     } catch (e) {
-      return Left(ErrorLogin(message: "Error login with Email"));
+      return Left(ErrorLogin(message: e.response.data['errors']));
     }
   }
 
