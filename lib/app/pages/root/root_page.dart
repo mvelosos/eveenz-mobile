@@ -19,7 +19,6 @@ class _RootPageState extends State<RootPage> {
 
   _setInitialRoute() async {
     var localStorage = locator<LocalStorageService>();
-    // var arguments =
     localStorage.get(Storage.jwtToken).then((value) => {
           if (value != null)
             {

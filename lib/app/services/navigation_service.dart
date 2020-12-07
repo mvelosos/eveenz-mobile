@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:party_mobile/app/router_manager.dart';
 
 class NavigationService {
   final GlobalKey<NavigatorState> navigatorKey =
@@ -11,6 +12,19 @@ class NavigationService {
   Future<dynamic> pushReplacementNamed(String routeName, {dynamic arguments}) {
     return navigatorKey.currentState
         .pushReplacementNamed(routeName, arguments: arguments);
+  }
+
+  Future<dynamic> pushNamedWithouAnimation(String routeName) {
+    MaterialPageRoute route =
+        RouterManager.generateRoute(RouteSettings(name: routeName));
+
+    return navigatorKey.currentState.push(
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) =>
+            route.buildPage(navigatorKey.currentContext, null, null),
+        transitionDuration: Duration(seconds: 0),
+      ),
+    );
   }
 
   void goBack() {
