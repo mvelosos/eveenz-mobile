@@ -23,7 +23,7 @@ class _RootPageState extends State<RootPage> {
           if (value != null)
             {
               locator<NavigationService>()
-                  .pushNamedWithouAnimation(RouteNames.home)
+                  .pushNamedReplacementNoAnimation(RouteNames.appContainer)
             }
           else
             {
