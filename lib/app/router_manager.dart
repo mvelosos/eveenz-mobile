@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:party_mobile/app/pages/app_container/app_container.dart';
 import 'package:party_mobile/app/pages/home/home_page.dart';
 import 'package:party_mobile/app/pages/login/login_page.dart';
 import 'package:party_mobile/app/pages/root/root_page.dart';
@@ -9,6 +10,9 @@ class RouterManager {
     switch (route.name) {
       case RouteNames.root:
         return MaterialPageRoute(builder: (_) => RootPage());
+
+      case RouteNames.appContainer:
+        return MaterialPageRoute(builder: (_) => AppContainer());
 
       case RouteNames.login:
         return MaterialPageRoute(builder: (_) => LoginPage());
