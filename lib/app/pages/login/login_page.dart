@@ -4,7 +4,7 @@ import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/view_models/user_login_vm.dart';
 
-import 'components/bezier_container.dart';
+import 'widgets/bezier_container.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
