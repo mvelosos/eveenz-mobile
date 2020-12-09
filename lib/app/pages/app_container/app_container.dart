@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:party_mobile/app/pages/app_container/widgets/bottom_navigation_bar_widget.dart';
 import 'package:party_mobile/app/pages/home/home_page.dart';
 import 'package:party_mobile/app/pages/map/map_page.dart';
 import 'package:party_mobile/app/pages/notifications/notifications_page.dart';
@@ -13,7 +14,7 @@ class AppContainer extends StatefulWidget {
 class _AppContainerState extends State<AppContainer> {
   int _currentIndex = 0;
 
-  final List<Widget> _telas = [
+  final List<Widget> _pages = [
     HomePage(),
     SearchPage(),
     MapPage(),
@@ -21,7 +22,7 @@ class _AppContainerState extends State<AppContainer> {
     ProfilePage()
   ];
 
-  void onTabTapped(int index) {
+  void _onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
@@ -31,20 +32,10 @@ class _AppContainerState extends State<AppContainer> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.red,
-      body: _telas[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
+      body: _pages[_currentIndex],
+      bottomNavigationBar: BottomNavigationBarWidget(
         currentIndex: _currentIndex,
-        onTap: onTabTapped,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
-          BottomNavigationBarItem(label: 'Search', icon: Icon(Icons.search)),
-          BottomNavigationBarItem(label: 'Map', icon: Icon(Icons.map)),
-          BottomNavigationBarItem(label: 'List', icon: Icon(Icons.view_list)),
-          BottomNavigationBarItem(label: 'U', icon: Icon(Icons.account_circle))
-        ],
+        onTabTapped: _onTabTapped,
       ),
     );
   }
