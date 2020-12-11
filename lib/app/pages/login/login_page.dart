@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/pages/login/widgets/facebook_login_button.dart';
 import 'package:party_mobile/app/view_models/user_login_vm.dart';
 
 import 'widgets/bezier_container.dart';
@@ -14,7 +15,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   var userLogin = UserLoginVM();
-  var loginController = locator<LoginController>();
+  var _loginController = locator<LoginController>();
 
   Widget _title() {
     return Text(
@@ -49,9 +50,9 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _loginInput() {
+  Widget _loginInput(BoxConstraints constraints) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: constraints.maxHeight * .01),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -62,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
               fontSize: 15,
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: constraints.maxHeight * .01),
           TextField(
             autocorrect: false,
             enableSuggestions: false,
@@ -80,9 +81,9 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _passwordInput() {
+  Widget _passwordInput(BoxConstraints constraints) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: constraints.maxHeight * .01),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -93,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
               fontSize: 15,
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: constraints.maxHeight * .01),
           TextField(
             obscureText: true,
             enableSuggestions: false,
@@ -111,11 +112,11 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _submitButton() {
+  Widget _submitButton(BoxConstraints constraints) {
     var white = Colors.white;
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(vertical: 15),
+      padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * .017),
       alignment: Alignment.center,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(
@@ -140,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       child: InkWell(
         onTap: () {
-          loginController.loginWithEmail(userLogin);
+          _loginController.loginWithEmail(userLogin);
         },
         child: Text(
           'Login',
@@ -150,84 +151,30 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _divider() {
+  Widget _divider(BoxConstraints constraints) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: constraints.maxHeight * .012),
       child: Row(
         children: <Widget>[
           SizedBox(width: 20),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(
+                horizontal: constraints.maxWidth * .02,
+              ),
               child: Divider(thickness: 1),
             ),
           ),
           Text('ou'),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(
+                horizontal: constraints.maxWidth * .02,
+              ),
               child: Divider(thickness: 1),
             ),
           ),
           SizedBox(width: 20),
-        ],
-      ),
-    );
-  }
-
-  Widget _facebookButton() {
-    return Container(
-      height: 50,
-      margin: EdgeInsets.symmetric(vertical: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xff1959a9),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(5),
-                  topLeft: Radius.circular(5),
-                ),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                'f',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 5,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xff2872ba),
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(5),
-                  topRight: Radius.circular(5),
-                ),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                'Log in with Facebook',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -284,7 +231,9 @@ class _LoginPageState extends State<LoginPage> {
                   child: BezierContainer(),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: constraints.maxWidth * .05,
+                  ),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -292,13 +241,15 @@ class _LoginPageState extends State<LoginPage> {
                       children: <Widget>[
                         SizedBox(height: constraints.maxHeight * .2),
                         _title(),
-                        SizedBox(height: 50),
-                        _loginInput(),
-                        _passwordInput(),
-                        SizedBox(height: 20),
-                        _submitButton(),
+                        SizedBox(height: constraints.maxHeight * .06),
+                        _loginInput(constraints),
+                        _passwordInput(constraints),
+                        SizedBox(height: constraints.maxHeight * .025),
+                        _submitButton(constraints),
                         Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
+                          padding: EdgeInsets.symmetric(
+                            vertical: constraints.maxHeight * .015,
+                          ),
                           alignment: Alignment.centerRight,
                           child: Text(
                             'Esqueceu sua senha?',
@@ -308,8 +259,9 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        _divider(),
-                        _facebookButton(),
+                        _divider(constraints),
+                        SizedBox(height: constraints.maxHeight * .03),
+                        FacebookLoginButton(loginController: _loginController),
                         SizedBox(height: constraints.maxHeight * .055),
                         _createAccountLabel(),
                       ],
