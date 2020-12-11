@@ -1,16 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
+import 'package:party_mobile/app/view_models/facebook_login_vm.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 class FacebookLoginButton extends StatelessWidget {
+  final FacebookLoginVM fbLogin = FacebookLoginVM();
   final LoginController loginController;
   final BoxConstraints constraints;
 
   FacebookLoginButton({this.loginController, this.constraints});
 
+  _initFacebookLogin() async {
+    final facebookLogin = FacebookLogin();
+    const permissions = ['email'];
+
+    final result = await facebookLogin.logIn(permissions);
+
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        fbLogin.accessToken = result.accessToken.token;
+        loginController.loginWithFacebook(fbLogin);
+        break;
+      case FacebookLoginStatus.cancelledByUser:
+        // _showCancelledMessage();
+        break;
+      case FacebookLoginStatus.error:
+        // _showErrorOnUI(result.errorMessage);
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      onPressed: () {},
+      onPressed: () {
+        _initFacebookLogin();
+      },
       child: Container(
         height: 50,
         margin: EdgeInsets.symmetric(vertical: constraints.maxHeight * .007),
