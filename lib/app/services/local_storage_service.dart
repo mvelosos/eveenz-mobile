@@ -27,4 +27,10 @@ class LocalStorageService implements ILocalStorage {
     var _shared = await SharedPreferences.getInstance();
     _shared.remove(key);
   }
+
+  @override
+  Future clear() async {
+    var _shared = await SharedPreferences.getInstance();
+    _shared.clear();
+  }
 }
