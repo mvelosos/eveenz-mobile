@@ -6,6 +6,7 @@ import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/shared/constants/storage.dart';
 import 'package:party_mobile/app/shared/errors/errors.dart';
+import 'package:party_mobile/app/view_models/facebook_login_vm.dart';
 import 'package:party_mobile/app/view_models/user_login_vm.dart';
 
 import '../locator.dart';
@@ -32,9 +33,14 @@ class LoginController {
   }
 
   Future<Either<Failure, AuthUserModel>> loginWithFacebook(
-      UserLoginVM userLogin) async {
-    var authUser = await _authRepository.authLogin(userLogin);
-    authUser.fold((l) => null, (r) => {_setLocalStorage(r), print(123)});
+      FacebookLoginVM fbLogin) async {
+    var authUser = await _authRepository.authFacebook(fbLogin);
+    authUser.fold(
+        (l) => null,
+        (r) => {
+              _setLocalStorage(r),
+              _navigation.pushNamed(RouteNames.appContainer)
+            });
   }
 
   _setLocalStorage(AuthUserModel authUser) {
