@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/login/widgets/facebook_login_button.dart';
+import 'package:party_mobile/app/services/navigation_service.dart';
+import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/view_models/user_login_vm.dart';
 
 import 'widgets/bezier_container.dart';
@@ -14,8 +16,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var userLogin = UserLoginVM();
+  var _userLogin = UserLoginVM();
   var _loginController = locator<LoginController>();
+  var _navigationService = locator<NavigationService>();
 
   Widget _title() {
     return Text(
@@ -73,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
               filled: true,
             ),
             onChanged: (value) {
-              userLogin.login = value;
+              _userLogin.login = value;
             },
           )
         ],
@@ -104,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
               filled: true,
             ),
             onChanged: (value) {
-              userLogin.password = value;
+              _userLogin.password = value;
             },
           )
         ],
@@ -116,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
     var white = Colors.white;
     return RawMaterialButton(
       onPressed: () {
-        _loginController.loginWithEmail(userLogin);
+        _loginController.loginWithEmail(_userLogin);
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -181,9 +184,11 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _createAccountLabel() {
-    return InkWell(
-      onTap: () {},
+  Widget _signUpButton() {
+    return RawMaterialButton(
+      onPressed: () {
+        _navigationService.pushNamed(RouteNames.signUp);
+      },
       child: Container(
         padding: EdgeInsets.all(15),
         alignment: Alignment.bottomCenter,
@@ -266,7 +271,7 @@ class _LoginPageState extends State<LoginPage> {
                             loginController: _loginController,
                             constraints: constraints),
                         SizedBox(height: constraints.maxHeight * .055),
-                        _createAccountLabel(),
+                        _signUpButton(),
                       ],
                     ),
                   ),
