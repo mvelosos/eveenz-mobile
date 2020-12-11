@@ -184,6 +184,24 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget _forgotPasswordButton(BoxConstraints constraints) {
+    return Container(
+      alignment: Alignment.centerRight,
+      child: RawMaterialButton(
+        onPressed: () {
+          _navigationService.pushNamed(RouteNames.forgotPassword);
+        },
+        child: Text(
+          'Esqueceu sua senha?',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _signUpButton() {
     return RawMaterialButton(
       onPressed: () {
@@ -252,19 +270,7 @@ class _LoginPageState extends State<LoginPage> {
                         _passwordInput(constraints),
                         SizedBox(height: constraints.maxHeight * .025),
                         _submitButton(constraints),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: constraints.maxHeight * .015,
-                          ),
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            'Esqueceu sua senha?',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
+                        _forgotPasswordButton(constraints),
                         _divider(constraints),
                         SizedBox(height: constraints.maxHeight * .03),
                         FacebookLoginButton(
