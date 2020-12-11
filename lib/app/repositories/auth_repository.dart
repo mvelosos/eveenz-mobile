@@ -31,7 +31,7 @@ class AuthRepository implements IAuthRepositoryInterface {
 
   @override
   Future<Either<Failure, AuthUserModel>> authFacebook(
-      {FacebookLoginVM fbLogin}) async {
+      FacebookLoginVM fbLogin) async {
     try {
       var user = await dio.instance
           .post(Endpoints.authFacebook, data: fbLogin.getData());
