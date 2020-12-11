@@ -3,6 +3,7 @@ import 'package:party_mobile/app/pages/app_container/app_container.dart';
 import 'package:party_mobile/app/pages/home/home_page.dart';
 import 'package:party_mobile/app/pages/login/login_page.dart';
 import 'package:party_mobile/app/pages/root/root_page.dart';
+import 'package:party_mobile/app/pages/signup/signup_page.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 
 class RouterManager {
@@ -16,6 +17,9 @@ class RouterManager {
 
       case RouteNames.login:
         return MaterialPageRoute(builder: (_) => LoginPage());
+
+      case RouteNames.signUp:
+        return MaterialPageRoute(builder: (_) => SignUpPage());
 
       case RouteNames.home:
         return MaterialPageRoute(builder: (_) => HomePage());
