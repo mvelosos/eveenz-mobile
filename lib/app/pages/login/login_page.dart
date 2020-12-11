@@ -114,35 +114,36 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _submitButton(BoxConstraints constraints) {
     var white = Colors.white;
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * .017),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(5),
-        ),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.grey.shade200,
-            offset: Offset(2, 4),
-            blurRadius: 5,
-            spreadRadius: 2,
+    return RawMaterialButton(
+      onPressed: () {
+        _loginController.loginWithEmail(userLogin);
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        margin: EdgeInsets.symmetric(vertical: constraints.maxHeight * .007),
+        padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * .017),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(5),
           ),
-        ],
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            Color(0xfffbb448),
-            Color(0xfff7892b),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.grey.shade200,
+              offset: Offset(2, 4),
+              blurRadius: 5,
+              spreadRadius: 2,
+            ),
           ],
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [
+              Color(0xfffbb448),
+              Color(0xfff7892b),
+            ],
+          ),
         ),
-      ),
-      child: InkWell(
-        onTap: () {
-          _loginController.loginWithEmail(userLogin);
-        },
         child: Text(
           'Login',
           style: TextStyle(fontSize: 20, color: white),
@@ -261,7 +262,9 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         _divider(constraints),
                         SizedBox(height: constraints.maxHeight * .03),
-                        FacebookLoginButton(loginController: _loginController),
+                        FacebookLoginButton(
+                            loginController: _loginController,
+                            constraints: constraints),
                         SizedBox(height: constraints.maxHeight * .055),
                         _createAccountLabel(),
                       ],

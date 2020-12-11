@@ -3,8 +3,9 @@ import 'package:party_mobile/app/controllers/login_controller.dart';
 
 class FacebookLoginButton extends StatelessWidget {
   final LoginController loginController;
+  final BoxConstraints constraints;
 
-  FacebookLoginButton({this.loginController});
+  FacebookLoginButton({this.loginController, this.constraints});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class FacebookLoginButton extends StatelessWidget {
       onPressed: () {},
       child: Container(
         height: 50,
-        margin: EdgeInsets.symmetric(vertical: 7),
+        margin: EdgeInsets.symmetric(vertical: constraints.maxHeight * .007),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(10),
