@@ -157,7 +157,6 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _divider(BoxConstraints constraints) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: constraints.maxHeight * .012),
       child: Row(
         children: <Widget>[
           SizedBox(width: 20),
@@ -271,7 +270,7 @@ class _LoginPageState extends State<LoginPage> {
                         _submitButton(constraints),
                         _forgotPasswordButton(constraints),
                         _divider(constraints),
-                        SizedBox(height: constraints.maxHeight * .03),
+                        SizedBox(height: constraints.maxHeight * .015),
                         FacebookLoginButton(
                           loginController: _loginController,
                           constraints: constraints,
