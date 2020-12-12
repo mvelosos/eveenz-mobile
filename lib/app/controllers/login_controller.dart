@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:party_mobile/app/models/auth_user_model.dart';
 import 'package:party_mobile/app/repositories/auth_repository.dart';
@@ -23,13 +25,12 @@ class LoginController {
 
   Future<Either<Failure, AuthUserModel>> loginWithEmail(
       UserLoginVM userLogin) async {
-    var authUser = await _authRepository.authLogin(userLogin);
-    authUser.fold(
-        (l) => null,
-        (r) => {
-              _setLocalStorage(r),
-              _navigation.pushNamed(RouteNames.appContainer)
-            });
+    var authResult = await _authRepository.authLogin(userLogin);
+    if (authResult.isRight()) {
+      _setLocalStorage(authResult.getOrElse(null));
+      _navigation.pushNamed(RouteNames.appContainer);
+    }
+    return authResult;
   }
 
   Future<Either<Failure, AuthUserModel>> loginWithFacebook(

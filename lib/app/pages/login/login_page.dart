@@ -115,11 +115,27 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _submitButton(BoxConstraints constraints) {
+  Widget _loginButton(BoxConstraints constraints, BuildContext context) {
     var white = Colors.white;
     return RawMaterialButton(
       onPressed: () {
-        _loginController.loginWithEmail(_userLogin);
+        var result = _loginController.loginWithEmail(_userLogin);
+        result.then((value) => {
+              value.fold(
+                  (l) => {
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              l.message,
+                              style: TextStyle(fontSize: 16),
+                              textAlign: TextAlign.center,
+                            ),
+                            backgroundColor: Colors.red,
+                          ),
+                        )
+                      },
+                  (r) => null)
+            });
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -201,7 +217,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _signUpButton() {
+  Widget _signUpButton(context) {
     return RawMaterialButton(
       onPressed: () {
         _navigationService.pushNamed(RouteNames.signUp);
@@ -267,7 +283,7 @@ class _LoginPageState extends State<LoginPage> {
                         _loginInput(constraints),
                         _passwordInput(constraints),
                         SizedBox(height: constraints.maxHeight * .025),
-                        _submitButton(constraints),
+                        _loginButton(constraints, context),
                         _forgotPasswordButton(constraints),
                         _divider(constraints),
                         SizedBox(height: constraints.maxHeight * .015),
@@ -275,7 +291,7 @@ class _LoginPageState extends State<LoginPage> {
                           loginController: _loginController,
                           constraints: constraints,
                         ),
-                        _signUpButton(),
+                        _signUpButton(context),
                       ],
                     ),
                   ),
