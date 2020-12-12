@@ -208,7 +208,6 @@ class _LoginPageState extends State<LoginPage> {
         _navigationService.pushNamed(RouteNames.signUp);
       },
       child: Container(
-        padding: EdgeInsets.all(15),
         alignment: Alignment.bottomCenter,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -274,9 +273,9 @@ class _LoginPageState extends State<LoginPage> {
                         _divider(constraints),
                         SizedBox(height: constraints.maxHeight * .03),
                         FacebookLoginButton(
-                            loginController: _loginController,
-                            constraints: constraints),
-                        SizedBox(height: constraints.maxHeight * .055),
+                          loginController: _loginController,
+                          constraints: constraints,
+                        ),
                         _signUpButton(),
                       ],
                     ),
