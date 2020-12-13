@@ -16,9 +16,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var _userLogin = UserLoginVM();
-  var _loginController = locator<LoginController>();
-  var _navigationService = locator<NavigationService>();
+  final _userLogin = UserLoginVM();
+  final _loginController = locator<LoginController>();
+  final _navigationService = locator<NavigationService>();
+  final _formKey = GlobalKey<FormState>();
+
+  // Widgets
 
   Widget _title() {
     return Text(
@@ -53,63 +56,43 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _loginInput(BoxConstraints constraints) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: constraints.maxHeight * .01),
+  Widget _formInput(BoxConstraints constraints) {
+    return Form(
+      key: _formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'Nome de usuário ou e-mail',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          ),
-          SizedBox(height: constraints.maxHeight * .01),
-          TextField(
+        children: [
+          TextFormField(
+            textInputAction: TextInputAction.next,
             autocorrect: false,
             enableSuggestions: false,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              fillColor: Color(0xfff3f3f4),
-              filled: true,
+            decoration: const InputDecoration(
+              icon: Icon(Icons.person),
+              labelText: 'Nome de usuário ou e-mail',
             ),
+            validator: (value) {
+              if (value.isEmpty) return "Campo obrigatório!";
+              return null;
+            },
             onChanged: (value) {
               _userLogin.login = value;
             },
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _passwordInput(BoxConstraints constraints) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: constraints.maxHeight * .01),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'Senha',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
           ),
-          SizedBox(height: constraints.maxHeight * .01),
-          TextField(
+          SizedBox(height: constraints.maxHeight * .015),
+          TextFormField(
             obscureText: true,
-            enableSuggestions: false,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              fillColor: Color(0xfff3f3f4),
-              filled: true,
+            decoration: const InputDecoration(
+              icon: Icon(Icons.lock),
+              labelText: 'Senha',
             ),
+            validator: (value) {
+              if (value.isEmpty) return "Campo obrigatório!";
+              return null;
+            },
             onChanged: (value) {
               _userLogin.password = value;
             },
-          )
+          ),
         ],
       ),
     );
@@ -119,23 +102,9 @@ class _LoginPageState extends State<LoginPage> {
     var white = Colors.white;
     return RawMaterialButton(
       onPressed: () {
-        var result = _loginController.loginWithEmail(_userLogin);
-        result.then((value) => {
-              value.fold(
-                  (l) => {
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              l.message,
-                              style: TextStyle(fontSize: 16),
-                              textAlign: TextAlign.center,
-                            ),
-                            backgroundColor: Colors.red,
-                          ),
-                        )
-                      },
-                  (r) => null)
-            });
+        if (_formKey.currentState.validate()) {
+          _requestLoginWithEmail(context);
+        }
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -171,6 +140,24 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget _forgotPasswordButton(BoxConstraints constraints) {
+    return Container(
+      alignment: Alignment.centerRight,
+      child: RawMaterialButton(
+        onPressed: () {
+          _navigationService.pushNamed(RouteNames.forgotPassword);
+        },
+        child: Text(
+          'Esqueceu sua senha?',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _divider(BoxConstraints constraints) {
     return Container(
       child: Row(
@@ -199,25 +186,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _forgotPasswordButton(BoxConstraints constraints) {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: RawMaterialButton(
-        onPressed: () {
-          _navigationService.pushNamed(RouteNames.forgotPassword);
-        },
-        child: Text(
-          'Esqueceu sua senha?',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _signUpButton(context) {
+  Widget _signUpButton() {
     return RawMaterialButton(
       onPressed: () {
         _navigationService.pushNamed(RouteNames.signUp);
@@ -246,6 +215,31 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
+    );
+  }
+
+  // Functions
+
+  void _requestLoginWithEmail(BuildContext context) {
+    var result = _loginController.loginWithEmail(_userLogin);
+    result.then(
+      (value) => {
+        value.fold(
+          (l) => {
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  l.message,
+                  style: TextStyle(fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+                backgroundColor: Colors.red,
+              ),
+            )
+          },
+          (r) => null,
+        )
+      },
     );
   }
 
@@ -280,18 +274,14 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height: constraints.maxHeight * .2),
                         _title(),
                         SizedBox(height: constraints.maxHeight * .06),
-                        _loginInput(constraints),
-                        _passwordInput(constraints),
+                        _formInput(constraints),
                         SizedBox(height: constraints.maxHeight * .025),
                         _loginButton(constraints, context),
                         _forgotPasswordButton(constraints),
                         _divider(constraints),
                         SizedBox(height: constraints.maxHeight * .015),
-                        FacebookLoginButton(
-                          loginController: _loginController,
-                          constraints: constraints,
-                        ),
-                        _signUpButton(context),
+                        FacebookLoginButton(_loginController, constraints),
+                        _signUpButton(),
                       ],
                     ),
                   ),
