@@ -4,11 +4,11 @@ import 'package:party_mobile/app/view_models/facebook_login_vm.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 class FacebookLoginButton extends StatelessWidget {
-  final FacebookLoginVM fbLogin = FacebookLoginVM();
-  final LoginController loginController;
-  final BoxConstraints constraints;
+  final FacebookLoginVM _fbLogin = FacebookLoginVM();
+  final LoginController _loginController;
+  final BoxConstraints _constraints;
 
-  FacebookLoginButton({this.loginController, this.constraints});
+  FacebookLoginButton(this._loginController, this._constraints);
 
   _initFacebookLogin() async {
     final facebookLogin = FacebookLogin();
@@ -18,8 +18,8 @@ class FacebookLoginButton extends StatelessWidget {
 
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
-        fbLogin.accessToken = result.accessToken.token;
-        loginController.loginWithFacebook(fbLogin);
+        _fbLogin.accessToken = result.accessToken.token;
+        _loginController.loginWithFacebook(_fbLogin);
         break;
       case FacebookLoginStatus.cancelledByUser:
         // _showCancelledMessage();
@@ -38,7 +38,7 @@ class FacebookLoginButton extends StatelessWidget {
       },
       child: Container(
         height: 50,
-        margin: EdgeInsets.symmetric(vertical: constraints.maxHeight * .007),
+        margin: EdgeInsets.symmetric(vertical: _constraints.maxHeight * .007),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(10),
