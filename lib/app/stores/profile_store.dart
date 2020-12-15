@@ -31,13 +31,13 @@ abstract class _ProfileStoreBase with Store {
 
   @action
   void setProfile(ProfileModel profileModel) {
-    username = profileModel.username;
-    name = profileModel.name;
-    bio = profileModel.bio;
-    popularity = profileModel.popularity;
-    events = profileModel.events;
-    following = profileModel.following;
-    followers = profileModel.followers;
-    avatarUrl = profileModel.avatarUrl;
+    username = profileModel.account.username;
+    name = profileModel.account.name;
+    bio = profileModel.account.bio;
+    popularity = profileModel.account.popularity;
+    events = profileModel.account.events;
+    following = profileModel.account.following;
+    followers = profileModel.account.followers;
+    avatarUrl = profileModel.account.avatarUrl;
   }
 }
