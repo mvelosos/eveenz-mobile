@@ -5,6 +5,7 @@ import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/login/widgets/facebook_login_button.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
+import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/shared/widgets/loading_indicator.dart';
 import 'package:party_mobile/app/stores/login_store.dart';
@@ -40,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
-                backgroundColor: Colors.red,
+                backgroundColor: AppColors.snackWarning,
               ),
             )
           },
