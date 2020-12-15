@@ -14,6 +14,16 @@ class AppContainer extends StatefulWidget {
 class _AppContainerState extends State<AppContainer> {
   int _currentIndex = 0;
 
+  // Functions
+
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  // Widgets
+
   final List<Widget> _pages = [
     HomePage(),
     SearchPage(),
@@ -21,12 +31,6 @@ class _AppContainerState extends State<AppContainer> {
     NotificationsPage(),
     ProfilePage()
   ];
-
-  void _onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
