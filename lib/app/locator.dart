@@ -3,6 +3,7 @@ import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/services/local_storage_service.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/utils/dio_http.dart';
+import 'package:party_mobile/app/stores/login_store.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -14,4 +15,7 @@ void setupLocator() {
 
   // Controllers
   locator.registerLazySingleton(() => LoginController());
+
+  //Stores
+  locator.registerLazySingleton(() => LoginStore());
 }
