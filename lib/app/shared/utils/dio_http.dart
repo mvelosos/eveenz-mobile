@@ -30,7 +30,7 @@ class DioHttp {
 
   Dio get instance => _dio;
 
-  _onRequest(RequestOptions options) async {
+  _onRequest(RequestOptions options) {
     _localStorageService.get(Storage.jwtToken).then(
           (value) => {
             if (value != null) {options.headers['Authorization'] = value}
@@ -38,9 +38,7 @@ class DioHttp {
         );
   }
 
-  _onResponse(Response e) {
-    print(e.data);
-  }
+  _onResponse(Response e) {}
 
   _onError(DioError e) {
     print('########## Response Error');
