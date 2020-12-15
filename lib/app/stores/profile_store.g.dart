@@ -133,11 +133,11 @@ mixin _$ProfileStore on _ProfileStoreBase, Store {
       ActionController(name: '_ProfileStoreBase');
 
   @override
-  void setProfile() {
+  void setProfile(ProfileModel profileModel) {
     final _$actionInfo = _$_ProfileStoreBaseActionController.startAction(
         name: '_ProfileStoreBase.setProfile');
     try {
-      return super.setProfile();
+      return super.setProfile(profileModel);
     } finally {
       _$_ProfileStoreBaseActionController.endAction(_$actionInfo);
     }
