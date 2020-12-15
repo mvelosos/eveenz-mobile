@@ -27,11 +27,6 @@ class _LoginPageState extends State<LoginPage> {
 
   // Functions
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   void _requestLoginWithEmail(BuildContext context) {
     var result = _loginController.loginWithEmail(_userLogin);
     result.then(
