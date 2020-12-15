@@ -33,6 +33,9 @@ class _ProfilePageState extends State<ProfilePage> {
           Observer(
             builder: (_) => Text(_profileStore.username),
           ),
+          Observer(
+            builder: (_) => Text(_profileStore.name),
+          ),
           RaisedButton(
             child: Text('Logout'),
             onPressed: () => {
