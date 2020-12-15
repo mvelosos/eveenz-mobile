@@ -84,6 +84,17 @@ mixin _$AuthUserStore on _AuthUserStoreBase, Store {
   }
 
   @override
+  void clean() {
+    final _$actionInfo = _$_AuthUserStoreBaseActionController.startAction(
+        name: '_AuthUserStoreBase.clean');
+    try {
+      return super.clean();
+    } finally {
+      _$_AuthUserStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 token: ${token},

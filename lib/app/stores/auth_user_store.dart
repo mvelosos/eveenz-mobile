@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:party_mobile/app/models/auth_user_model.dart';
 part 'auth_user_store.g.dart';
@@ -23,5 +24,13 @@ abstract class _AuthUserStoreBase with Store {
     tokenType = authUser.tokenType;
     exp = authUser.exp;
     provider = authUser.provider;
+  }
+
+  @action
+  void clean() {
+    token = '';
+    tokenType = '';
+    exp = '';
+    provider = '';
   }
 }
