@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/login/widgets/facebook_login_button.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
+import 'package:party_mobile/app/shared/widgets/loading_indicator.dart';
+import 'package:party_mobile/app/stores/login_store.dart';
 import 'package:party_mobile/app/view_models/user_login_vm.dart';
 
 import 'widgets/bezier_container.dart';
@@ -18,8 +21,39 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _userLogin = UserLoginVM();
   final _loginController = locator<LoginController>();
+  final _loginStore = locator<LoginStore>();
   final _navigationService = locator<NavigationService>();
   final _formKey = GlobalKey<FormState>();
+
+  // Functions
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void _requestLoginWithEmail(BuildContext context) {
+    var result = _loginController.loginWithEmail(_userLogin);
+    result.then(
+      (value) => {
+        value.fold(
+          (l) => {
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  l.message,
+                  style: TextStyle(fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+                backgroundColor: Colors.red,
+              ),
+            )
+          },
+          (r) => null,
+        )
+      },
+    );
+  }
 
   // Widgets
 
@@ -218,78 +252,60 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // Functions
-
-  void _requestLoginWithEmail(BuildContext context) {
-    var result = _loginController.loginWithEmail(_userLogin);
-    result.then(
-      (value) => {
-        value.fold(
-          (l) => {
-            Scaffold.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  l.message,
-                  style: TextStyle(fontSize: 16),
-                  textAlign: TextAlign.center,
-                ),
-                backgroundColor: Colors.red,
-              ),
-            )
-          },
-          (r) => null,
-        )
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
     return Scaffold(
       body: LayoutBuilder(builder: (context, constraints) {
-        return GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: Container(
-            height: constraints.maxHeight,
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                  top: -constraints.maxHeight * .15,
-                  right: -constraints.maxWidth * .4,
-                  child: BezierContainer(),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: constraints.maxWidth * .05,
+        return Stack(children: [
+          GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: Container(
+              height: constraints.maxHeight,
+              child: Stack(
+                children: <Widget>[
+                  Positioned(
+                    top: -constraints.maxHeight * .15,
+                    right: -constraints.maxWidth * .4,
+                    child: BezierContainer(),
                   ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(height: constraints.maxHeight * .2),
-                        _title(),
-                        SizedBox(height: constraints.maxHeight * .06),
-                        _formInput(constraints),
-                        SizedBox(height: constraints.maxHeight * .025),
-                        _loginButton(constraints, context),
-                        _forgotPasswordButton(constraints),
-                        _divider(constraints),
-                        SizedBox(height: constraints.maxHeight * .015),
-                        FacebookLoginButton(_loginController, constraints),
-                        _signUpButton(),
-                      ],
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: constraints.maxWidth * .05,
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(height: constraints.maxHeight * .2),
+                          _title(),
+                          SizedBox(height: constraints.maxHeight * .06),
+                          _formInput(constraints),
+                          SizedBox(height: constraints.maxHeight * .025),
+                          _loginButton(constraints, context),
+                          _forgotPasswordButton(constraints),
+                          _divider(constraints),
+                          SizedBox(height: constraints.maxHeight * .015),
+                          FacebookLoginButton(_loginController, constraints),
+                          _signUpButton(),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        );
+          Observer(
+            builder: (_) => _loginStore.loading
+                ? LoadingIndicator(constraints)
+                : SizedBox.shrink(),
+          ),
+        ]);
       }),
     );
   }
