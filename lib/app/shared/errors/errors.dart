@@ -7,17 +7,22 @@ class ConnectionError extends Failure {
   ConnectionError({this.message});
 }
 
-class ErrorLogin extends Failure {
+class LoginError extends Failure {
   final String message;
-  ErrorLogin({this.message});
+  LoginError({this.message});
 }
 
-class ErrorLogout extends Failure {
+class LogoutError extends Failure {
   final String message;
-  ErrorLogout({this.message});
+  LogoutError({this.message});
 }
 
 class InternalError implements Failure {
   final String message;
   InternalError({this.message});
+}
+
+class RequestError implements Failure {
+  final String message;
+  RequestError({this.message});
 }
