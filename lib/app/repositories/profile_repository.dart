@@ -16,7 +16,7 @@ class ProfileRepository implements IProfileRepository {
   @override
   Future<Either<Failure, ProfileModel>> me() async {
     try {
-      var profile = await dio.instance.get(Endpoints.me);
+      var profile = await dio.withAuth().get(Endpoints.me);
       return Right(ProfileModel.fromJson(profile.data));
     } catch (e) {
       return Left(RequestError(message: e.response.data['errors']));
