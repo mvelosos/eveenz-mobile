@@ -9,7 +9,6 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-// TODO: Reafactor this class later
 class _ProfilePageState extends State<ProfilePage> {
   var storage = locator<LocalStorageService>();
   var navigation = locator<NavigationService>();
