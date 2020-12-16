@@ -12,23 +12,26 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  // TODO: Remove this from here \/
-  var _storage = locator<LocalStorageService>();
-  var _navigation = locator<NavigationService>();
+  var _navigationService = locator<NavigationService>();
   var _profileStore = locator<ProfileStore>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Profile',
-          style: TextStyle(color: Colors.blue),
-        ),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         brightness: Brightness.light,
-        actions: [Icon(Icons.code)],
+        actions: [
+          IconButton(
+            icon: Icon(Icons.view_headline),
+            color: Colors.grey,
+            tooltip: 'Show Snackbar',
+            onPressed: () {
+              _navigationService.pushNamed(RouteNames.settings);
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -37,15 +40,6 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           Observer(
             builder: (_) => Text(_profileStore.name),
-          ),
-          RaisedButton(
-            child: Text('Logout'),
-            onPressed: () => {
-              _storage.clear().then(
-                    (_) => _navigation
-                        .pushNamedReplacementNoAnimation(RouteNames.login),
-                  )
-            },
           ),
         ]),
       ),
