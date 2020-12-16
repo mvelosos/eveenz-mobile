@@ -27,6 +27,8 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
+        brightness: Brightness.light,
+        actions: [Icon(Icons.code)],
       ),
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [

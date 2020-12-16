@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
+        brightness: Brightness.light,
       ),
       body: Center(child: Text('This is the home page!')),
     );
