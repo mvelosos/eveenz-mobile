@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/pages/login/widgets/facebook_login_button.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
@@ -23,7 +24,8 @@ class _LoginPageState extends State<LoginPage> {
   final _userLogin = UserLoginVM();
   final _loginController = locator<LoginController>();
   final _loginStore = locator<LoginStore>();
-  final _navigationService = locator<NavigationService>();
+  final _navigationService =
+      NavigationService(locator<RootNavigatorKey>().navigatorKey);
   final _formKey = GlobalKey<FormState>();
 
   // Functions

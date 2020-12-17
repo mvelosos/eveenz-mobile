@@ -1,8 +1,8 @@
 import 'dart:async';
-
 import 'package:dartz/dartz.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/auth_user_model.dart';
+import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/repositories/auth_repository.dart';
 import 'package:party_mobile/app/services/local_storage_service.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
@@ -16,13 +16,14 @@ import 'package:party_mobile/app/view_models/user_login_vm.dart';
 
 class LoginController {
   AuthRepository _authRepository;
-  NavigationService _navigation;
+  NavigationService _navigationService;
   LoginStore _loginStore;
   AuthUserStore _authUserStore;
 
   LoginController() {
     _authRepository = AuthRepository();
-    _navigation = locator<NavigationService>();
+    _navigationService =
+        NavigationService(locator<RootNavigatorKey>().navigatorKey);
     _loginStore = locator<LoginStore>();
     _authUserStore = locator<AuthUserStore>();
   }
@@ -34,7 +35,8 @@ class LoginController {
     if (authResult.isRight()) {
       _setLocalStorage(authResult.getOrElse(null));
       _authUserStore.setUser(authResult.getOrElse(null));
-      _navigation.pushNamed(RouteNames.appContainer);
+      _navigationService
+          .pushReplacementNamedNoAnimation(RouteNames.appContainer);
     }
     _loginStore.setLoading(false);
     return authResult;
@@ -47,7 +49,8 @@ class LoginController {
     if (authResult.isRight()) {
       _setLocalStorage(authResult.getOrElse(null));
       _authUserStore.setUser(authResult.getOrElse(null));
-      _navigation.pushNamed(RouteNames.appContainer);
+      _navigationService
+          .pushReplacementNamedNoAnimation(RouteNames.appContainer);
     }
     _loginStore.setLoading(false);
     return authResult;

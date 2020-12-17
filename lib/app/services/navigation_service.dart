@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:party_mobile/app/router_manager.dart';
 
 class NavigationService {
-  final GlobalKey<NavigatorState> navigatorKey =
-      new GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> navigatorKey;
+
+  NavigationService(this.navigatorKey);
 
   Future<dynamic> pushNamed(String routeName, {dynamic arguments}) {
     return navigatorKey.currentState.pushNamed(routeName, arguments: arguments);
@@ -27,7 +28,7 @@ class NavigationService {
     );
   }
 
-  Future<dynamic> pushNamedReplacementNoAnimation(String routeName) {
+  Future<dynamic> pushReplacementNamedNoAnimation(String routeName) {
     MaterialPageRoute route =
         RouterManager.generateRoute(RouteSettings(name: routeName));
 
