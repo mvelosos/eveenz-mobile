@@ -17,6 +17,7 @@ class _SearchPageState extends State<SearchPage> {
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         brightness: Brightness.light,
+        automaticallyImplyLeading: false,
       ),
       body: Center(child: Text('This is the search page!')),
     );

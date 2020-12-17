@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/services/local_storage_service.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
@@ -11,7 +12,8 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   var _storage = locator<LocalStorageService>();
-  var _navigation = locator<NavigationService>();
+  var _navigationService =
+      NavigationService(locator<RootNavigatorKey>().navigatorKey);
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +30,10 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Text('Logout'),
             onPressed: () => {
               _storage.clear().then(
-                    (_) => _navigation
-                        .pushNamedReplacementNoAnimation(RouteNames.login),
+                    (_) => {
+                      _navigationService
+                          .pushReplacementNamedNoAnimation(RouteNames.login)
+                    },
                   )
             },
           ),

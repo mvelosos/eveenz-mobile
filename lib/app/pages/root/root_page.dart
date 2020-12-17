@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/services/local_storage_service.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
@@ -11,6 +12,9 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
+  var _navigationService =
+      NavigationService(locator<RootNavigatorKey>().navigatorKey);
+
   @override
   void initState() {
     super.initState();
@@ -21,15 +25,10 @@ class _RootPageState extends State<RootPage> {
     var localStorage = locator<LocalStorageService>();
     localStorage.get(Storage.jwtToken).then((value) => {
           if (value != null)
-            {
-              locator<NavigationService>()
-                  .pushNamedReplacementNoAnimation(RouteNames.appContainer)
-            }
+            _navigationService
+                .pushReplacementNamedNoAnimation(RouteNames.appContainer)
           else
-            {
-              locator<NavigationService>()
-                  .pushReplacementNamed(RouteNames.login)
-            }
+            _navigationService.pushReplacementNamed(RouteNames.login)
         });
   }
 

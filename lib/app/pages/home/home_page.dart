@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
+import 'package:party_mobile/app/services/navigation_service.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -8,6 +11,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var navigator = NavigationService(locator<HomeNavigatorKey>().navigatorKey);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,8 +24,10 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         brightness: Brightness.light,
+        iconTheme: IconThemeData(color: Colors.blue),
+        automaticallyImplyLeading: false,
       ),
-      body: Center(child: Text('This is the home page!')),
+      body: Center(child: Text('Welcome!')),
     );
   }
 }
