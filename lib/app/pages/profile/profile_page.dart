@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:party_mobile/app/locator.dart';
-import 'package:party_mobile/app/services/local_storage_service.dart';
+import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/stores/profile_store.dart';
@@ -12,7 +12,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  var _navigationService = locator<NavigationService>();
+  var _navigationService =
+      NavigationService(locator<ProfileNavigatorKey>().navigatorKey);
   var _profileStore = locator<ProfileStore>();
 
   @override
@@ -22,6 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         brightness: Brightness.light,
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: Icon(Icons.view_headline),

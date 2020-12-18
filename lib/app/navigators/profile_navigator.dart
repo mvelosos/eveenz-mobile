@@ -4,18 +4,20 @@ import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/router_manager.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 
-class App extends StatelessWidget {
+class ProfileNavigator extends StatefulWidget {
+  @override
+  _ProfileNavigatorState createState() => _ProfileNavigatorState();
+}
+
+final _profileNavigatorKey = locator<ProfileNavigatorKey>().navigatorKey;
+
+class _ProfileNavigatorState extends State<ProfileNavigator> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Party Project',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      navigatorKey: locator<RootNavigatorKey>().navigatorKey,
+    return Navigator(
+      key: _profileNavigatorKey,
       onGenerateRoute: RouterManager.generateRoute,
-      initialRoute: RouteNames.root,
+      initialRoute: RouteNames.profile,
     );
   }
 }
