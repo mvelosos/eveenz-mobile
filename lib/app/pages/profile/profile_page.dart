@@ -18,33 +18,59 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        brightness: Brightness.light,
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.view_headline),
-            color: Colors.grey,
-            tooltip: 'Show Snackbar',
-            onPressed: () {
-              _navigationService.pushNamed(RouteNames.settings);
-            },
-          ),
-        ],
-      ),
-      body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Observer(
-            builder: (_) => Text(_profileStore.username),
-          ),
-          Observer(
-            builder: (_) => Text(_profileStore.name),
-          ),
-        ]),
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              brightness: Brightness.light,
+              automaticallyImplyLeading: false,
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.view_headline),
+                  color: Colors.grey,
+                  tooltip: 'Show Snackbar',
+                  onPressed: () {
+                    _navigationService.pushNamed(RouteNames.settings);
+                  },
+                ),
+              ],
+            ),
+            body: RefreshIndicator(
+              color: Colors.blue,
+              displacement: 0,
+              onRefresh: () async {
+                await Future.delayed(Duration(seconds: 2), () => true);
+              },
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                child: Container(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  height: constraints.maxHeight,
+                  width: constraints.maxWidth,
+                  child: Column(children: [
+                    Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image(
+                            height: 90,
+                            width: 90,
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ]),
+                ),
+              ),
+            ));
+      },
     );
   }
 }
