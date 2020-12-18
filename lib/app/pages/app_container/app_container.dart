@@ -40,14 +40,6 @@ class _AppContainerState extends State<AppContainer> {
     });
   }
 
-  List<GlobalKey<NavigatorState>> _navigatorKeys = [
-    _homeNavigatorKey,
-    _searchNavigatorKey,
-    _mapNavigatorKey,
-    _notificationsNavigatorKey,
-    _profileNavigatorKey
-  ];
-
   Future<bool> _systemBackButtonPressed() async {
     final NavigatorState navigator = _navigatorKeys[_currentIndex].currentState;
     // SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
@@ -72,6 +64,14 @@ class _AppContainerState extends State<AppContainer> {
   }
 
   // Widgets
+
+  List<GlobalKey<NavigatorState>> _navigatorKeys = [
+    _homeNavigatorKey,
+    _searchNavigatorKey,
+    _mapNavigatorKey,
+    _notificationsNavigatorKey,
+    _profileNavigatorKey
+  ];
 
   final List<Widget> _navigators = [
     HomeNavigator(),
