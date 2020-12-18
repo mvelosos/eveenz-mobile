@@ -37,31 +37,36 @@ class RouterManager {
       case RouteNames.home:
         return MaterialPageRoute(
             builder: (_) => HomePage(),
-            settings: RouteSettings(name: RouteNames.home));
+            settings: RouteSettings(name: RouteNames.home),
+            fullscreenDialog: true);
 
       // Search
       case RouteNames.search:
         return MaterialPageRoute(
             builder: (_) => SearchPage(),
-            settings: RouteSettings(name: RouteNames.search));
+            settings: RouteSettings(name: RouteNames.search),
+            fullscreenDialog: true);
 
       // Map
       case RouteNames.map:
         return MaterialPageRoute(
             builder: (_) => MapPage(),
-            settings: RouteSettings(name: RouteNames.map));
+            settings: RouteSettings(name: RouteNames.map),
+            fullscreenDialog: true);
 
       // Notifications
       case RouteNames.notifications:
         return MaterialPageRoute(
             builder: (_) => NotificationsPage(),
-            settings: RouteSettings(name: RouteNames.notifications));
+            settings: RouteSettings(name: RouteNames.notifications),
+            fullscreenDialog: true);
 
       // Profile
       case RouteNames.profile:
         return MaterialPageRoute(
             builder: (_) => ProfilePage(),
-            settings: RouteSettings(name: RouteNames.profile));
+            settings: RouteSettings(name: RouteNames.profile),
+            fullscreenDialog: true);
 
       case RouteNames.settings:
         return MaterialPageRoute(builder: (_) => SettingsPage());
