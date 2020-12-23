@@ -44,7 +44,6 @@ class LoginController {
 
   Future<Either<Failure, AuthUserModel>> loginWithFacebook(
       FacebookLoginVM fbLogin) async {
-    _loginStore.setLoading(true);
     var authResult = await _authRepository.authFacebook(fbLogin);
     if (authResult.isRight()) {
       _setLocalStorage(authResult.getOrElse(null));
