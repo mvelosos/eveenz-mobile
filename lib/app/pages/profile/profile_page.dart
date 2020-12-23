@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:party_mobile/app/controllers/profile_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
@@ -14,6 +15,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   var _navigationService =
       NavigationService(locator<ProfileNavigatorKey>().navigatorKey);
+  var _profileController = locator<ProfileController>();
   var _profileStore = locator<ProfileStore>();
 
   @override
@@ -22,6 +24,10 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (context, constraints) {
         return Scaffold(
             appBar: AppBar(
+              title: Observer(builder: (_) {
+                return Text(_profileStore.username,
+                    style: TextStyle(color: Colors.blue));
+              }),
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
               brightness: Brightness.light,
@@ -41,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
               color: Colors.blue,
               displacement: 0,
               onRefresh: () async {
-                await Future.delayed(Duration(seconds: 2), () => true);
+                await _profileController.getProfile();
               },
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
@@ -52,16 +58,50 @@ class _ProfilePageState extends State<ProfilePage> {
                   width: constraints.maxWidth,
                   child: Column(children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
+                        Column(children: [
+                          Observer(
+                            builder: (_) => Text(
+                              _profileStore.events.toString(),
+                              style: TextStyle(fontSize: 19),
+                            ),
+                          ),
+                          Text('Festas'),
+                        ]),
+                        Column(children: [
+                          Observer(
+                            builder: (_) => Text(
+                              _profileStore.followers.toString(),
+                              style: TextStyle(fontSize: 19),
+                            ),
+                          ),
+                          Text('Seguidores'),
+                        ]),
+                        Column(children: [
+                          Observer(
+                            builder: (_) => Text(
+                              _profileStore.following.toString(),
+                              style: TextStyle(fontSize: 19),
+                            ),
+                          ),
+                          Text('Seguindo'),
+                        ]),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(50),
-                          child: Image(
-                            height: 90,
-                            width: 90,
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                              'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
-                            ),
+                          child: Observer(
+                            builder: (_) {
+                              return _profileStore.avatarUrl != ''
+                                  ? Image.network(
+                                      _profileStore.avatarUrl,
+                                      height: 85,
+                                      width: 85,
+                                    )
+                                  : CircleAvatar(
+                                      radius: 45,
+                                      backgroundColor: Color(0xffd3d5db),
+                                    );
+                            },
                           ),
                         ),
                       ],
