@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
             textInputAction: TextInputAction.next,
             autocorrect: false,
             enableSuggestions: false,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               icon: Icon(Icons.person),
               labelText: 'Nome de usuário ou e-mail',
             ),
@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
           SizedBox(height: constraints.maxHeight * .015),
           TextFormField(
             obscureText: true,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               icon: Icon(Icons.lock),
               labelText: 'Senha',
             ),
