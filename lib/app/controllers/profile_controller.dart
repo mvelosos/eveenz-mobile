@@ -11,7 +11,7 @@ class ProfileController {
     _profileStore = locator<ProfileStore>();
   }
 
-  void getProfile() async {
+  Future<void> getProfile() async {
     var profileResult = await _profileRepository.me();
     if (profileResult.isRight()) {
       _profileStore.setProfile(profileResult.getOrElse(null));
