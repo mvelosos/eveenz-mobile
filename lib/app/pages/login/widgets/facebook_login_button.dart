@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
+import 'package:party_mobile/app/stores/login_store.dart';
 import 'package:party_mobile/app/view_models/facebook_login_vm.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 class FacebookLoginButton extends StatelessWidget {
   final FacebookLoginVM _fbLogin = FacebookLoginVM();
   final LoginController _loginController;
+  final LoginStore _loginStore;
   final BoxConstraints _constraints;
 
-  FacebookLoginButton(this._loginController, this._constraints);
+  FacebookLoginButton(
+      this._loginController, this._loginStore, this._constraints);
 
   _initFacebookLogin() async {
     final facebookLogin = FacebookLogin();
@@ -22,10 +25,10 @@ class FacebookLoginButton extends StatelessWidget {
         _loginController.loginWithFacebook(_fbLogin);
         break;
       case FacebookLoginStatus.cancelledByUser:
-        // _showCancelledMessage();
+        _loginStore.setLoading(false);
         break;
       case FacebookLoginStatus.error:
-        // _showErrorOnUI(result.errorMessage);
+        _loginStore.setLoading(false);
         break;
     }
   }
@@ -34,6 +37,7 @@ class FacebookLoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RawMaterialButton(
       onPressed: () {
+        _loginStore.setLoading(true);
         _initFacebookLogin();
       },
       child: Container(

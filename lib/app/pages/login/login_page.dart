@@ -288,7 +288,8 @@ class _LoginPageState extends State<LoginPage> {
                           _forgotPasswordButton(constraints),
                           _divider(constraints),
                           SizedBox(height: constraints.maxHeight * .015),
-                          FacebookLoginButton(_loginController, constraints),
+                          FacebookLoginButton(
+                              _loginController, _loginStore, constraints),
                           _signUpButton(),
                         ],
                       ),
