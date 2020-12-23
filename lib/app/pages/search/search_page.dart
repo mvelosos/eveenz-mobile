@@ -23,48 +23,49 @@ class _SearchPageState extends State<SearchPage> {
               padding: EdgeInsets.only(left: 10, right: 10),
               height: constraints.maxHeight,
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Buscar',
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.blue,
-                        fontWeight: FontWeight.w500,
-                      ),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Buscar',
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w500,
                     ),
-                    Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: TextField(
-                        onChanged: (value) {
-                          print(value);
-                        },
-                        autocorrect: false,
-                        enableSuggestions: false,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search),
-                          labelText: 'Buscar por eventos ou pessoas',
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                            borderSide: BorderSide(
-                              color: Colors.blue,
-                            ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: TextField(
+                      onChanged: (value) {
+                        print(value);
+                      },
+                      autocorrect: false,
+                      enableSuggestions: false,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.search),
+                        labelText: 'Buscar por eventos ou pessoas',
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
                           ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                            borderSide: BorderSide(
-                              color: Colors.grey,
-                            ),
+                          borderSide: BorderSide(
+                            color: Colors.blue,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.grey,
                           ),
                         ),
                       ),
                     ),
-                  ]),
+                  ),
+                ],
+              ),
             ),
           ),
         );
