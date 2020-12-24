@@ -1,10 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:party_mobile/app/controllers/search_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/search_result_model.dart';
+import 'package:party_mobile/app/pages/search/widgets/search_list_view.dart';
 import 'package:party_mobile/app/view_models/search_vm.dart';
 
 class SearchPage extends StatefulWidget {
@@ -40,7 +39,7 @@ class _SearchPageState extends State<SearchPage> {
           child: GestureDetector(
             onTap: () {
               FocusScope.of(context).unfocus();
-              _resultSearch = SearchResultModel();
+              _resultSearch.data = [];
               _searchInputController.clear();
             },
             child: Container(
@@ -95,28 +94,8 @@ class _SearchPageState extends State<SearchPage> {
                   _focusNode.hasFocus
                       ? Expanded(
                           child: Container(
-                            margin: EdgeInsets.only(top: 10),
-                            child: ListView.builder(
-                              itemCount: _resultSearch.data != null
-                                  ? _resultSearch.data.length
-                                  : 1,
-                              itemBuilder: (_, idx) {
-                                return (_resultSearch.data != null &&
-                                        _resultSearch.data.length > 0)
-                                    ? ListTile(
-                                        title:
-                                            Text(_resultSearch.data[idx].name),
-                                        onTap: () {
-                                          print(_resultSearch.data[idx].name);
-                                        },
-                                      )
-                                    : ListTile(
-                                        title:
-                                            Text('Nenhum resultado encontrado'),
-                                      );
-                              },
-                            ),
-                          ),
+                              margin: EdgeInsets.only(top: 10),
+                              child: SearchListView(_resultSearch)),
                         )
                       : Expanded(
                           child: Container(
