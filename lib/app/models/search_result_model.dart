@@ -43,7 +43,7 @@ class Data {
     uuid = json['uuid'] ?? null;
     type = json['type'] ?? null;
     username = json['username'] ?? null;
-    name = json['name'] ?? null;
+    name = json['name'] ?? '';
     avatarUrl = json['avatar_url'] ?? null;
     imageUrl = json['image_url'] ?? null;
     distance = json['distance'] ?? null;
