@@ -2,6 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:party_mobile/app/controllers/search_controller.dart';
+import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/view_models/search_vm.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -9,6 +12,20 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  var _search = SearchVM();
+  var _searchController = locator<SearchController>();
+
+  // Functions
+
+  void _requestSearch() async {
+    var result = await _searchController.search(_search);
+    result.fold(
+        (l) => null,
+        (r) => r.data.forEach((element) {
+              print(element.toJson());
+            }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +54,8 @@ class _SearchPageState extends State<SearchPage> {
                     margin: EdgeInsets.only(top: 10),
                     child: TextField(
                       onChanged: (value) {
-                        print(value);
+                        _search.query = value;
+                        _requestSearch();
                       },
                       autocorrect: false,
                       enableSuggestions: false,
