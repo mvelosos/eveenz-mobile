@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:party_mobile/app/controllers/search_controller.dart';
 import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/models/search_result_model.dart';
 import 'package:party_mobile/app/view_models/search_vm.dart';
 
 class SearchPage extends StatefulWidget {
@@ -12,8 +13,11 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  var _search = SearchVM();
   var _searchController = locator<SearchController>();
+  var _searchInputController = TextEditingController();
+  var _search = SearchVM();
+  var _resultSearch = SearchResultModel();
+  var _focusNode = FocusNode();
 
   // Functions
 
@@ -21,9 +25,11 @@ class _SearchPageState extends State<SearchPage> {
     var result = await _searchController.search(_search);
     result.fold(
         (l) => null,
-        (r) => r.data.forEach((element) {
-              print(element.toJson());
-            }));
+        (r) => {
+              setState(() {
+                _resultSearch = r;
+              })
+            });
   }
 
   @override
@@ -34,6 +40,8 @@ class _SearchPageState extends State<SearchPage> {
           child: GestureDetector(
             onTap: () {
               FocusScope.of(context).unfocus();
+              _resultSearch = SearchResultModel();
+              _searchInputController.clear();
             },
             child: Container(
               color: Colors.transparent,
@@ -53,6 +61,8 @@ class _SearchPageState extends State<SearchPage> {
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     child: TextField(
+                      controller: _searchInputController,
+                      focusNode: _focusNode,
                       onChanged: (value) {
                         _search.query = value;
                         _requestSearch();
@@ -82,6 +92,38 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     ),
                   ),
+                  _focusNode.hasFocus
+                      ? Expanded(
+                          child: Container(
+                            margin: EdgeInsets.only(top: 10),
+                            child: ListView.builder(
+                              itemCount: _resultSearch.data != null
+                                  ? _resultSearch.data.length
+                                  : 1,
+                              itemBuilder: (_, idx) {
+                                return (_resultSearch.data != null &&
+                                        _resultSearch.data.length > 0)
+                                    ? ListTile(
+                                        title:
+                                            Text(_resultSearch.data[idx].name),
+                                        onTap: () {
+                                          print(_resultSearch.data[idx].name);
+                                        },
+                                      )
+                                    : ListTile(
+                                        title:
+                                            Text('Nenhum resultado encontrado'),
+                                      );
+                              },
+                            ),
+                          ),
+                        )
+                      : Expanded(
+                          child: Container(
+                            margin: EdgeInsets.only(top: 10),
+                            color: Colors.blue,
+                          ),
+                        )
                 ],
               ),
             ),
