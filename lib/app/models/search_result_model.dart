@@ -1,9 +1,9 @@
-class SearchResult {
+class SearchResultModel {
   List<Data> data;
 
-  SearchResult({this.data});
+  SearchResultModel({this.data});
 
-  SearchResult.fromJson(Map<String, dynamic> json) {
+  SearchResultModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       data = new List<Data>();
       json['data'].forEach((v) {
