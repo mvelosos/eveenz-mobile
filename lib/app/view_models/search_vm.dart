@@ -1,0 +1,3 @@
+class SearchVM {
+  String query = '';
+}
