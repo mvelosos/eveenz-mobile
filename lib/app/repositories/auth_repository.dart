@@ -9,17 +9,17 @@ import 'package:party_mobile/app/view_models/facebook_login_vm.dart';
 import 'package:party_mobile/app/view_models/user_login_vm.dart';
 
 class AuthRepository implements IAuthRepositoryInterface {
-  DioHttp dio;
+  DioHttp _dio;
 
   AuthRepository() {
-    dio = locator<DioHttp>();
+    _dio = locator<DioHttp>();
   }
 
   @override
   Future<Either<Failure, AuthUserModel>> authLogin(
       UserLoginVM userLogin) async {
     try {
-      var user = await dio.instance
+      var user = await _dio.instance
           .post(Endpoints.authLogin, data: userLogin.getData());
       print(user.data);
 
@@ -33,7 +33,7 @@ class AuthRepository implements IAuthRepositoryInterface {
   Future<Either<Failure, AuthUserModel>> authFacebook(
       FacebookLoginVM fbLogin) async {
     try {
-      var user = await dio.instance
+      var user = await _dio.instance
           .post(Endpoints.authFacebook, data: fbLogin.getData());
 
       return Right(AuthUserModel.fromJson(user.data));
