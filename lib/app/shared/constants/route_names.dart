@@ -7,6 +7,8 @@ class RouteNames {
   static const String signUp = '/signup';
   static const String forgotPassword = '/forgot_password';
 
+  static const String showUser = '/users/:username';
+
   // Home
   static const String home = '/home';
 

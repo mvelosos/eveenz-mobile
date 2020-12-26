@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:party_mobile/app/pages/account/account_page.dart';
 import 'package:party_mobile/app/pages/app_container/app_container.dart';
 import 'package:party_mobile/app/pages/forgot_password/forgot_password_page.dart';
 import 'package:party_mobile/app/pages/home/home_page.dart';
@@ -32,6 +33,12 @@ class RouterManager {
 
       case RouteNames.forgotPassword:
         return MaterialPageRoute(builder: (_) => ForgotPasswordPage());
+
+      case RouteNames.showUser:
+        AccountPageArguments args = route.arguments;
+        return MaterialPageRoute(
+          builder: (_) => AccountPage(args: args),
+        );
 
       // Home
       case RouteNames.home:

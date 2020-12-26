@@ -8,4 +8,7 @@ class Endpoints {
 
   // Profile Endpoints
   static const String me = '/me';
+
+  // Users Endpoints
+  static const String users = '/users';
 }
