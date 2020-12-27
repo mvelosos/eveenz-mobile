@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
-import 'package:party_mobile/app/pages/account/account_page.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
-import 'package:party_mobile/app/shared/constants/route_names.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
