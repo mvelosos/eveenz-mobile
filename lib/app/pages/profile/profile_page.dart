@@ -61,33 +61,39 @@ class _ProfilePageState extends State<ProfilePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Column(children: [
-                          Observer(
-                            builder: (_) => Text(
-                              _profileStore.events.toString(),
-                              style: TextStyle(fontSize: 19),
+                        Column(
+                          children: [
+                            Observer(
+                              builder: (_) => Text(
+                                _profileStore.events.toString(),
+                                style: TextStyle(fontSize: 19),
+                              ),
                             ),
-                          ),
-                          Text('Festas'),
-                        ]),
-                        Column(children: [
-                          Observer(
-                            builder: (_) => Text(
-                              _profileStore.followers.toString(),
-                              style: TextStyle(fontSize: 19),
+                            Text('Festas'),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Observer(
+                              builder: (_) => Text(
+                                _profileStore.followers.toString(),
+                                style: TextStyle(fontSize: 19),
+                              ),
                             ),
-                          ),
-                          Text('Seguidores'),
-                        ]),
-                        Column(children: [
-                          Observer(
-                            builder: (_) => Text(
-                              _profileStore.following.toString(),
-                              style: TextStyle(fontSize: 19),
+                            Text('Seguidores'),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Observer(
+                              builder: (_) => Text(
+                                _profileStore.following.toString(),
+                                style: TextStyle(fontSize: 19),
+                              ),
                             ),
-                          ),
-                          Text('Seguindo'),
-                        ]),
+                            Text('Seguindo'),
+                          ],
+                        ),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(50),
                           child: Observer(
