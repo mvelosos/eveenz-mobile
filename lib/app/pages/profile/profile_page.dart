@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:party_mobile/app/controllers/profile_controller.dart';
+import 'package:party_mobile/app/controllers/me_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
-import 'package:party_mobile/app/stores/profile_store.dart';
+import 'package:party_mobile/app/stores/me_store.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -15,16 +15,15 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   var _navigationService =
       NavigationService(locator<ProfileNavigatorKey>().navigatorKey);
-  var _profileController = locator<ProfileController>();
-  var _profileStore = locator<ProfileStore>();
+  var _meController = locator<MeController>();
+  var _meStore = locator<MeStore>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Observer(builder: (_) {
-          return Text(_profileStore.username,
-              style: TextStyle(color: Colors.blue));
+          return Text(_meStore.username, style: TextStyle(color: Colors.blue));
         }),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
@@ -47,7 +46,7 @@ class _ProfilePageState extends State<ProfilePage> {
             color: Colors.blue,
             displacement: 0,
             onRefresh: () async {
-              await _profileController.getProfile();
+              await _meController.getMe();
             },
             child: SingleChildScrollView(
               physics: AlwaysScrollableScrollPhysics(),
@@ -65,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             Observer(
                               builder: (_) => Text(
-                                _profileStore.events.toString(),
+                                _meStore.events.toString(),
                                 style: TextStyle(fontSize: 19),
                               ),
                             ),
@@ -76,7 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             Observer(
                               builder: (_) => Text(
-                                _profileStore.followers.toString(),
+                                _meStore.followers.toString(),
                                 style: TextStyle(fontSize: 19),
                               ),
                             ),
@@ -87,7 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             Observer(
                               builder: (_) => Text(
-                                _profileStore.following.toString(),
+                                _meStore.following.toString(),
                                 style: TextStyle(fontSize: 19),
                               ),
                             ),
@@ -98,9 +97,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           borderRadius: BorderRadius.circular(50),
                           child: Observer(
                             builder: (_) {
-                              return _profileStore.avatarUrl != ''
+                              return _meStore.avatarUrl != ''
                                   ? Image.network(
-                                      _profileStore.avatarUrl,
+                                      _meStore.avatarUrl,
                                       height: 85,
                                       width: 85,
                                     )

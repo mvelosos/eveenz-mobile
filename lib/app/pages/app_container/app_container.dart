@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:party_mobile/app/controllers/profile_controller.dart';
+import 'package:party_mobile/app/controllers/me_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/navigators/home_navigator.dart';
 import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
@@ -23,7 +23,7 @@ final _notificationsNavigatorKey =
 final _profileNavigatorKey = locator<ProfileNavigatorKey>().navigatorKey;
 
 class _AppContainerState extends State<AppContainer> {
-  var _profileController = locator<ProfileController>();
+  var _profileController = locator<MeController>();
   int _currentIndex = 0;
 
   // Functions
@@ -31,7 +31,7 @@ class _AppContainerState extends State<AppContainer> {
   @override
   void initState() {
     super.initState();
-    _profileController.getProfile();
+    _profileController.getMe();
   }
 
   void _onTabTapped(int index) {

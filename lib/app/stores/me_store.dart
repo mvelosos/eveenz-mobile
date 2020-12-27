@@ -1,10 +1,10 @@
 import 'package:mobx/mobx.dart';
 import 'package:party_mobile/app/models/profile_model.dart';
-part 'profile_store.g.dart';
+part 'me_store.g.dart';
 
-class ProfileStore = _ProfileStoreBase with _$ProfileStore;
+class MeStore = _MeStoreBase with _$MeStore;
 
-abstract class _ProfileStoreBase with Store {
+abstract class _MeStoreBase with Store {
   @observable
   String uuid = '';
 
@@ -33,7 +33,7 @@ abstract class _ProfileStoreBase with Store {
   String avatarUrl = '';
 
   @action
-  void setProfile(ProfileModel profileModel) {
+  void setMe(ProfileModel profileModel) {
     uuid = profileModel.account.uuid ?? '';
     username = profileModel.account.username ?? '';
     name = profileModel.account.name ?? '';
