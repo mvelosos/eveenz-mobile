@@ -21,7 +21,7 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
-  final AccountsController _usersController = locator<AccountsController>();
+  final AccountsController _accountsController = locator<AccountsController>();
   AccountModel _accountModel;
   bool _loading = true;
 
@@ -30,11 +30,11 @@ class _AccountPageState extends State<AccountPage> {
   @override
   void initState() {
     super.initState();
-    _getUser();
+    _getAccount();
   }
 
-  void _getUser() async {
-    var result = await _usersController.getUser(widget.args.username);
+  void _getAccount() async {
+    var result = await _accountsController.getAccount(widget.args.username);
     if (result.isRight()) {
       setState(() {
         _accountModel = result.getOrElse(null);

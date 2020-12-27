@@ -19,8 +19,8 @@ class AccountModel {
 
 class Account {
   String username;
-  Null name;
-  Null bio;
+  String name;
+  String bio;
   int popularity;
   int events;
   int following;

@@ -4,14 +4,14 @@ import 'package:party_mobile/app/repositories/accounts_repository.dart';
 import 'package:party_mobile/app/shared/errors/errors.dart';
 
 class AccountsController {
-  AccountsRepository _usersRepository;
+  AccountsRepository _accountsRepository;
 
   AccountsController() {
-    _usersRepository = AccountsRepository();
+    _accountsRepository = AccountsRepository();
   }
 
-  Future<Either<Failure, AccountModel>> getUser(String username) async {
-    var userResult = await _usersRepository.getUser(username);
-    return userResult;
+  Future<Either<Failure, AccountModel>> getAccount(String username) async {
+    var accountResult = await _accountsRepository.getAccount(username);
+    return accountResult;
   }
 }
