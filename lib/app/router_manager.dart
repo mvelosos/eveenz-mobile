@@ -34,7 +34,7 @@ class RouterManager {
       case RouteNames.forgotPassword:
         return MaterialPageRoute(builder: (_) => ForgotPasswordPage());
 
-      case RouteNames.showUser:
+      case RouteNames.showAccount:
         AccountPageArguments args = route.arguments;
         return MaterialPageRoute(
           builder: (_) => AccountPage(args: args),

@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
         child: RaisedButton(
           onPressed: () {
             _homeNavigator.pushNamed(
-              RouteNames.showUser,
+              RouteNames.showAccount,
               arguments: AccountPageArguments(username: 'test'),
             );
           },

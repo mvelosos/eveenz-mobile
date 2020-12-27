@@ -21,7 +21,7 @@ class AccountListTile extends StatelessWidget {
       subtitle: Text(_item.username),
       onTap: () {
         _searchNavigator.pushNamed(
-          RouteNames.showUser,
+          RouteNames.showAccount,
           arguments: AccountPageArguments(username: _item.username),
         );
       },

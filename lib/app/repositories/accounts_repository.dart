@@ -16,7 +16,7 @@ class AccountsRepository implements IAccountsRepository {
   @override
   Future<Either<Failure, AccountModel>> getUser(String username) async {
     try {
-      var result = await _dio.withAuth().get("${Endpoints.users}/$username");
+      var result = await _dio.withAuth().get("${Endpoints.accounts}/$username");
       return Right(AccountModel.fromJson(result.data));
     } catch (e) {
       return Left(RequestError(message: e.response.data['errors']));
