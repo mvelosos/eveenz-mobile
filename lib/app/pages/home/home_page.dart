@@ -31,15 +31,7 @@ class _HomePageState extends State<HomePage> {
         automaticallyImplyLeading: false,
       ),
       body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            _homeNavigator.pushNamed(
-              RouteNames.showAccount,
-              arguments: AccountPageArguments(username: 'test'),
-            );
-          },
-          child: Text('Tela de usuário'),
-        ),
+        child: Text('Welcome!'),
       ),
     );
   }
