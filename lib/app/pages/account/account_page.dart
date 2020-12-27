@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:party_mobile/app/controllers/users_controller.dart';
+import 'package:party_mobile/app/controllers/accounts_controller.dart';
 import 'package:party_mobile/app/locator.dart';
-import 'package:party_mobile/app/models/user_model.dart';
+import 'package:party_mobile/app/models/account_model.dart';
 
 // Page Arguments
 class AccountPageArguments {
@@ -21,8 +21,8 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
-  final UsersController _usersController = locator<UsersController>();
-  UserModel _userModel;
+  final AccountsController _usersController = locator<AccountsController>();
+  AccountModel _accountModel;
   bool _loading = true;
 
   // Functions
@@ -37,7 +37,7 @@ class _AccountPageState extends State<AccountPage> {
     var result = await _usersController.getUser(widget.args.username);
     if (result.isRight()) {
       setState(() {
-        _userModel = result.getOrElse(null);
+        _accountModel = result.getOrElse(null);
         _loading = false;
       });
     }
@@ -47,7 +47,7 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_loading ? '' : _userModel.user.username,
+        title: Text(_loading ? '' : _accountModel.account.username,
             style: TextStyle(color: Colors.blue)),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
@@ -61,7 +61,7 @@ class _AccountPageState extends State<AccountPage> {
                   child: CircularProgressIndicator(),
                 )
               : Center(
-                  child: Text(_userModel.user.username),
+                  child: Text(_accountModel.account.username),
                 );
         },
       ),

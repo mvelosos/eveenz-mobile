@@ -2,7 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/controllers/profile_controller.dart';
 import 'package:party_mobile/app/controllers/search_controller.dart';
-import 'package:party_mobile/app/controllers/users_controller.dart';
+import 'package:party_mobile/app/controllers/accounts_controller.dart';
 import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/services/local_storage_service.dart';
 import 'package:party_mobile/app/shared/utils/dio_http.dart';
@@ -17,7 +17,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => LoginController());
   locator.registerLazySingleton(() => ProfileController());
   locator.registerLazySingleton(() => SearchController());
-  locator.registerLazySingleton(() => UsersController());
+  locator.registerLazySingleton(() => AccountsController());
 
   // Navigator Keys
   locator.registerLazySingleton(() => RootNavigatorKey());
