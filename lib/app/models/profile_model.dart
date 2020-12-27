@@ -18,6 +18,7 @@ class ProfileModel {
 }
 
 class Account {
+  String uuid;
   String username;
   String name;
   String bio;
@@ -28,7 +29,8 @@ class Account {
   String avatarUrl;
 
   Account(
-      {this.username,
+      {this.uuid,
+      this.username,
       this.name,
       this.bio,
       this.popularity,
@@ -38,6 +40,7 @@ class Account {
       this.avatarUrl});
 
   Account.fromJson(Map<String, dynamic> json) {
+    uuid = json['uuid'];
     username = json['username'];
     name = json['name'];
     bio = json['bio'];
@@ -50,6 +53,7 @@ class Account {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['uuid'] = this.uuid;
     data['username'] = this.username;
     data['name'] = this.name;
     data['bio'] = this.bio;

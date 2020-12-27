@@ -6,6 +6,9 @@ class ProfileStore = _ProfileStoreBase with _$ProfileStore;
 
 abstract class _ProfileStoreBase with Store {
   @observable
+  String uuid = '';
+
+  @observable
   String username = '';
 
   @observable
@@ -31,6 +34,7 @@ abstract class _ProfileStoreBase with Store {
 
   @action
   void setProfile(ProfileModel profileModel) {
+    uuid = profileModel.account.uuid ?? '';
     username = profileModel.account.username ?? '';
     name = profileModel.account.name ?? '';
     bio = profileModel.account.bio ?? '';
