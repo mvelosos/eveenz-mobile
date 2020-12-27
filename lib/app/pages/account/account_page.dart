@@ -52,7 +52,7 @@ class _AccountPageState extends State<AccountPage> {
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         brightness: Brightness.light,
-        automaticallyImplyLeading: false,
+        iconTheme: IconThemeData(color: Colors.blue),
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
