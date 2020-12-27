@@ -20,43 +20,44 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Scaffold(
-            appBar: AppBar(
-              title: Observer(builder: (_) {
-                return Text(_profileStore.username,
-                    style: TextStyle(color: Colors.blue));
-              }),
-              backgroundColor: Colors.transparent,
-              shadowColor: Colors.transparent,
-              brightness: Brightness.light,
-              automaticallyImplyLeading: false,
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.view_headline),
-                  color: Colors.grey,
-                  tooltip: 'Show Snackbar',
-                  onPressed: () {
-                    _navigationService.pushNamed(RouteNames.settings);
-                  },
-                ),
-              ],
-            ),
-            body: RefreshIndicator(
-              color: Colors.blue,
-              displacement: 0,
-              onRefresh: () async {
-                await _profileController.getProfile();
-              },
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                child: Container(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  height: constraints.maxHeight,
-                  width: constraints.maxWidth,
-                  child: Column(children: [
+    return Scaffold(
+      appBar: AppBar(
+        title: Observer(builder: (_) {
+          return Text(_profileStore.username,
+              style: TextStyle(color: Colors.blue));
+        }),
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        brightness: Brightness.light,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.view_headline),
+            color: Colors.grey,
+            tooltip: 'Show Snackbar',
+            onPressed: () {
+              _navigationService.pushNamed(RouteNames.settings);
+            },
+          ),
+        ],
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return RefreshIndicator(
+            color: Colors.blue,
+            displacement: 0,
+            onRefresh: () async {
+              await _profileController.getProfile();
+            },
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              child: Container(
+                padding: EdgeInsets.only(left: 10, right: 10),
+                height: constraints.maxHeight,
+                width: constraints.maxWidth,
+                child: Column(
+                  children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -106,11 +107,13 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ],
                     )
-                  ]),
+                  ],
                 ),
               ),
-            ));
-      },
+            ),
+          );
+        },
+      ),
     );
   }
 }
