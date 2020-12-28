@@ -33,7 +33,7 @@ class _AccountPageState extends State<AccountPage> {
     _getAccount();
   }
 
-  void _getAccount() async {
+  Future<void> _getAccount() async {
     var result = await _accountsController.getAccount(widget.args.username);
     if (result.isRight()) {
       setState(() {
@@ -47,8 +47,10 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_loading ? '' : _accountModel.account.username,
-            style: TextStyle(color: Colors.blue)),
+        title: Text(
+          _loading ? '' : _accountModel.account.username,
+          style: TextStyle(color: Colors.blue),
+        ),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         brightness: Brightness.light,
@@ -60,8 +62,70 @@ class _AccountPageState extends State<AccountPage> {
               ? Center(
                   child: CircularProgressIndicator(),
                 )
-              : Center(
-                  child: Text(_accountModel.account.username),
+              : RefreshIndicator(
+                  color: Colors.blue,
+                  displacement: 0,
+                  onRefresh: () async {
+                    await _getAccount();
+                  },
+                  child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    child: Container(
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      height: constraints.maxHeight,
+                      width: constraints.maxWidth,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    _accountModel.account.events.toString(),
+                                    style: TextStyle(fontSize: 19),
+                                  ),
+                                  Text('Festas'),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    _accountModel.account.followers.toString(),
+                                    style: TextStyle(fontSize: 19),
+                                  ),
+                                  Text('Seguidores'),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    _accountModel.account.following.toString(),
+                                    style: TextStyle(fontSize: 19),
+                                  ),
+                                  Text('Seguindo'),
+                                ],
+                              ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: _accountModel.account.avatarUrl != ''
+                                    ? Image.network(
+                                        _accountModel.account.avatarUrl,
+                                        height: 85,
+                                        width: 85,
+                                      )
+                                    : CircleAvatar(
+                                        radius: 45,
+                                        backgroundColor: Color(0xffd3d5db),
+                                      ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 );
         },
       ),
