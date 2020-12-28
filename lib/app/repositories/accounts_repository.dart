@@ -16,7 +16,8 @@ class AccountsRepository implements IAccountsRepository {
   @override
   Future<Either<Failure, AccountModel>> getAccount(String username) async {
     try {
-      var result = await _dio.withAuth().get("${Endpoints.accounts}/$username");
+      var url = Endpoints.accountShow.replaceAll(':username', username);
+      var result = await _dio.withAuth().get(url);
       return Right(AccountModel.fromJson(result.data['account']));
     } catch (e) {
       return Left(RequestError(message: e.response.data['errors']));
@@ -24,9 +25,9 @@ class AccountsRepository implements IAccountsRepository {
   }
 
   @override
-  Future<Either<Failure, Object>> getFollowers(String uuid) async {
+  Future<Either<Failure, Object>> getFollowers(String username) async {
     try {
-      var url = Endpoints.accountFollowers.replaceAll(':uuid', uuid);
+      var url = Endpoints.accountFollowers.replaceAll(':username', username);
       var result = await _dio.withAuth().get(url);
       return Right(result.data);
     } catch (e) {
@@ -35,9 +36,9 @@ class AccountsRepository implements IAccountsRepository {
   }
 
   @override
-  Future<Either<Failure, Object>> getFollowing(String uuid) async {
+  Future<Either<Failure, Object>> getFollowing(String username) async {
     try {
-      var url = Endpoints.accountFollowing.replaceAll(':uuid', uuid);
+      var url = Endpoints.accountFollowing.replaceAll(':username', username);
       var result = await _dio.withAuth().get(url);
       return Right(result.data);
     } catch (e) {
