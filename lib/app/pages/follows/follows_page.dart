@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:party_mobile/app/controllers/accounts_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/account_model.dart';
-import 'package:party_mobile/app/stores/me_store.dart';
+import 'package:party_mobile/app/pages/follows/widgets/follows_tab_view.dart';
 
 // Page Arguments
 class FollowsPageArguments {
-  final String uuid;
   final String username;
+  final int initialIndex;
 
-  FollowsPageArguments({@required this.uuid, @required this.username});
+  FollowsPageArguments({@required this.username, this.initialIndex});
 }
 
 // Page
@@ -24,20 +24,38 @@ class FollowsPage extends StatefulWidget {
 
 class _FollowsPageState extends State<FollowsPage> {
   final AccountsController _accountsController = locator<AccountsController>();
-  final MeStore _meStore = locator<MeStore>();
+  AccountModel _currentAccount;
   List<AccountModel> _followersList;
   List<AccountModel> _followingList;
+  bool _loading = true;
 
   // Functions
   @override
   initState() {
     super.initState();
-    _getFollowers();
-    _getFollowing();
+    _initValues();
   }
 
-  void _getFollowers() async {
-    var result = await _accountsController.getFollowers(widget.args.uuid);
+  Future<void> _initValues() async {
+    await _getAccount();
+    await _getFollowers();
+    await _getFollowing();
+    setState(() {
+      _loading = false;
+    });
+  }
+
+  Future<void> _getAccount() async {
+    var result = await _accountsController.getAccount(widget.args.username);
+    if (result.isRight()) {
+      setState(() {
+        _currentAccount = result.getOrElse(null);
+      });
+    }
+  }
+
+  Future<void> _getFollowers() async {
+    var result = await _accountsController.getFollowers(widget.args.username);
     if (result.isRight()) {
       setState(() {
         _followersList = result.getOrElse(null);
@@ -45,8 +63,8 @@ class _FollowsPageState extends State<FollowsPage> {
     }
   }
 
-  void _getFollowing() async {
-    var result = await _accountsController.getFollowing(widget.args.uuid);
+  Future<void> _getFollowing() async {
+    var result = await _accountsController.getFollowing(widget.args.username);
     if (result.isRight()) {
       setState(() {
         _followingList = result.getOrElse(null);
@@ -56,25 +74,50 @@ class _FollowsPageState extends State<FollowsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.args.username,
-          style: TextStyle(
-            color: Colors.blue,
-            fontSize: 17,
+    return DefaultTabController(
+      initialIndex: widget.args.initialIndex,
+      length: 2,
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              widget.args.username,
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: 17,
+              ),
+            ),
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                    icon: Text(
+                  _currentAccount != null
+                      ? "${_currentAccount.followers}  Seguidores"
+                      : 'Seguidores',
+                  style: TextStyle(color: Colors.black),
+                )),
+                Tab(
+                    icon: Text(
+                  _currentAccount != null
+                      ? "${_currentAccount.following}  Seguindo"
+                      : 'Seguindo',
+                  style: TextStyle(color: Colors.black),
+                )),
+              ],
+            ),
+            backgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent,
+            brightness: Brightness.light,
+            iconTheme: IconThemeData(color: Colors.blue),
           ),
-        ),
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        brightness: Brightness.light,
-        iconTheme: IconThemeData(color: Colors.blue),
-      ),
-      body: LayoutBuilder(builder: (context, constraints) {
-        return Center(
-          child: Text('follows page'),
-        );
-      }),
+          body: LayoutBuilder(
+            builder: (context, constraints) {
+              return _loading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : FollowsTabView();
+            },
+          )),
     );
   }
 }
