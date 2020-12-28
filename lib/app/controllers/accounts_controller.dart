@@ -15,9 +15,10 @@ class AccountsController {
     return accountResult;
   }
 
-  Future<Either<Failure, List<AccountModel>>> getFollowers(String uuid) async {
+  Future<Either<Failure, List<AccountModel>>> getFollowers(
+      String username) async {
     List<AccountModel> accountsList = [];
-    var result = await _accountsRepository.getFollowers(uuid);
+    var result = await _accountsRepository.getFollowers(username);
     if (result.isRight()) {
       dynamic resultList = result.getOrElse(null);
       if (resultList['accounts'] != null || resultList['accounts'] != []) {
@@ -31,9 +32,10 @@ class AccountsController {
     return Right(accountsList);
   }
 
-  Future<Either<Failure, List<AccountModel>>> getFollowing(String uuid) async {
+  Future<Either<Failure, List<AccountModel>>> getFollowing(
+      String username) async {
     List<AccountModel> accountsList = [];
-    var result = await _accountsRepository.getFollowing(uuid);
+    var result = await _accountsRepository.getFollowing(username);
     if (result.isRight()) {
       dynamic resultList = result.getOrElse(null);
       if (resultList['accounts'] != null || resultList['accounts'] != []) {
