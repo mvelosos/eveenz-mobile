@@ -8,7 +8,7 @@ import 'package:party_mobile/app/shared/constants/route_names.dart';
 
 class AccountListTile extends StatelessWidget {
   final _item;
-  final _searchNavigator =
+  final _navigationService =
       NavigationService(locator<SearchNavigatorKey>().navigatorKey);
 
   AccountListTile(this._item);
@@ -20,7 +20,7 @@ class AccountListTile extends StatelessWidget {
       title: Text(_item.name),
       subtitle: Text(_item.username),
       onTap: () {
-        _searchNavigator.pushNamed(
+        _navigationService.pushNamed(
           RouteNames.showAccount,
           arguments: AccountPageArguments(username: _item.username),
         );
