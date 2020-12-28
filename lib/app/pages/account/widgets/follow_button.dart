@@ -26,14 +26,14 @@ class _FollowButtonState extends State<FollowButton> {
 
   void followAccount() async {
     _setLoading(true);
-    await _meController.followAccount(widget._accountModel.account.uuid);
+    await _meController.followAccount(widget._accountModel.uuid);
     await widget._getAccount();
     _setLoading(false);
   }
 
   void unfollowAccount() async {
     _setLoading(true);
-    await _meController.unfollowAccount(widget._accountModel.account.uuid);
+    await _meController.unfollowAccount(widget._accountModel.uuid);
     await widget._getAccount();
     _setLoading(false);
   }
@@ -44,7 +44,7 @@ class _FollowButtonState extends State<FollowButton> {
       margin: EdgeInsets.only(
         top: widget._constraints.maxHeight * .025,
       ),
-      child: widget._accountModel.account.followedByMe
+      child: widget._accountModel.followedByMe
           ? RaisedButton(
               onPressed: _loading ? null : unfollowAccount,
               disabledColor: Colors.grey[350],

@@ -42,8 +42,9 @@ class RouterManager {
         );
 
       case RouteNames.accountFollows:
+        FollowsPageArguments args = route.arguments;
         return MaterialPageRoute(
-          builder: (_) => FollowsPage(),
+          builder: (_) => FollowsPage(args: args),
         );
 
       // Home

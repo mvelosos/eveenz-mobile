@@ -17,7 +17,29 @@ class AccountsRepository implements IAccountsRepository {
   Future<Either<Failure, AccountModel>> getAccount(String username) async {
     try {
       var result = await _dio.withAuth().get("${Endpoints.accounts}/$username");
-      return Right(AccountModel.fromJson(result.data));
+      return Right(AccountModel.fromJson(result.data['account']));
+    } catch (e) {
+      return Left(RequestError(message: e.response.data['errors']));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Object>> getFollowers(String uuid) async {
+    try {
+      var url = Endpoints.accountFollowers.replaceAll(':uuid', uuid);
+      var result = await _dio.withAuth().get(url);
+      return Right(result.data);
+    } catch (e) {
+      return Left(RequestError(message: e.response.data['errors']));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Object>> getFollowing(String uuid) async {
+    try {
+      var url = Endpoints.accountFollowing.replaceAll(':uuid', uuid);
+      var result = await _dio.withAuth().get(url);
+      return Right(result.data);
     } catch (e) {
       return Left(RequestError(message: e.response.data['errors']));
     }

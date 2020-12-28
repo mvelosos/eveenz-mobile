@@ -14,4 +14,36 @@ class AccountsController {
     var accountResult = await _accountsRepository.getAccount(username);
     return accountResult;
   }
+
+  Future<Either<Failure, List<AccountModel>>> getFollowers(String uuid) async {
+    List<AccountModel> accountsList = [];
+    var result = await _accountsRepository.getFollowers(uuid);
+    if (result.isRight()) {
+      dynamic resultList = result.getOrElse(null);
+      if (resultList['accounts'] != null || resultList['accounts'] != []) {
+        resultList['accounts'].forEach(
+          (account) => accountsList.add(
+            AccountModel.fromJson(account),
+          ),
+        );
+      }
+    }
+    return Right(accountsList);
+  }
+
+  Future<Either<Failure, List<AccountModel>>> getFollowing(String uuid) async {
+    List<AccountModel> accountsList = [];
+    var result = await _accountsRepository.getFollowing(uuid);
+    if (result.isRight()) {
+      dynamic resultList = result.getOrElse(null);
+      if (resultList['accounts'] != null || resultList['accounts'] != []) {
+        resultList['accounts'].forEach(
+          (account) => accountsList.add(
+            AccountModel.fromJson(account),
+          ),
+        );
+      }
+    }
+    return Right(accountsList);
+  }
 }

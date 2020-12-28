@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:party_mobile/app/controllers/me_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
+import 'package:party_mobile/app/pages/follows/follows_page.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/stores/me_store.dart';
@@ -71,16 +72,27 @@ class _ProfilePageState extends State<ProfilePage> {
                             Text('Festas'),
                           ],
                         ),
-                        Column(
-                          children: [
-                            Observer(
-                              builder: (_) => Text(
-                                _meStore.followers.toString(),
-                                style: TextStyle(fontSize: 19),
+                        GestureDetector(
+                          onTap: () {
+                            _navigationService.pushNamed(
+                              RouteNames.accountFollows,
+                              arguments: FollowsPageArguments(
+                                uuid: _meStore.uuid,
+                                username: _meStore.username,
                               ),
-                            ),
-                            Text('Seguidores'),
-                          ],
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              Observer(
+                                builder: (_) => Text(
+                                  _meStore.followers.toString(),
+                                  style: TextStyle(fontSize: 19),
+                                ),
+                              ),
+                              Text('Seguidores'),
+                            ],
+                          ),
                         ),
                         Column(
                           children: [

@@ -11,5 +11,7 @@ class Endpoints {
 
   // Accounts Endpoints
   static const String accounts = '/accounts';
+  static const String accountFollowers = '/accounts/:uuid/followers';
+  static const String accountFollowing = '/accounts/:uuid/following';
   static const String accountFollow = '/me/follows/accounts';
 }
