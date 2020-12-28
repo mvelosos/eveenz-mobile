@@ -77,8 +77,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             _navigationService.pushNamed(
                               RouteNames.accountFollows,
                               arguments: FollowsPageArguments(
-                                uuid: _meStore.uuid,
                                 username: _meStore.username,
+                                initialIndex: 0,
                               ),
                             );
                           },
@@ -94,16 +94,27 @@ class _ProfilePageState extends State<ProfilePage> {
                             ],
                           ),
                         ),
-                        Column(
-                          children: [
-                            Observer(
-                              builder: (_) => Text(
-                                _meStore.following.toString(),
-                                style: TextStyle(fontSize: 19),
+                        GestureDetector(
+                          onTap: () {
+                            _navigationService.pushNamed(
+                              RouteNames.accountFollows,
+                              arguments: FollowsPageArguments(
+                                username: _meStore.username,
+                                initialIndex: 1,
                               ),
-                            ),
-                            Text('Seguindo'),
-                          ],
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              Observer(
+                                builder: (_) => Text(
+                                  _meStore.following.toString(),
+                                  style: TextStyle(fontSize: 19),
+                                ),
+                              ),
+                              Text('Seguindo'),
+                            ],
+                          ),
                         ),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(50),
