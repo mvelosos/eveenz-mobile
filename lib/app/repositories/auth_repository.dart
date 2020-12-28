@@ -21,8 +21,6 @@ class AuthRepository implements IAuthRepositoryInterface {
     try {
       var user = await _dio.instance
           .post(Endpoints.authLogin, data: userLogin.getData());
-      print(user.data);
-
       return Right(AuthUserModel.fromJson(user.data));
     } catch (e) {
       return Left(LoginError(message: e.response.data['errors']));
