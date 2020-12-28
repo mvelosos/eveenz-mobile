@@ -1,23 +1,4 @@
 class AccountModel {
-  Account account;
-
-  AccountModel({this.account});
-
-  AccountModel.fromJson(Map<String, dynamic> json) {
-    account =
-        json['account'] != null ? new Account.fromJson(json['account']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.account != null) {
-      data['account'] = this.account.toJson();
-    }
-    return data;
-  }
-}
-
-class Account {
   String uuid;
   String username;
   String name;
@@ -29,7 +10,7 @@ class Account {
   String avatarUrl;
   bool followedByMe;
 
-  Account(
+  AccountModel(
       {this.uuid,
       this.username,
       this.name,
@@ -41,7 +22,7 @@ class Account {
       this.avatarUrl,
       this.followedByMe});
 
-  Account.fromJson(Map<String, dynamic> json) {
+  AccountModel.fromJson(Map<String, dynamic> json) {
     uuid = json['uuid'];
     username = json['username'];
     name = json['name'];

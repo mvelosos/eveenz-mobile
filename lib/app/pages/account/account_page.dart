@@ -49,7 +49,7 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   void _shouldShowFollowButton() {
-    if (_accountModel.account.uuid != _meStore.uuid) {
+    if (_accountModel.uuid != _meStore.uuid) {
       _showFollowButton = true;
     }
   }
@@ -59,7 +59,7 @@ class _AccountPageState extends State<AccountPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _loading ? '' : _accountModel.account.username,
+          _loading ? '' : _accountModel.username,
           style: TextStyle(color: Colors.blue),
         ),
         backgroundColor: Colors.transparent,
@@ -94,7 +94,7 @@ class _AccountPageState extends State<AccountPage> {
                               Column(
                                 children: [
                                   Text(
-                                    _accountModel.account.events.toString(),
+                                    _accountModel.events.toString(),
                                     style: TextStyle(fontSize: 19),
                                   ),
                                   Text('Festas'),
@@ -103,7 +103,7 @@ class _AccountPageState extends State<AccountPage> {
                               Column(
                                 children: [
                                   Text(
-                                    _accountModel.account.followers.toString(),
+                                    _accountModel.followers.toString(),
                                     style: TextStyle(fontSize: 19),
                                   ),
                                   Text('Seguidores'),
@@ -112,7 +112,7 @@ class _AccountPageState extends State<AccountPage> {
                               Column(
                                 children: [
                                   Text(
-                                    _accountModel.account.following.toString(),
+                                    _accountModel.following.toString(),
                                     style: TextStyle(fontSize: 19),
                                   ),
                                   Text('Seguindo'),
@@ -120,9 +120,9 @@ class _AccountPageState extends State<AccountPage> {
                               ),
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(50),
-                                child: _accountModel.account.avatarUrl != ''
+                                child: _accountModel.avatarUrl != ''
                                     ? Image.network(
-                                        _accountModel.account.avatarUrl,
+                                        _accountModel.avatarUrl,
                                         height: 85,
                                         width: 85,
                                       )
