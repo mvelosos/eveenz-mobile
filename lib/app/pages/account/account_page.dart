@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:party_mobile/app/controllers/accounts_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/account_model.dart';
+import 'package:party_mobile/app/pages/account/widgets/follow_button.dart';
+import 'package:party_mobile/app/stores/me_store.dart';
 
 // Page Arguments
 class AccountPageArguments {
@@ -22,8 +24,10 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   final AccountsController _accountsController = locator<AccountsController>();
+  final MeStore _meStore = locator<MeStore>();
   AccountModel _accountModel;
   bool _loading = true;
+  bool _showFollowButton = false;
 
   // Functions
 
@@ -38,8 +42,15 @@ class _AccountPageState extends State<AccountPage> {
     if (result.isRight()) {
       setState(() {
         _accountModel = result.getOrElse(null);
+        _shouldShowFollowButton();
         _loading = false;
       });
+    }
+  }
+
+  void _shouldShowFollowButton() {
+    if (_accountModel.account.uuid != _meStore.uuid) {
+      _showFollowButton = true;
     }
   }
 
@@ -120,6 +131,15 @@ class _AccountPageState extends State<AccountPage> {
                                         backgroundColor: Color(0xffd3d5db),
                                       ),
                               ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _showFollowButton
+                                  ? FollowButton(
+                                      constraints, _accountModel, _getAccount)
+                                  : SizedBox.shrink(),
                             ],
                           )
                         ],

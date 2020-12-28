@@ -1,20 +1,32 @@
+import 'package:dartz/dartz.dart';
 import 'package:party_mobile/app/locator.dart';
-import 'package:party_mobile/app/repositories/profile_repository.dart';
+import 'package:party_mobile/app/repositories/me_repository.dart';
+import 'package:party_mobile/app/shared/errors/errors.dart';
 import 'package:party_mobile/app/stores/me_store.dart';
 
 class MeController {
-  MeRepository _profileRepository;
-  MeStore _profileStore;
+  MeRepository _meRepository;
+  MeStore _meStore;
 
   MeController() {
-    _profileRepository = MeRepository();
-    _profileStore = locator<MeStore>();
+    _meRepository = MeRepository();
+    _meStore = locator<MeStore>();
   }
 
   Future<void> getMe() async {
-    var profileResult = await _profileRepository.getMe();
+    var profileResult = await _meRepository.getMe();
     if (profileResult.isRight()) {
-      _profileStore.setMe(profileResult.getOrElse(null));
+      _meStore.setMe(profileResult.getOrElse(null));
     }
+  }
+
+  Future<Either<Failure, Object>> followAccount(String uuid) async {
+    var result = await _meRepository.followAccount(uuid);
+    return result;
+  }
+
+  Future<Either<Failure, Object>> unfollowAccount(String uuid) async {
+    var result = await _meRepository.unfollowAccount(uuid);
+    return result;
   }
 }

@@ -14,10 +14,10 @@ GetIt locator = GetIt.instance;
 
 void setupLocator() {
   // Controllers
+  locator.registerLazySingleton(() => AccountsController());
   locator.registerLazySingleton(() => LoginController());
   locator.registerLazySingleton(() => MeController());
   locator.registerLazySingleton(() => SearchController());
-  locator.registerLazySingleton(() => AccountsController());
 
   // Navigator Keys
   locator.registerLazySingleton(() => RootNavigatorKey());
@@ -28,8 +28,8 @@ void setupLocator() {
   locator.registerLazySingleton(() => ProfileNavigatorKey());
 
   //Stores
-  locator.registerLazySingleton(() => LoginStore());
   locator.registerLazySingleton(() => AuthUserStore());
+  locator.registerLazySingleton(() => LoginStore());
   locator.registerLazySingleton(() => MeStore());
 
   // Utils

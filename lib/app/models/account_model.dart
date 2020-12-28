@@ -27,6 +27,7 @@ class Account {
   int following;
   int followers;
   String avatarUrl;
+  bool followedByMe;
 
   Account(
       {this.uuid,
@@ -37,7 +38,8 @@ class Account {
       this.events,
       this.following,
       this.followers,
-      this.avatarUrl});
+      this.avatarUrl,
+      this.followedByMe});
 
   Account.fromJson(Map<String, dynamic> json) {
     uuid = json['uuid'];
@@ -49,6 +51,7 @@ class Account {
     following = json['following'];
     followers = json['followers'];
     avatarUrl = json['avatarUrl'];
+    followedByMe = json['followedByMe'];
   }
 
   Map<String, dynamic> toJson() {
@@ -62,6 +65,7 @@ class Account {
     data['following'] = this.following;
     data['followers'] = this.followers;
     data['avatarUrl'] = this.avatarUrl;
+    data['followedByMe'] = this.followedByMe;
     return data;
   }
 }
