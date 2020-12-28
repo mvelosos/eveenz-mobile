@@ -8,6 +8,7 @@ class RouteNames {
   static const String forgotPassword = '/forgot_password';
 
   static const String showAccount = '/accounts/:username';
+  static const String accountFollows = '/accounts/follows';
 
   // Home
   static const String home = '/home';

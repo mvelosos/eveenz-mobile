@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:party_mobile/app/pages/account/account_page.dart';
 import 'package:party_mobile/app/pages/app_container/app_container.dart';
+import 'package:party_mobile/app/pages/follows/follows_page.dart';
 import 'package:party_mobile/app/pages/forgot_password/forgot_password_page.dart';
 import 'package:party_mobile/app/pages/home/home_page.dart';
 import 'package:party_mobile/app/pages/login/login_page.dart';
@@ -38,6 +39,11 @@ class RouterManager {
         AccountPageArguments args = route.arguments;
         return MaterialPageRoute(
           builder: (_) => AccountPage(args: args),
+        );
+
+      case RouteNames.accountFollows:
+        return MaterialPageRoute(
+          builder: (_) => FollowsPage(),
         );
 
       // Home
