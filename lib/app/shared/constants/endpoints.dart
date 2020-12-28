@@ -10,8 +10,8 @@ class Endpoints {
   static const String me = '/me';
 
   // Accounts Endpoints
-  static const String accounts = '/accounts';
-  static const String accountFollowers = '/accounts/:uuid/followers';
-  static const String accountFollowing = '/accounts/:uuid/following';
+  static const String accountShow = '/accounts/:username';
+  static const String accountFollowers = '/accounts/:username/followers';
+  static const String accountFollowing = '/accounts/:username/following';
   static const String accountFollow = '/me/follows/accounts';
 }
