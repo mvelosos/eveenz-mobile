@@ -22,4 +22,26 @@ class MeRepository implements IMeRepository {
       return Left(RequestError(message: e.response.data['errors']));
     }
   }
+
+  @override
+  Future<Either<Failure, Object>> followAccount(String uuid) async {
+    try {
+      var result =
+          await _dio.withAuth().post("${Endpoints.accountFollow}/$uuid");
+      return Right(result);
+    } catch (e) {
+      return Left(RequestError(message: e.response.data['errors']));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Object>> unfollowAccount(String uuid) async {
+    try {
+      var result =
+          await _dio.withAuth().delete("${Endpoints.accountFollow}/$uuid");
+      return Right(result);
+    } catch (e) {
+      return Left(RequestError(message: e.response.data['errors']));
+    }
+  }
 }
