@@ -2,27 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:party_mobile/app/models/account_model.dart';
 import 'package:party_mobile/app/pages/follows/widgets/follows_list_view.dart';
 
-class FollowsTabView extends StatefulWidget {
+class FollowsTabView extends StatelessWidget {
+  final BoxConstraints constraints;
+  final Function getFollowers;
+  final Function getFollowing;
   final List<AccountModel> followersList;
   final List<AccountModel> followingList;
-  final BoxConstraints constraints;
 
   FollowsTabView(
-      {@required this.followersList,
+      {@required this.constraints,
+      @required this.followersList,
       @required this.followingList,
-      @required this.constraints});
+      @required this.getFollowers,
+      @required this.getFollowing});
 
-  @override
-  _FollowsTabViewState createState() => _FollowsTabViewState();
-}
-
-class _FollowsTabViewState extends State<FollowsTabView> {
   @override
   Widget build(BuildContext context) {
     return TabBarView(
       children: [
-        FollowsListView(widget.followersList),
-        FollowsListView(widget.followingList),
+        FollowsListView(followersList, getFollowers),
+        FollowsListView(followingList, getFollowing),
       ],
     );
   }

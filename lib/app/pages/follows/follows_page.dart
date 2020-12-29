@@ -24,7 +24,6 @@ class FollowsPage extends StatefulWidget {
 
 class _FollowsPageState extends State<FollowsPage> {
   final AccountsController _accountsController = locator<AccountsController>();
-  AccountModel _currentAccount;
   List<AccountModel> _followersList;
   List<AccountModel> _followingList;
   bool _loading = true;
@@ -33,25 +32,12 @@ class _FollowsPageState extends State<FollowsPage> {
   @override
   initState() {
     super.initState();
-    _initValues();
+    _initValues().then((_) => {_loading = false});
   }
 
   Future<void> _initValues() async {
-    await _getAccount();
     await _getFollowers();
     await _getFollowing();
-    setState(() {
-      _loading = false;
-    });
-  }
-
-  Future<void> _getAccount() async {
-    var result = await _accountsController.getAccount(widget.args.username);
-    if (result.isRight()) {
-      setState(() {
-        _currentAccount = result.getOrElse(null);
-      });
-    }
   }
 
   Future<void> _getFollowers() async {
@@ -90,15 +76,15 @@ class _FollowsPageState extends State<FollowsPage> {
               tabs: [
                 Tab(
                     icon: Text(
-                  _currentAccount != null
-                      ? "${_currentAccount.followers}  Seguidores"
+                  _followersList != null
+                      ? "${_followersList.length}  Seguidores"
                       : 'Seguidores',
                   style: TextStyle(color: Colors.black),
                 )),
                 Tab(
                     icon: Text(
-                  _currentAccount != null
-                      ? "${_currentAccount.following}  Seguindo"
+                  _followingList != null
+                      ? "${_followingList.length}  Seguindo"
                       : 'Seguindo',
                   style: TextStyle(color: Colors.black),
                 )),
@@ -116,9 +102,11 @@ class _FollowsPageState extends State<FollowsPage> {
                       child: CircularProgressIndicator(),
                     )
                   : FollowsTabView(
+                      constraints: constraints,
                       followersList: _followersList,
                       followingList: _followingList,
-                      constraints: constraints,
+                      getFollowers: _getFollowers,
+                      getFollowing: _getFollowing,
                     );
             },
           )),
