@@ -6,6 +6,11 @@ class NavigationService {
 
   NavigationService(this.navigatorKey);
 
+  static currentNavigator(BuildContext context) {
+    var navigatorKey = ModalRoute.of(context).navigator.widget.key;
+    return NavigationService(navigatorKey);
+  }
+
   Future<dynamic> pushNamed(String routeName, {dynamic arguments}) {
     return navigatorKey.currentState.pushNamed(routeName, arguments: arguments);
   }
