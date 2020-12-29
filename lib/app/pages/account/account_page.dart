@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:party_mobile/app/controllers/accounts_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/account_model.dart';
-import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/pages/account/widgets/follow_button.dart';
 import 'package:party_mobile/app/pages/follows/follows_page.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
@@ -27,8 +26,6 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
-  final _navigationService =
-      NavigationService(locator<SearchNavigatorKey>().navigatorKey);
   final AccountsController _accountsController = locator<AccountsController>();
   final MeStore _meStore = locator<MeStore>();
   AccountModel _accountModel;
@@ -62,6 +59,8 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _navigationService = NavigationService.currentNavigator(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(

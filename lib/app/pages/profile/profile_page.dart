@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:party_mobile/app/controllers/me_controller.dart';
 import 'package:party_mobile/app/locator.dart';
-import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/pages/follows/follows_page.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
@@ -14,13 +13,13 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  var _navigationService =
-      NavigationService(locator<ProfileNavigatorKey>().navigatorKey);
   var _meController = locator<MeController>();
   var _meStore = locator<MeStore>();
 
   @override
   Widget build(BuildContext context) {
+    final _navigationService = NavigationService.currentNavigator(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Observer(builder: (_) {
