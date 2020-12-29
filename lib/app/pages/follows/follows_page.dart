@@ -115,7 +115,11 @@ class _FollowsPageState extends State<FollowsPage> {
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
-                  : FollowsTabView();
+                  : FollowsTabView(
+                      followersList: _followersList,
+                      followingList: _followingList,
+                      constraints: constraints,
+                    );
             },
           )),
     );
