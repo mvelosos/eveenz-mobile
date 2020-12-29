@@ -25,7 +25,7 @@ class AccountModel {
   AccountModel.fromJson(Map<String, dynamic> json) {
     uuid = json['uuid'];
     username = json['username'];
-    name = json['name'];
+    name = json['name'] ?? '';
     bio = json['bio'];
     popularity = json['popularity'];
     events = json['events'];

@@ -31,7 +31,7 @@ class FollowsAccountListTile extends StatelessWidget {
 
     return ListTile(
       leading: _followAccountTileImage(),
-      title: Text(_item.name != null ? _item.name : ''),
+      title: Text(_item.name),
       subtitle: Text(_item.username),
       onTap: () {
         _navigationService.pushNamed(
