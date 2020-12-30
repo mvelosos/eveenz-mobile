@@ -35,6 +35,12 @@ class _AppContainerState extends State<AppContainer> {
   }
 
   void _onTabTapped(int index) {
+    if (_currentIndex == index) {
+      NavigatorState navigator = _navigatorKeys[_currentIndex].currentState;
+      navigator.popUntil(
+        (route) => route.settings.name == navigator.widget.initialRoute,
+      );
+    }
     setState(() {
       _currentIndex = index;
     });
