@@ -3,12 +3,14 @@ import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/controllers/me_controller.dart';
 import 'package:party_mobile/app/controllers/search_controller.dart';
 import 'package:party_mobile/app/controllers/accounts_controller.dart';
+import 'package:party_mobile/app/controllers/signup_controller.dart';
 import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/services/local_storage_service.dart';
 import 'package:party_mobile/app/shared/utils/dio_http.dart';
 import 'package:party_mobile/app/stores/auth_user_store.dart';
 import 'package:party_mobile/app/stores/login_store.dart';
 import 'package:party_mobile/app/stores/me_store.dart';
+import 'package:party_mobile/app/stores/signup_store.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -18,6 +20,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => LoginController());
   locator.registerLazySingleton(() => MeController());
   locator.registerLazySingleton(() => SearchController());
+  locator.registerLazySingleton(() => SignUpController());
 
   // Navigator Keys
   locator.registerLazySingleton(() => RootNavigatorKey());
@@ -31,6 +34,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => AuthUserStore());
   locator.registerLazySingleton(() => LoginStore());
   locator.registerLazySingleton(() => MeStore());
+  locator.registerLazySingleton(() => SignUpStore());
 
   // Utils
   locator.registerLazySingleton(() => DioHttp());

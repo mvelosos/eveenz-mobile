@@ -7,6 +7,11 @@ class ConnectionError extends Failure {
   ConnectionError({this.message});
 }
 
+class CreateUserError extends Failure {
+  final String message;
+  CreateUserError({this.message});
+}
+
 class LoginError extends Failure {
   final String message;
   LoginError({this.message});
