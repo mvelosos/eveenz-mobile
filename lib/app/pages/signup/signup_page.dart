@@ -157,6 +157,7 @@ class _SignUpPageState extends State<SignUpPage> {
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         iconTheme: IconThemeData(color: Colors.blue),
+        brightness: Brightness.light,
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {

@@ -17,6 +17,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         iconTheme: IconThemeData(color: Colors.blue),
+        brightness: Brightness.light,
       ),
       body: Center(
         child: Text('Forgot password page'),
