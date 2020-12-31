@@ -47,26 +47,24 @@ class _AppContainerState extends State<AppContainer> {
   }
 
   Future<bool> _systemBackButtonPressed() async {
-    final NavigatorState navigator = _navigatorKeys[_currentIndex].currentState;
+    NavigatorState navigator = _navigatorKeys[_currentIndex].currentState;
+
+    if (navigator == null) return Future.value(false);
+
+    List<String> routeNames = [
+      RouteNames.home,
+      RouteNames.search,
+      RouteNames.map,
+      RouteNames.notifications,
+      RouteNames.profile
+    ];
     // SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
 
-    if (navigator == null) return false;
-    navigator.popUntil((route) {
-      switch (route.settings.name) {
-        case RouteNames.home:
-          return true;
-        case RouteNames.search:
-          return true;
-        case RouteNames.map:
-          return true;
-        case RouteNames.notifications:
-          return true;
-        case RouteNames.profile:
-          return true;
-        default:
-          return false;
-      }
-    });
+    navigator.popUntil(
+      (route) => routeNames.contains(route.settings.name) ? null : null,
+    );
+
+    return Future.value();
   }
 
   // Widgets
