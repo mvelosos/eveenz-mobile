@@ -177,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
       alignment: Alignment.centerRight,
       child: RawMaterialButton(
         onPressed: () {
-          _navigationService.pushNamed(RouteNames.forgotPassword);
+          _navigationService.pushNamed(RouteNames.forgotPassword1);
         },
         child: Text(
           'Esqueceu sua senha?',
