@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:party_mobile/app/pages/account/account_page.dart';
 import 'package:party_mobile/app/pages/app_container/app_container.dart';
 import 'package:party_mobile/app/pages/follows/follows_page.dart';
-import 'package:party_mobile/app/pages/forgot_password/forgot_password_page.dart';
+import 'package:party_mobile/app/pages/forgot_password/forgot_password_1_page.dart';
+import 'package:party_mobile/app/pages/forgot_password/forgot_password_2_page.dart';
+import 'package:party_mobile/app/pages/forgot_password/forgot_password_3_page.dart';
+import 'package:party_mobile/app/pages/forgot_password/forgot_password_4_page.dart';
 import 'package:party_mobile/app/pages/home/home_page.dart';
 import 'package:party_mobile/app/pages/login/login_page.dart';
 import 'package:party_mobile/app/pages/map/map_page.dart';
@@ -32,8 +35,18 @@ class RouterManager {
       case RouteNames.signUp:
         return MaterialPageRoute(builder: (_) => SignUpPage());
 
-      case RouteNames.forgotPassword:
-        return MaterialPageRoute(builder: (_) => ForgotPasswordPage());
+      // Forgot Password
+      case RouteNames.forgotPassword1:
+        return MaterialPageRoute(builder: (_) => ForgotPassword1Page());
+
+      case RouteNames.forgotPassword2:
+        return MaterialPageRoute(builder: (_) => ForgotPassword2Page());
+
+      case RouteNames.forgotPassword3:
+        return MaterialPageRoute(builder: (_) => ForgotPassword3Page());
+
+      case RouteNames.forgotPassword4:
+        return MaterialPageRoute(builder: (_) => ForgotPassword4Page());
 
       case RouteNames.showAccount:
         AccountPageArguments args = route.arguments;

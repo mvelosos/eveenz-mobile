@@ -5,7 +5,11 @@ class RouteNames {
   static const String appContainer = '/app_container';
   static const String login = '/login';
   static const String signUp = '/signup';
-  static const String forgotPassword = '/forgot_password';
+
+  static const String forgotPassword1 = '/forgot_password/1';
+  static const String forgotPassword2 = '/forgot_password/2';
+  static const String forgotPassword3 = '/forgot_password/3';
+  static const String forgotPassword4 = '/forgot_password/4';
 
   static const String showAccount = '/accounts/:username';
   static const String accountFollows = '/accounts/follows';
