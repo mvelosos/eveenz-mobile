@@ -45,7 +45,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
   // Widgets
 
-  Widget _formInput(BoxConstraints constraints) {
+  Widget _formInput(BuildContext context) {
+    final _size = MediaQuery.of(context).size;
+
     return Form(
       key: _formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -67,7 +69,7 @@ class _SignUpPageState extends State<SignUpPage> {
               _createUser.username = value;
             },
           ),
-          SizedBox(height: constraints.maxHeight * .015),
+          SizedBox(height: _size.height * .015),
           TextFormField(
             textInputAction: TextInputAction.next,
             autocorrect: false,
@@ -84,7 +86,7 @@ class _SignUpPageState extends State<SignUpPage> {
               _createUser.email = value;
             },
           ),
-          SizedBox(height: constraints.maxHeight * .015),
+          SizedBox(height: _size.height * .015),
           TextFormField(
             obscureText: true,
             decoration: InputDecoration(
@@ -104,8 +106,9 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Widget _signUpButton(BoxConstraints constraints, BuildContext context) {
-    var white = Colors.white;
+  Widget _signUpButton(BuildContext context) {
+    final _size = MediaQuery.of(context).size;
+
     return RawMaterialButton(
       onPressed: () {
         if (_formKey.currentState.validate()) {
@@ -113,9 +116,9 @@ class _SignUpPageState extends State<SignUpPage> {
         }
       },
       child: Container(
-        width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.symmetric(vertical: constraints.maxHeight * .007),
-        padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * .017),
+        width: _size.width,
+        margin: EdgeInsets.symmetric(vertical: _size.height * .007),
+        padding: EdgeInsets.symmetric(vertical: _size.height * .017),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
@@ -140,7 +143,7 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
         child: Text(
           'Cadastrar',
-          style: TextStyle(fontSize: 20, color: white),
+          style: TextStyle(fontSize: 20, color: Colors.white),
         ),
       ),
     );
@@ -148,6 +151,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -177,9 +182,9 @@ class _SignUpPageState extends State<SignUpPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _formInput(constraints),
-                        SizedBox(height: constraints.maxHeight * .025),
-                        _signUpButton(constraints, context),
+                        _formInput(context),
+                        SizedBox(height: _size.height * .025),
+                        _signUpButton(context),
                       ],
                     ),
                   ),
