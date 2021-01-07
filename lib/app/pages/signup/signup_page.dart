@@ -161,35 +161,37 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          return Stack(children: [
-            GestureDetector(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
-              child: Container(
-                height: constraints.maxHeight,
-                padding: EdgeInsets.symmetric(
-                  horizontal: constraints.maxWidth * .05,
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _formInput(constraints),
-                      SizedBox(height: constraints.maxHeight * .025),
-                      _signUpButton(constraints, context),
-                    ],
+          return Stack(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                },
+                child: Container(
+                  height: constraints.maxHeight,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: constraints.maxWidth * .05,
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _formInput(constraints),
+                        SizedBox(height: constraints.maxHeight * .025),
+                        _signUpButton(constraints, context),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Observer(
-              builder: (_) => _signUpStore.loading
-                  ? LoadingIndicator(constraints)
-                  : SizedBox.shrink(),
-            ),
-          ]);
+              Observer(
+                builder: (_) => _signUpStore.loading
+                    ? LoadingIndicator(constraints)
+                    : SizedBox.shrink(),
+              ),
+            ],
+          );
         },
       ),
     );
