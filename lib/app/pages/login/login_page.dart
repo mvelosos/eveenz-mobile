@@ -255,57 +255,61 @@ class _LoginPageState extends State<LoginPage> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
     return Scaffold(
-      body: LayoutBuilder(builder: (context, constraints) {
-        return Stack(children: [
-          GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: Container(
-              height: constraints.maxHeight,
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                    top: -constraints.maxHeight * .15,
-                    right: -constraints.maxWidth * .4,
-                    child: BezierContainer(),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: constraints.maxWidth * .05,
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(height: constraints.maxHeight * .2),
-                          _title(),
-                          SizedBox(height: constraints.maxHeight * .06),
-                          _formInput(constraints),
-                          SizedBox(height: constraints.maxHeight * .025),
-                          _loginButton(constraints, context),
-                          _forgotPasswordButton(constraints),
-                          _divider(constraints),
-                          SizedBox(height: constraints.maxHeight * .015),
-                          FacebookLoginButton(
-                              _loginController, _loginStore, constraints),
-                          _signUpButton(),
-                        ],
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Stack(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                },
+                child: Container(
+                  height: constraints.maxHeight,
+                  child: Stack(
+                    children: <Widget>[
+                      Positioned(
+                        top: -constraints.maxHeight * .15,
+                        right: -constraints.maxWidth * .4,
+                        child: BezierContainer(),
                       ),
-                    ),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: constraints.maxWidth * .05,
+                        ),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SizedBox(height: constraints.maxHeight * .2),
+                              _title(),
+                              SizedBox(height: constraints.maxHeight * .06),
+                              _formInput(constraints),
+                              SizedBox(height: constraints.maxHeight * .025),
+                              _loginButton(constraints, context),
+                              _forgotPasswordButton(constraints),
+                              _divider(constraints),
+                              SizedBox(height: constraints.maxHeight * .015),
+                              FacebookLoginButton(
+                                  _loginController, _loginStore, constraints),
+                              _signUpButton(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-          Observer(
-            builder: (_) => _loginStore.loading
-                ? LoadingIndicator(constraints)
-                : SizedBox.shrink(),
-          ),
-        ]);
-      }),
+              Observer(
+                builder: (_) => _loginStore.loading
+                    ? LoadingIndicator(constraints)
+                    : SizedBox.shrink(),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }
