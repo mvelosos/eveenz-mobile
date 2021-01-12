@@ -1,4 +1,4 @@
-# party_mobile
+# Eveenz
 
 A new Flutter project.
 
