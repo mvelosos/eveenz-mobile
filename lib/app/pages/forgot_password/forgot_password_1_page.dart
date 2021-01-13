@@ -40,6 +40,8 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
                     textAlign: TextAlign.center,
                   ),
                   backgroundColor: AppColors.snackWarning,
+                  behavior: SnackBarBehavior.floating,
+                  duration: Duration(seconds: 2),
                 ),
               )
             },
