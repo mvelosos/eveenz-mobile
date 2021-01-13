@@ -40,7 +40,10 @@ class RouterManager {
         return MaterialPageRoute(builder: (_) => ForgotPassword1Page());
 
       case RouteNames.forgotPassword2:
-        return MaterialPageRoute(builder: (_) => ForgotPassword2Page());
+        ForgotPasswordPage2Arguments args = route.arguments;
+        return MaterialPageRoute(
+          builder: (_) => ForgotPassword2Page(args: args),
+        );
 
       case RouteNames.forgotPassword3:
         return MaterialPageRoute(builder: (_) => ForgotPassword3Page());

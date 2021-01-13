@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
 
+// Page Arguments
+class ForgotPasswordPage2Arguments {
+  final String email;
+
+  ForgotPasswordPage2Arguments({@required this.email});
+}
+
+// Page
 class ForgotPassword2Page extends StatefulWidget {
+  final ForgotPasswordPage2Arguments args;
+
+  ForgotPassword2Page({@required this.args});
+
   @override
   _ForgotPassword2PageState createState() => _ForgotPassword2PageState();
 }
@@ -20,7 +32,7 @@ class _ForgotPassword2PageState extends State<ForgotPassword2Page> {
         brightness: Brightness.light,
       ),
       body: Center(
-        child: Text('Forgot password 2'),
+        child: Text(widget.args.email),
       ),
     );
   }
