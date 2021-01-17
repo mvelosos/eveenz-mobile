@@ -23,7 +23,7 @@ class AuthRepository implements IAuthRepositoryInterface {
           .post(Endpoints.authLogin, data: userLogin.getData());
       return Right(AuthUserModel.fromJson(user.data));
     } catch (e) {
-      return Left(LoginError(message: e.response.data['errors']));
+      return Left(LoginError(message: e.response.data['error']));
     }
   }
 
