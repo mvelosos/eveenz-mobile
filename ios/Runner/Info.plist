@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Hango</string>
+	<string>Eveenz</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -37,7 +37,7 @@
 	<key>FacebookAppID</key>
 	<string>659257231190297</string>
 	<key>FacebookDisplayName</key>
-	<string>project-party</string>
+	<string>Eveenz</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

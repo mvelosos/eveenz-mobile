@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _title() {
     return Text(
-      'hango',
+      'eveenz',
       style: TextStyle(
         fontSize: 40,
         fontWeight: FontWeight.bold,
