@@ -11,7 +11,7 @@ class SearchListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: resultSearch.data.length,
+      itemCount: resultSearch.data != null ? resultSearch.data.length : 0,
       itemBuilder: (_, idx) {
         if (resultSearch.data != null && resultSearch.data.length > 0) {
           return resultSearch.data[idx].type == 'account'

@@ -15,13 +15,13 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final _createUser = CreateUserVM();
   final _signUpStore = locator<SignUpStore>();
-  final _suignUpController = locator<SignUpController>();
+  final _signUpController = locator<SignUpController>();
   final _formKey = GlobalKey<FormState>();
 
   // Functions
 
   void _requestCreateUser(BuildContext context) {
-    var result = _suignUpController.createUser(_createUser);
+    var result = _signUpController.createUser(_createUser);
     result.then(
       (value) => {
         value.fold(
