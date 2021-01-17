@@ -11,6 +11,8 @@ class Endpoints {
 
   // Passwords Endpoints
   static const String passwordsForgot = '/passwords/forgot';
+  static const String passwordsVerifyCode = '/passwords/verify_code';
+  static const String passwordsRecover = '/passwords/recover_password';
 
   // Profile Endpoints
   static const String me = '/me';
