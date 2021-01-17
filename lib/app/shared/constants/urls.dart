@@ -1,8 +1,18 @@
 class Urls {
+  // Use http for development and https for deploys
   static const String protocol = 'http';
+
+  // Always v1
   static const String apiVersion = 'v1';
-  // static const String baseUrl = '10.0.2.2:3000'; //Use this when running on Android Emulator
-  static const String baseUrl = '127.0.0.1:3000';
+
+  //Use Android Emulator ip when running on Android Emulators
+  // static const String baseUrl = '10.0.2.2:3000';
+
+  // Use when running on real device
+  static const String baseUrl = '192.168.0.12:3000';
+
+  // Use when running on iPhone Simulator
+  // static const String baseUrl = '127.0.0.1:3000';
 
   String get apiUrl {
     return '$protocol://$baseUrl/api/$apiVersion';
