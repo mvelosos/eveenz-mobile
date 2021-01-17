@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:party_mobile/app/controllers/passwords_controller.dart';
+import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/pages/forgot_password/forgot_password_3_page.dart';
+import 'package:party_mobile/app/services/navigation_service.dart';
+import 'package:party_mobile/app/shared/constants/app_colors.dart';
+import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/view_models/password_recovery_vm.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -20,11 +26,49 @@ class ForgotPassword2Page extends StatefulWidget {
 }
 
 class _ForgotPassword2PageState extends State<ForgotPassword2Page> {
-  TextEditingController _textEditingController = TextEditingController();
+  final _passwordsController = locator<PasswordsController>();
+  NavigationService _navigationService;
   PasswordRecoveryVM _passwordRecovery = PasswordRecoveryVM();
+  bool _loading = false;
+
+  // Functions
+
+  _setLoading(value) {
+    setState(() {
+      _loading = value;
+    });
+  }
+
+  _requestVerifyCode(BuildContext context) async {
+    _setLoading(true);
+    var result = await _passwordsController.verifyCode(_passwordRecovery);
+    result.fold(
+        (l) => {
+              Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    l.message,
+                    style: TextStyle(fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                  backgroundColor: AppColors.snackWarning,
+                  behavior: SnackBarBehavior.floating,
+                  duration: Duration(seconds: 2),
+                ),
+              )
+            },
+        (r) => {
+              _navigationService.pushNamed(RouteNames.forgotPassword3,
+                  arguments: ForgotPasswordPage3Arguments(token: r['token']))
+            });
+    _setLoading(false);
+  }
+
+  // Widgets
 
   @override
   Widget build(BuildContext context) {
+    _navigationService = NavigationService.currentNavigator(context);
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -58,12 +102,53 @@ class _ForgotPassword2PageState extends State<ForgotPassword2Page> {
                     style: TextStyle(fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
-                  PinCodeTextField(
-                    backgroundColor: Colors.transparent,
-                    appContext: context,
-                    onChanged: (value) {},
-                    length: 6,
-                    controller: _textEditingController,
+                  SizedBox(
+                    height: size.height * .1,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: PinCodeTextField(
+                      onChanged: (value) {
+                        _passwordRecovery.code = value;
+                      },
+                      pastedTextStyle: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      backgroundColor: Colors.transparent,
+                      appContext: context,
+                      length: 6,
+                      // animationDuration: Duration(seconds: 0),
+                      animationType: AnimationType.scale,
+                      keyboardType: TextInputType.number,
+                      pinTheme: PinTheme(
+                        shape: PinCodeFieldShape.underline,
+                        borderRadius: BorderRadius.circular(50),
+                        fieldHeight: 50,
+                        fieldWidth: 40,
+                        inactiveColor: Colors.blue,
+                        activeColor: Colors.blue,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * .07,
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      return _loading ? null : _requestVerifyCode(context);
+                    },
+                    child: _loading
+                        ? SizedBox(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
+                            ),
+                            height: 13,
+                            width: 13,
+                          )
+                        : Text('Continuar'),
                   )
                 ],
               ),
