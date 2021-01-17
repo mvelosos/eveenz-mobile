@@ -28,7 +28,7 @@ class _RootPageState extends State<RootPage> {
             _navigationService
                 .pushReplacementNamedNoAnimation(RouteNames.appContainer)
           else
-            _navigationService.pushReplacementNamed(RouteNames.login)
+            _navigationService.pushReplacementNamedNoAnimation(RouteNames.login)
         });
   }
 
