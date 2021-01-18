@@ -1,10 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:party_mobile/app/interfaces/me_repository_interface.dart';
 import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/models/api_success_model.dart';
 import 'package:party_mobile/app/models/profile_model.dart';
 import 'package:party_mobile/app/shared/constants/endpoints.dart';
 import 'package:party_mobile/app/shared/errors/errors.dart';
 import 'package:party_mobile/app/shared/utils/dio_http.dart';
+import 'package:party_mobile/app/view_models/me_profile_vm.dart';
 
 class MeRepository implements IMeRepository {
   DioHttp _dio;
@@ -18,6 +20,18 @@ class MeRepository implements IMeRepository {
     try {
       var profile = await _dio.withAuth().get(Endpoints.me);
       return Right(ProfileModel.fromJson(profile.data));
+    } catch (e) {
+      return Left(RequestError(message: e.response.data['errors']));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ApiSuccessModel>> updateMe(
+      MeProfileVM meProfile) async {
+    try {
+      var result =
+          await _dio.withAuth().put(Endpoints.me, data: meProfile.getData());
+      return Right(ApiSuccessModel.fromJson(result.data));
     } catch (e) {
       return Left(RequestError(message: e.response.data['errors']));
     }

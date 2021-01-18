@@ -3,6 +3,7 @@ import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/repositories/me_repository.dart';
 import 'package:party_mobile/app/shared/errors/errors.dart';
 import 'package:party_mobile/app/stores/me_store.dart';
+import 'package:party_mobile/app/view_models/me_profile_vm.dart';
 
 class MeController {
   MeRepository _meRepository;
@@ -18,6 +19,10 @@ class MeController {
     if (profileResult.isRight()) {
       _meStore.setMe(profileResult.getOrElse(null));
     }
+  }
+
+  void updateMe(MeProfileVM meProfile) async {
+    await _meRepository.updateMe(meProfile);
   }
 
   Future<Either<Failure, Object>> followAccount(String uuid) async {

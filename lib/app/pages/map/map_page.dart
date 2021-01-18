@@ -2,6 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:party_mobile/app/controllers/me_controller.dart';
+import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/view_models/me_profile_vm.dart';
 
 class MapPage extends StatefulWidget {
   @override
@@ -9,30 +12,36 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  // TODO: Update this later
-  CameraPosition _initialPosition = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
+  Completer<GoogleMapController> _gmController = Completer();
+  CameraPosition _initialPosition;
+  MeController _meController = locator<MeController>();
+  MeProfileVM _meProfile = MeProfileVM();
+  bool _loadingPosition = true;
 
-  // TODO: Update this later
   @override
   void initState() {
     super.initState();
-    Future<Position> position = _determinePosition();
-    position.then((value) => {
-          setState(() {
-            _initialPosition = CameraPosition(
-              target: LatLng(value.latitude, value.longitude),
-              zoom: 14.4746,
-            );
-          })
-        });
+    _setUserPosition();
   }
 
-  Completer<GoogleMapController> _gmController = Completer();
+  void _setUserPosition() async {
+    Position position = await _determinePosition();
+    setState(() {
+      _initialPosition = CameraPosition(
+        target: LatLng(position.latitude, position.longitude),
+        zoom: 14.4746,
+      );
+      _loadingPosition = false;
+      _meProfile.latitude = position.latitude;
+      _meProfile.longitude = position.longitude;
+      _updateUserLocalization();
+    });
+  }
 
-  // TODO: Update this later
+  void _updateUserLocalization() {
+    _meController.updateMe(_meProfile);
+  }
+
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -57,23 +66,39 @@ class _MapPageState extends State<MapPage> {
       }
     }
 
+    // var locationOptions =
+    //     LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
+
+    // StreamSubscription<Position> positionStream =
+    //     Geolocator.getPositionStream().listen((Position position) {
+    //   print(position == null
+    //       ? 'Unknown'
+    //       : position.latitude.toString() +
+    //           ', ' +
+    //           position.longitude.toString());
+    // });
+
     return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best);
+      desiredAccuracy: LocationAccuracy.best,
+      timeLimit: Duration(seconds: 30),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition: _initialPosition,
-        myLocationEnabled: true,
-        myLocationButtonEnabled: true,
-        rotateGesturesEnabled: false,
-        onMapCreated: (GoogleMapController controller) {
-          _gmController.complete(controller);
-        },
-      ),
+      body: _loadingPosition
+          ? null
+          : GoogleMap(
+              mapType: MapType.normal,
+              initialCameraPosition: _initialPosition,
+              myLocationEnabled: true,
+              myLocationButtonEnabled: true,
+              rotateGesturesEnabled: false,
+              onMapCreated: (GoogleMapController controller) {
+                _gmController.complete(controller);
+              },
+            ),
     );
   }
 }
