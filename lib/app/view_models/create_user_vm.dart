@@ -7,8 +7,8 @@ class CreateUserVM {
     return {
       'user': {
         'email': email,
+        'username': username,
         'password': password,
-        'accountAttributes': {'username': username}
       }
     };
   }
