@@ -253,6 +253,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     _navigationService = NavigationService.currentNavigator(context);
+    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       body: LayoutBuilder(
@@ -267,11 +268,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: constraints.maxHeight,
                   child: Stack(
                     children: <Widget>[
-                      Positioned(
-                        top: -constraints.maxHeight * .15,
-                        right: -constraints.maxWidth * .4,
-                        child: BezierContainer(),
-                      ),
+                      BezierContainer(),
                       Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: constraints.maxWidth * .05,
@@ -281,9 +278,13 @@ class _LoginPageState extends State<LoginPage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SizedBox(height: constraints.maxHeight * .2),
-                              _title(),
-                              SizedBox(height: constraints.maxHeight * .06),
+                              SizedBox(height: constraints.maxHeight * .1),
+                              Image(
+                                image: AssetImage('assets/images/logo.png'),
+                                height: constraints.maxHeight * .13,
+                              ),
+                              // _title(),
+                              SizedBox(height: constraints.maxHeight * .17),
                               _formInput(constraints),
                               SizedBox(height: constraints.maxHeight * .025),
                               _loginButton(constraints, context),
