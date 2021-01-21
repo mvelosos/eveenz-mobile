@@ -54,39 +54,6 @@ class _LoginPageState extends State<LoginPage> {
 
   // Widgets
 
-  Widget _title() {
-    return Text(
-      'eveenz',
-      style: TextStyle(
-        fontSize: 40,
-        fontWeight: FontWeight.bold,
-        color: Color.fromRGBO(114, 120, 239, 1),
-        shadows: [
-          Shadow(
-            // bottomLeft
-            offset: Offset(-1.5, -1.5),
-            color: Colors.white,
-          ),
-          Shadow(
-            // bottomRight
-            offset: Offset(1.5, -1.5),
-            color: Colors.white,
-          ),
-          Shadow(
-            // topRight
-            offset: Offset(1.5, 1.5),
-            color: Colors.white,
-          ),
-          Shadow(
-            // topLeft
-            offset: Offset(-1.5, 1.5),
-            color: Colors.white,
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _formInput(BoxConstraints constraints) {
     return Form(
       key: _formKey,
@@ -98,7 +65,10 @@ class _LoginPageState extends State<LoginPage> {
             autocorrect: false,
             enableSuggestions: false,
             decoration: InputDecoration(
-              icon: Icon(Icons.person),
+              icon: Icon(
+                Icons.person,
+                color: AppColors.purple,
+              ),
               labelText: 'Nome de usuário ou e-mail',
             ),
             validator: (value) {
@@ -109,11 +79,14 @@ class _LoginPageState extends State<LoginPage> {
               _userLogin.login = value;
             },
           ),
-          SizedBox(height: constraints.maxHeight * .015),
+          SizedBox(height: constraints.maxHeight * .04),
           TextFormField(
             obscureText: true,
             decoration: InputDecoration(
-              icon: Icon(Icons.lock),
+              icon: Icon(
+                Icons.lock,
+                color: AppColors.purple,
+              ),
               labelText: 'Senha',
             ),
             validator: (value) {
@@ -130,7 +103,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _loginButton(BoxConstraints constraints, BuildContext context) {
-    var white = Colors.white;
+    Size size = MediaQuery.of(context).size;
+
     return RawMaterialButton(
       onPressed: () {
         if (_formKey.currentState.validate()) {
@@ -139,8 +113,8 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.symmetric(vertical: constraints.maxHeight * .007),
-        padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * .017),
+        margin: EdgeInsets.symmetric(vertical: size.height * .007),
+        padding: EdgeInsets.symmetric(vertical: size.height * .018),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
@@ -159,13 +133,13 @@ class _LoginPageState extends State<LoginPage> {
             end: Alignment.centerRight,
             colors: [
               Color(0xfffbb448),
-              Color(0xfff7892b),
+              AppColors.orange,
             ],
           ),
         ),
         child: Text(
-          'Login',
-          style: TextStyle(fontSize: 20, color: white),
+          'Entrar',
+          style: TextStyle(fontSize: 20, color: Colors.white),
         ),
       ),
     );
@@ -179,8 +153,9 @@ class _LoginPageState extends State<LoginPage> {
           _navigationService.pushNamed(RouteNames.forgotPassword1);
         },
         child: Text(
-          'Esqueceu sua senha?',
+          'Esqueci minha senha',
           style: TextStyle(
+            color: AppColors.gray1,
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
@@ -234,13 +209,13 @@ class _LoginPageState extends State<LoginPage> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(width: 10),
+            SizedBox(width: 5),
             Text(
-              'Registrar',
+              'Cadastre-se',
               style: TextStyle(
-                color: Color(0xfff79c4f),
+                color: AppColors.purple,
                 fontSize: 13,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w800,
               ),
             ),
           ],
@@ -270,8 +245,9 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
                       BezierContainer(),
                       Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: constraints.maxWidth * .05,
+                        padding: EdgeInsets.only(
+                          left: size.width * .08,
+                          right: size.width * .08,
                         ),
                         child: SingleChildScrollView(
                           child: Column(
@@ -283,16 +259,33 @@ class _LoginPageState extends State<LoginPage> {
                                 image: AssetImage('assets/images/logo.png'),
                                 height: constraints.maxHeight * .13,
                               ),
-                              // _title(),
-                              SizedBox(height: constraints.maxHeight * .17),
+                              SizedBox(height: constraints.maxHeight * .15),
                               _formInput(constraints),
-                              SizedBox(height: constraints.maxHeight * .025),
-                              _loginButton(constraints, context),
+                              SizedBox(height: size.height * .01),
                               _forgotPasswordButton(constraints),
+                              SizedBox(height: size.height * .03),
+                              _loginButton(constraints, context),
+                              SizedBox(height: size.height * .02),
                               _divider(constraints),
-                              SizedBox(height: constraints.maxHeight * .015),
-                              FacebookLoginButton(
-                                  _loginController, _loginStore, constraints),
+                              SizedBox(height: constraints.maxHeight * .03),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  FacebookLoginButton(
+                                    _loginController,
+                                    _loginStore,
+                                  ),
+                                  FacebookLoginButton(
+                                    _loginController,
+                                    _loginStore,
+                                  ),
+                                  FacebookLoginButton(
+                                    _loginController,
+                                    _loginStore,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: size.height * .015),
                               _signUpButton(),
                             ],
                           ),
