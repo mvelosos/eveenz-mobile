@@ -41,19 +41,9 @@ class FacebookLoginButton extends StatelessWidget {
         _initFacebookLogin();
       },
       splashColor: Colors.transparent,
-      child: Container(
-        child: CircleAvatar(
-          radius: size.height * .033,
-          backgroundColor: Color(0xFF4464aa),
-          child: Text(
-            'f',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 45,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
+      child: Image(
+        image: AssetImage('assets/images/facebook_button.png'),
+        height: size.height * .06,
       ),
     );
   }
