@@ -6,6 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/login/widgets/apple_login_button.dart';
+import 'package:party_mobile/app/pages/login/widgets/bezier_container.dart';
 import 'package:party_mobile/app/pages/login/widgets/facebook_login_button.dart';
 import 'package:party_mobile/app/pages/login/widgets/google_login_button.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
@@ -14,8 +15,7 @@ import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/shared/widgets/loading_indicator.dart';
 import 'package:party_mobile/app/stores/login_store.dart';
 import 'package:party_mobile/app/view_models/user_login_vm.dart';
-
-import 'widgets/bezier_container.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -58,6 +58,17 @@ class _LoginPageState extends State<LoginPage> {
 
   // Widgets
 
+  Widget _subtitle(BoxConstraints constraints) {
+    return Text(
+      'viva momentos incríveis',
+      style: GoogleFonts.poppins(
+        fontSize: constraints.maxHeight * .016,
+        fontWeight: FontWeight.w400,
+        color: AppColors.darkPurple,
+      ),
+    );
+  }
+
   Widget _formInput(BoxConstraints constraints) {
     return Form(
       key: _formKey,
@@ -87,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
               _userLogin.login = value;
             },
           ),
-          SizedBox(height: constraints.maxHeight * .04),
+          SizedBox(height: constraints.maxHeight * .035),
           TextFormField(
             obscureText: true,
             decoration: InputDecoration(
@@ -272,11 +283,13 @@ class _LoginPageState extends State<LoginPage> {
                                 image: AssetImage('assets/images/logo.png'),
                                 height: constraints.maxHeight * .13,
                               ),
-                              SizedBox(height: constraints.maxHeight * .14),
+                              SizedBox(height: constraints.maxHeight * .01),
+                              _subtitle(constraints),
+                              SizedBox(height: constraints.maxHeight * .11),
                               _formInput(constraints),
-                              SizedBox(height: size.height * .01),
+                              SizedBox(height: size.height * .005),
                               _forgotPasswordButton(constraints),
-                              SizedBox(height: size.height * .02),
+                              SizedBox(height: size.height * .03),
                               _loginButton(constraints, context),
                               SizedBox(height: size.height * .02),
                               _divider(constraints),
