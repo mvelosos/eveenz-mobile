@@ -1,6 +1,22 @@
 import 'package:flutter/material.dart';
 
-class CurvePainter extends CustomPainter {
+class LoginBezierContainer extends StatelessWidget {
+  const LoginBezierContainer({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: CustomPaint(
+        painter: _CurvePainter(),
+      ),
+    );
+  }
+}
+
+class _CurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
@@ -11,7 +27,7 @@ class CurvePainter extends CustomPainter {
 
     path.moveTo(0, size.height * .33);
     path.quadraticBezierTo(
-      size.width * .25,
+      size.width * .33,
       (size.height * .36) * .82,
       size.width / 2,
       size.height * .33,
