@@ -272,7 +272,7 @@ class _LoginPageState extends State<LoginPage> {
                                 image: AssetImage('assets/images/logo.png'),
                                 height: constraints.maxHeight * .13,
                               ),
-                              SizedBox(height: constraints.maxHeight * .15),
+                              SizedBox(height: constraints.maxHeight * .14),
                               _formInput(constraints),
                               SizedBox(height: size.height * .01),
                               _forgotPasswordButton(constraints),
