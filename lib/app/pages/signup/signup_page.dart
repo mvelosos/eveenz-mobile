@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/signup_controller.dart';
 import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/pages/signup/widgets/signup_bezier_container.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/widgets/loading_indicator.dart';
 import 'package:party_mobile/app/stores/signup_store.dart';
@@ -151,17 +153,13 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Cadastre-se',
-          style: TextStyle(color: Colors.blue),
-        ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color(0xFFC4C4C4).withOpacity(.15),
         shadowColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Colors.blue),
+        iconTheme: IconThemeData(color: AppColors.orange),
         brightness: Brightness.light,
       ),
       body: LayoutBuilder(
@@ -174,19 +172,43 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
                 child: Container(
                   height: constraints.maxHeight,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: constraints.maxWidth * .05,
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _formInput(context),
-                        SizedBox(height: _size.height * .025),
-                        _signUpButton(context),
-                      ],
-                    ),
+                  child: Stack(
+                    children: [
+                      SignUpBezierContainer(),
+                      Container(
+                        padding: EdgeInsets.only(
+                          left: size.width * .08,
+                          right: size.width * .08,
+                        ),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: size.height * .02),
+                              Text(
+                                'Cadastre-se',
+                                style: GoogleFonts.inter(
+                                    fontSize: 31,
+                                    color: AppColors.darkPurple,
+                                    fontWeight: FontWeight.w800),
+                              ),
+                              SizedBox(height: size.height * .005),
+                              Text(
+                                'É rápido e grátis',
+                                style: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                    color: AppColors.darkPurple,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                              SizedBox(height: size.height * .1),
+                              _formInput(context),
+                              SizedBox(height: size.height * .025),
+                              _signUpButton(context),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),

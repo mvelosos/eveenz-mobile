@@ -6,7 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/login/widgets/apple_login_button.dart';
-import 'package:party_mobile/app/pages/login/widgets/bezier_container.dart';
+import 'package:party_mobile/app/pages/login/widgets/login_bezier_container.dart';
 import 'package:party_mobile/app/pages/login/widgets/facebook_login_button.dart';
 import 'package:party_mobile/app/pages/login/widgets/google_login_button.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
@@ -266,8 +266,8 @@ class _LoginPageState extends State<LoginPage> {
                 child: Container(
                   height: constraints.maxHeight,
                   child: Stack(
-                    children: <Widget>[
-                      BezierContainer(),
+                    children: [
+                      LoginBezierContainer(),
                       Container(
                         padding: EdgeInsets.only(
                           left: size.width * .08,
