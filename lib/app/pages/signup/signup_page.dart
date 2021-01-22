@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/signup_controller.dart';
+import 'package:party_mobile/app/controllers/users_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/signup/widgets/signup_bezier_container.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
+import 'package:party_mobile/app/shared/utils/commons.dart';
 import 'package:party_mobile/app/shared/widgets/loading_indicator.dart';
 import 'package:party_mobile/app/stores/signup_store.dart';
 import 'package:party_mobile/app/view_models/create_user_vm.dart';
@@ -18,9 +20,19 @@ class _SignUpPageState extends State<SignUpPage> {
   final _createUser = CreateUserVM();
   final _signUpStore = locator<SignUpStore>();
   final _signUpController = locator<SignUpController>();
+  final _usersController = locator<UsersController>();
   final _formKey = GlobalKey<FormState>();
+  bool _hidePassword = true;
+  bool _usernameAvailable = false;
 
   // Functions
+
+  void _checkUsernameAvailablity(String username) async {
+    bool available = await _usersController.usernameAvailable(username);
+    setState(() {
+      _usernameAvailable = available;
+    });
+  }
 
   void _requestCreateUser(BuildContext context) {
     var result = _signUpController.createUser(_createUser);
@@ -36,6 +48,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   textAlign: TextAlign.center,
                 ),
                 backgroundColor: AppColors.snackWarning,
+                behavior: SnackBarBehavior.floating,
               ),
             )
           },
@@ -52,7 +65,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
     return Form(
       key: _formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         children: [
           TextFormField(
@@ -60,41 +72,93 @@ class _SignUpPageState extends State<SignUpPage> {
             autocorrect: false,
             enableSuggestions: false,
             decoration: InputDecoration(
-              icon: Icon(Icons.person),
+              icon: Icon(
+                Icons.person,
+                color: AppColors.purple,
+              ),
               labelText: 'Nome de usuário',
+              labelStyle: TextStyle(color: AppColors.darkPurple),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.purple),
+              ),
+              suffixIcon: _createUser.username.length >= 3
+                  ? Icon(
+                      _usernameAvailable ? Icons.check_circle : Icons.close,
+                      color:
+                          _usernameAvailable ? AppColors.green : AppColors.red,
+                    )
+                  : null,
             ),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
               if (value.isEmpty) return "Campo obrigatório!";
+              if (value.length < 3) return "Mínimo de 3 caracteres";
+              if (value.length > 25) return "Máximo de 25 caracteres";
+              if (!_usernameAvailable) return "Nome de usuário indisponível";
               return null;
             },
             onChanged: (value) {
-              _createUser.username = value;
+              setState(() {
+                _createUser.username = value;
+              });
+              if (value.length >= 3) {
+                _checkUsernameAvailablity(value);
+              }
             },
           ),
-          SizedBox(height: _size.height * .015),
+          SizedBox(height: _size.height * .03),
           TextFormField(
             textInputAction: TextInputAction.next,
             autocorrect: false,
             enableSuggestions: false,
             decoration: InputDecoration(
-              icon: Icon(Icons.email),
+              icon: Icon(
+                Icons.email,
+                color: AppColors.purple,
+              ),
               labelText: 'E-mail',
+              labelStyle: TextStyle(color: AppColors.darkPurple),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.purple),
+              ),
             ),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
               if (value.isEmpty) return "Campo obrigatório!";
+              if (!Commons.matchEmailRegex(value))
+                return "Insira um e-mail válido";
               return null;
             },
             onChanged: (value) {
               _createUser.email = value;
             },
           ),
-          SizedBox(height: _size.height * .015),
+          SizedBox(height: _size.height * .03),
           TextFormField(
-            obscureText: true,
+            obscureText: _hidePassword,
             decoration: InputDecoration(
-              icon: Icon(Icons.lock),
+              icon: Icon(
+                Icons.lock,
+                color: AppColors.purple,
+              ),
               labelText: 'Senha',
+              labelStyle: TextStyle(color: AppColors.darkPurple),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.purple),
+              ),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _hidePassword = !_hidePassword;
+                  });
+                },
+                icon: Icon(
+                  _hidePassword ? Icons.visibility_off : Icons.visibility,
+                ),
+                color: AppColors.purple,
+              ),
             ),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
               if (value.isEmpty) return "Campo obrigatório!";
               return null;
@@ -151,13 +215,42 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  Widget _privacyPolicy(Size size) {
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        style: TextStyle(
+          fontSize: 14.0,
+          color: Colors.black,
+        ),
+        children: <TextSpan>[
+          TextSpan(
+            text:
+                'Ao criar sua conta você concorda com nossos Termos de Uso e ',
+            style: GoogleFonts.poppins(
+                fontSize: size.height * .015, fontWeight: FontWeight.w300),
+          ),
+          TextSpan(
+            text: 'Políticas de Privacidade',
+            style: GoogleFonts.poppins(
+              color: AppColors.orange,
+              fontSize: size.height * .015,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFC4C4C4).withOpacity(.15),
+        backgroundColor: _signUpStore.loading
+            ? AppColors.orange
+            : Color(0xFFC4C4C4).withOpacity(.15),
         shadowColor: Colors.transparent,
         iconTheme: IconThemeData(color: AppColors.orange),
         brightness: Brightness.light,
@@ -200,9 +293,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                     color: AppColors.darkPurple,
                                     fontWeight: FontWeight.normal),
                               ),
-                              SizedBox(height: size.height * .1),
+                              SizedBox(height: size.height * .12),
                               _formInput(context),
                               SizedBox(height: size.height * .025),
+                              _privacyPolicy(size),
                               _signUpButton(context),
                             ],
                           ),

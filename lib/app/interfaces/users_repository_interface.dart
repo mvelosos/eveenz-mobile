@@ -5,4 +5,6 @@ import 'package:party_mobile/app/view_models/create_user_vm.dart';
 
 abstract class IUsersRepository {
   Future<Either<Failure, AuthUserModel>> createUser(CreateUserVM createUser);
+
+  Future<Either<Failure, bool>> usernameAvailable(String username);
 }

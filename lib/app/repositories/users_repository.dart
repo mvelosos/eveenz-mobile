@@ -29,4 +29,15 @@ class UsersRepository implements IUsersRepository {
       return Left(CreateUserError(message: 'Unexpected error!'));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> usernameAvailable(String username) async {
+    try {
+      var result = await _dio.instance
+          .get("${Endpoints.usernameAvailable}?username=$username");
+      return Right(result.data['available']);
+    } catch (e) {
+      return Left(RequestError(message: 'Unexpected error!'));
+    }
+  }
 }

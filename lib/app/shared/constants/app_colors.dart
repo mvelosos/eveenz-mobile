@@ -6,5 +6,6 @@ class AppColors {
   static Color orange = Color(0xFFFB6408);
   static Color green = Color(0xFF68D273);
   static Color gray1 = Color(0xFF171717).withOpacity(.7);
+  static Color red = Color(0xFFEC4825);
   static Color snackWarning = Colors.red;
 }

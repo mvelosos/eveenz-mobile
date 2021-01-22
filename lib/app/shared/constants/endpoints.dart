@@ -22,4 +22,5 @@ class Endpoints {
 
   // Users Endpoints
   static const String users = '/users';
+  static const String usernameAvailable = '/users/username_available';
 }
