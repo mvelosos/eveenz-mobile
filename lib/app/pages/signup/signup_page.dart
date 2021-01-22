@@ -192,7 +192,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               Observer(
                 builder: (_) => _signUpStore.loading
-                    ? LoadingIndicator(constraints)
+                    ? LoadingIndicator()
                     : SizedBox.shrink(),
               ),
             ],

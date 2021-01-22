@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/pages/login/widgets/apple_login_button.dart';
 import 'package:party_mobile/app/pages/login/widgets/facebook_login_button.dart';
+import 'package:party_mobile/app/pages/login/widgets/google_login_button.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
@@ -70,6 +74,10 @@ class _LoginPageState extends State<LoginPage> {
                 color: AppColors.purple,
               ),
               labelText: 'Nome de usuário ou e-mail',
+              labelStyle: TextStyle(color: AppColors.darkPurple),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.purple),
+              ),
             ),
             validator: (value) {
               if (value.isEmpty) return "Campo obrigatório!";
@@ -88,6 +96,10 @@ class _LoginPageState extends State<LoginPage> {
                 color: AppColors.purple,
               ),
               labelText: 'Senha',
+              labelStyle: TextStyle(color: AppColors.darkPurple),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.purple),
+              ),
             ),
             validator: (value) {
               if (value.isEmpty) return "Campo obrigatório!";
@@ -109,6 +121,7 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () {
         if (_formKey.currentState.validate()) {
           _requestLoginWithEmail(context);
+          FocusScope.of(context).unfocus();
         }
       },
       child: Container(
@@ -263,7 +276,7 @@ class _LoginPageState extends State<LoginPage> {
                               _formInput(constraints),
                               SizedBox(height: size.height * .01),
                               _forgotPasswordButton(constraints),
-                              SizedBox(height: size.height * .03),
+                              SizedBox(height: size.height * .02),
                               _loginButton(constraints, context),
                               SizedBox(height: size.height * .02),
                               _divider(constraints),
@@ -275,14 +288,16 @@ class _LoginPageState extends State<LoginPage> {
                                     _loginController,
                                     _loginStore,
                                   ),
-                                  FacebookLoginButton(
+                                  GoogleLoginButton(
                                     _loginController,
                                     _loginStore,
                                   ),
-                                  FacebookLoginButton(
-                                    _loginController,
-                                    _loginStore,
-                                  ),
+                                  Platform.isIOS
+                                      ? AppleLoginButton(
+                                          _loginController,
+                                          _loginStore,
+                                        )
+                                      : SizedBox.shrink(),
                                 ],
                               ),
                               SizedBox(height: size.height * .015),
@@ -297,7 +312,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Observer(
                 builder: (_) => _loginStore.loading
-                    ? LoadingIndicator(constraints)
+                    ? LoadingIndicator()
                     : SizedBox.shrink(),
               ),
             ],

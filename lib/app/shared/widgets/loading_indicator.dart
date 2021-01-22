@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class LoadingIndicator extends StatelessWidget {
-  final BoxConstraints _constraints;
-
-  LoadingIndicator(this._constraints);
-
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Container(
-      width: _constraints.maxWidth,
-      height: _constraints.maxHeight,
+      width: size.width,
+      height: size.height,
       color: Color.fromRGBO(0, 0, 0, .3),
       child: Center(
         child: Container(
-          width: _constraints.maxWidth * .2,
-          height: _constraints.maxHeight * .09,
+          width: size.height * .1,
+          height: size.height * .09,
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
