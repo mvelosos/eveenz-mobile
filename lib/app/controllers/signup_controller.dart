@@ -6,7 +6,6 @@ import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/repositories/users_repository.dart';
 import 'package:party_mobile/app/services/local_storage_service.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
-import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/shared/constants/storage.dart';
 import 'package:party_mobile/app/shared/errors/errors.dart';
 import 'package:party_mobile/app/stores/auth_user_store.dart';
@@ -34,8 +33,6 @@ class SignUpController {
     if (userResult.isRight()) {
       _setLocalStorage(userResult.getOrElse(null));
       _authUserStore.setUser(userResult.getOrElse(null));
-      _navigationService
-          .pushReplacementNamedNoAnimation(RouteNames.appContainer);
     }
     _signUpStore.setLoading(false);
     return userResult;
