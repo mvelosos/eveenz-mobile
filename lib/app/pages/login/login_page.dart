@@ -82,7 +82,9 @@ class _LoginPageState extends State<LoginPage> {
             enableSuggestions: false,
             decoration: InputDecoration(
               icon: FaIcon(
-                FontAwesomeIcons.gamepad,
+                FontAwesomeIcons.userAlt,
+                color: AppColors.darkPurple,
+                size: 17,
               ),
               labelText: 'Nome de usuário ou e-mail',
               labelStyle: TextStyle(color: AppColors.darkPurple),
@@ -102,9 +104,10 @@ class _LoginPageState extends State<LoginPage> {
           TextFormField(
             obscureText: true,
             decoration: InputDecoration(
-              icon: Icon(
-                Icons.lock,
+              icon: FaIcon(
+                FontAwesomeIcons.lock,
                 color: AppColors.darkPurple,
+                size: 17,
               ),
               labelText: 'Senha',
               labelStyle: TextStyle(color: AppColors.darkPurple),
