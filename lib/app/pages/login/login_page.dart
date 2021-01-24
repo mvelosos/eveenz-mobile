@@ -155,18 +155,11 @@ class _LoginPageState extends State<LoginPage> {
               spreadRadius: 2,
             ),
           ],
-          gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [
-              Color(0xfffbb448),
-              AppColors.orange,
-            ],
-          ),
+          color: AppColors.orange,
         ),
         child: Text(
           'Entrar',
-          style: TextStyle(fontSize: 20, color: Colors.white),
+          style: TextStyle(fontSize: size.height * .022, color: Colors.white),
         ),
       ),
     );
@@ -224,7 +217,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return RawMaterialButton(
       onPressed: () {
-        _navigationService.pushNamed(RouteNames.signUp);
+        _navigationService.pushNamed(RouteNames.signUp1);
       },
       child: RichText(
         textAlign: TextAlign.center,
