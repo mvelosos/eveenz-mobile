@@ -4,7 +4,7 @@ class RouteNames {
   static const String root = '/';
   static const String appContainer = '/app_container';
   static const String login = '/login';
-  static const String signUp = '/signup';
+  static const String signUp = '/signup/1';
 
   static const String forgotPassword1 = '/forgot_password/1';
   static const String forgotPassword2 = '/forgot_password/2';

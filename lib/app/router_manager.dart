@@ -14,7 +14,7 @@ import 'package:party_mobile/app/pages/profile/profile_page.dart';
 import 'package:party_mobile/app/pages/root/root_page.dart';
 import 'package:party_mobile/app/pages/search/search_page.dart';
 import 'package:party_mobile/app/pages/settings/settings_page.dart';
-import 'package:party_mobile/app/pages/signup/signup_page.dart';
+import 'package:party_mobile/app/pages/signup/signup_page_1.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 
 class RouterManager {
@@ -33,7 +33,7 @@ class RouterManager {
         return MaterialPageRoute(builder: (_) => LoginPage());
 
       case RouteNames.signUp:
-        return MaterialPageRoute(builder: (_) => SignUpPage());
+        return MaterialPageRoute(builder: (_) => SignUpPage1());
 
       // Forgot Password
       case RouteNames.forgotPassword1:

@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/signup_controller.dart';
 import 'package:party_mobile/app/controllers/users_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/signup/widgets/signup_bezier_container.dart';
+import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/utils/commons.dart';
 import 'package:party_mobile/app/shared/widgets/loading_indicator.dart';
 import 'package:party_mobile/app/stores/signup_store.dart';
 import 'package:party_mobile/app/view_models/create_user_vm.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignUpPage1 extends StatefulWidget {
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _SignUpPage1State createState() => _SignUpPage1State();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignUpPage1State extends State<SignUpPage1> {
   final _createUser = CreateUserVM();
   final _signUpStore = locator<SignUpStore>();
   final _signUpController = locator<SignUpController>();
   final _usersController = locator<UsersController>();
   final _formKey = GlobalKey<FormState>();
+  NavigationService _navigationService;
   bool _hidePassword = true;
   bool _usernameAvailable = false;
 
@@ -72,9 +75,10 @@ class _SignUpPageState extends State<SignUpPage> {
             autocorrect: false,
             enableSuggestions: false,
             decoration: InputDecoration(
-              icon: Icon(
-                Icons.person,
-                color: AppColors.purple,
+              icon: FaIcon(
+                FontAwesomeIcons.userAlt,
+                color: AppColors.darkPurple,
+                size: 17,
               ),
               labelText: 'Nome de usuário',
               labelStyle: TextStyle(color: AppColors.darkPurple),
@@ -112,9 +116,10 @@ class _SignUpPageState extends State<SignUpPage> {
             autocorrect: false,
             enableSuggestions: false,
             decoration: InputDecoration(
-              icon: Icon(
-                Icons.email,
-                color: AppColors.purple,
+              icon: FaIcon(
+                FontAwesomeIcons.solidEnvelope,
+                color: AppColors.darkPurple,
+                size: 17,
               ),
               labelText: 'E-mail',
               labelStyle: TextStyle(color: AppColors.darkPurple),
@@ -137,9 +142,10 @@ class _SignUpPageState extends State<SignUpPage> {
           TextFormField(
             obscureText: _hidePassword,
             decoration: InputDecoration(
-              icon: Icon(
-                Icons.lock,
-                color: AppColors.purple,
+              icon: FaIcon(
+                FontAwesomeIcons.lock,
+                color: AppColors.darkPurple,
+                size: 17,
               ),
               labelText: 'Senha',
               labelStyle: TextStyle(color: AppColors.darkPurple),
@@ -166,6 +172,31 @@ class _SignUpPageState extends State<SignUpPage> {
             onChanged: (value) {
               _createUser.password = value;
             },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _privacyPolicy(Size size) {
+    return RichText(
+      textAlign: TextAlign.start,
+      text: TextSpan(
+        style: TextStyle(
+          color: AppColors.gray1,
+          fontSize: size.height * .013,
+          fontWeight: FontWeight.w300,
+        ),
+        children: <TextSpan>[
+          TextSpan(
+            text: 'Ao criar sua conta você concorda com nossos ',
+            style: GoogleFonts.poppins(),
+          ),
+          TextSpan(
+            text: 'Termos de Uso e Políticas de Privacidade',
+            style: GoogleFonts.poppins(
+              color: AppColors.orange,
+            ),
           ),
         ],
       ),
@@ -215,28 +246,33 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Widget _privacyPolicy(Size size) {
-    return RichText(
-      textAlign: TextAlign.start,
-      text: TextSpan(
-        style: TextStyle(
-          color: AppColors.gray1,
-          fontSize: size.height * .013,
-          fontWeight: FontWeight.w300,
-        ),
-        children: <TextSpan>[
-          TextSpan(
-            text:
-                'Ao criar sua conta você concorda com nossos Termos de Uso e ',
-            style: GoogleFonts.poppins(),
-          ),
-          TextSpan(
-            text: 'Políticas de Privacidade',
-            style: GoogleFonts.poppins(
-              color: AppColors.orange,
+  Widget _backToLogin(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return RawMaterialButton(
+      onPressed: () {
+        _navigationService.goBack();
+      },
+      child: Center(
+        child: RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            style: GoogleFonts.inter(
+              color: AppColors.gray1,
+              fontSize: size.height * .015,
+              fontWeight: FontWeight.w700,
             ),
+            children: <TextSpan>[
+              TextSpan(text: 'Já é cadastrado? '),
+              TextSpan(
+                text: 'Faça login',
+                style: TextStyle(
+                  color: AppColors.darkPurple,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -244,6 +280,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    _navigationService = NavigationService.currentNavigator(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -296,8 +333,10 @@ class _SignUpPageState extends State<SignUpPage> {
                               _formInput(context),
                               SizedBox(height: size.height * .03),
                               _privacyPolicy(size),
-                              SizedBox(height: size.height * .03),
+                              SizedBox(height: size.height * .04),
                               _signUpButton(context),
+                              SizedBox(height: size.height * .03),
+                              _backToLogin(context)
                             ],
                           ),
                         ),
