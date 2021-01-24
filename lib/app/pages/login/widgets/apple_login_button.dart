@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
-import 'package:party_mobile/app/stores/login_store.dart';
 
 class AppleLoginButton extends StatelessWidget {
   final LoginController _loginController;
-  final LoginStore _loginStore;
 
-  AppleLoginButton(this._loginController, this._loginStore);
+  AppleLoginButton(this._loginController);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +12,7 @@ class AppleLoginButton extends StatelessWidget {
 
     return RawMaterialButton(
       onPressed: () {
-        // _loginStore.setLoading(true);
+        print('login with apple');
       },
       splashColor: Colors.transparent,
       child: Image(

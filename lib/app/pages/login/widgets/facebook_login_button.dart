@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
-import 'package:party_mobile/app/stores/login_store.dart';
+import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/services/navigation_service.dart';
+import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/view_models/facebook_login_vm.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 class FacebookLoginButton extends StatelessWidget {
+  final Function _setLoading;
   final FacebookLoginVM _fbLogin = FacebookLoginVM();
-  final LoginController _loginController;
-  final LoginStore _loginStore;
+  final LoginController _loginController = locator<LoginController>();
+  final NavigationService _navigationService;
 
-  FacebookLoginButton(this._loginController, this._loginStore);
+  FacebookLoginButton(this._setLoading, this._navigationService);
 
   _initFacebookLogin() async {
     final facebookLogin = FacebookLogin();
@@ -20,13 +23,24 @@ class FacebookLoginButton extends StatelessWidget {
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         _fbLogin.accessToken = result.accessToken.token;
-        _loginController.loginWithFacebook(_fbLogin);
+        _loginController.loginWithFacebook(_fbLogin).then(
+              (value) => {
+                value.fold(
+                  (l) => null,
+                  (r) => {
+                    _navigationService.pushReplacementNamedNoAnimation(
+                      RouteNames.appContainer,
+                    )
+                  },
+                )
+              },
+            );
         break;
       case FacebookLoginStatus.cancelledByUser:
-        _loginStore.setLoading(false);
+        _setLoading(false);
         break;
       case FacebookLoginStatus.error:
-        _loginStore.setLoading(false);
+        _setLoading(false);
         break;
     }
   }
@@ -37,7 +51,7 @@ class FacebookLoginButton extends StatelessWidget {
 
     return RawMaterialButton(
       onPressed: () {
-        _loginStore.setLoading(true);
+        _setLoading(true);
         _initFacebookLogin();
       },
       splashColor: Colors.transparent,
