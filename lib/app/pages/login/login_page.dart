@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/login/widgets/apple_login_button.dart';
@@ -13,7 +12,6 @@ import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/shared/widgets/loading_indicator.dart';
-import 'package:party_mobile/app/stores/login_store.dart';
 import 'package:party_mobile/app/view_models/user_login_vm.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -27,34 +25,46 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _userLogin = UserLoginVM();
   final _loginController = locator<LoginController>();
-  final _loginStore = locator<LoginStore>();
-  NavigationService _navigationService;
   final _formKey = GlobalKey<FormState>();
+  NavigationService _navigationService;
+  bool _loading = false;
 
   // Functions
 
+  _setLoading(value) {
+    setState(() {
+      _loading = value;
+    });
+  }
+
   void _requestLoginWithEmail(BuildContext context) {
+    _setLoading(true);
     var result = _loginController.loginWithEmail(_userLogin);
-    result.then(
-      (value) => {
-        value.fold(
-          (l) => {
-            Scaffold.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  l.message,
-                  style: TextStyle(fontSize: 14),
-                  textAlign: TextAlign.center,
-                ),
-                backgroundColor: AppColors.snackWarning,
-                behavior: SnackBarBehavior.floating,
-              ),
-            )
+    result
+        .then(
+          (value) => {
+            value.fold(
+              (l) => {
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      l.message,
+                      style: TextStyle(fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                    backgroundColor: AppColors.snackWarning,
+                    behavior: SnackBarBehavior.floating,
+                  ),
+                )
+              },
+              (r) => {
+                _navigationService
+                    .pushReplacementNamedNoAnimation(RouteNames.appContainer)
+              },
+            ),
           },
-          (r) => null,
         )
-      },
-    );
+        .whenComplete(() => {_setLoading(false)});
   }
 
   // Widgets
@@ -73,7 +83,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget _formInput(BoxConstraints constraints) {
     return Form(
       key: _formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         children: [
           TextFormField(
@@ -92,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                 borderSide: BorderSide(color: AppColors.orange),
               ),
             ),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
               if (value.isEmpty) return "Campo obrigatório!";
               return null;
@@ -115,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                 borderSide: BorderSide(color: AppColors.orange),
               ),
             ),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
               if (value.isEmpty) return "Campo obrigatório!";
               return null;
@@ -291,18 +302,12 @@ class _LoginPageState extends State<LoginPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   FacebookLoginButton(
-                                    _loginController,
-                                    _loginStore,
+                                    _setLoading,
+                                    _navigationService,
                                   ),
-                                  GoogleLoginButton(
-                                    _loginController,
-                                    _loginStore,
-                                  ),
+                                  GoogleLoginButton(_loginController),
                                   Platform.isIOS
-                                      ? AppleLoginButton(
-                                          _loginController,
-                                          _loginStore,
-                                        )
+                                      ? AppleLoginButton(_loginController)
                                       : SizedBox.shrink(),
                                 ],
                               ),
@@ -316,11 +321,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              Observer(
-                builder: (_) => _loginStore.loading
-                    ? LoadingIndicator()
-                    : SizedBox.shrink(),
-              ),
+              _loading ? LoadingIndicator() : SizedBox.shrink()
             ],
           );
         },
