@@ -15,6 +15,7 @@ class FacebookLoginButton extends StatelessWidget {
   FacebookLoginButton(this._setLoading, this._navigationService);
 
   _initFacebookLogin() async {
+    _setLoading(true);
     final facebookLogin = FacebookLogin();
     const permissions = ['email'];
 
@@ -23,7 +24,9 @@ class FacebookLoginButton extends StatelessWidget {
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         _fbLogin.accessToken = result.accessToken.token;
-        _loginController.loginWithFacebook(_fbLogin).then(
+        _loginController
+            .loginWithFacebook(_fbLogin)
+            .then(
               (value) => {
                 value.fold(
                   (l) => null,
@@ -34,7 +37,8 @@ class FacebookLoginButton extends StatelessWidget {
                   },
                 )
               },
-            );
+            )
+            .whenComplete(() => _setLoading(false));
         break;
       case FacebookLoginStatus.cancelledByUser:
         _setLoading(false);
@@ -51,7 +55,6 @@ class FacebookLoginButton extends StatelessWidget {
 
     return RawMaterialButton(
       onPressed: () {
-        _setLoading(true);
         _initFacebookLogin();
       },
       splashColor: Colors.transparent,
