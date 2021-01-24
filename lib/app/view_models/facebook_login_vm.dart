@@ -3,7 +3,7 @@ class FacebookLoginVM {
 
   Map<String, dynamic> getData() {
     return {
-      'facebook': {'accessToken': accessToken}
+      'facebook': {'fbAccessToken': accessToken}
     };
   }
 }
