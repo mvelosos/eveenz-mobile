@@ -184,7 +184,7 @@ class _SignUpPageState extends State<SignUpPage> {
       child: Container(
         width: _size.width,
         margin: EdgeInsets.symmetric(vertical: _size.height * .007),
-        padding: EdgeInsets.symmetric(vertical: _size.height * .017),
+        padding: EdgeInsets.symmetric(vertical: _size.height * .018),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
@@ -203,7 +203,7 @@ class _SignUpPageState extends State<SignUpPage> {
             end: Alignment.centerRight,
             colors: [
               Color(0xfffbb448),
-              Color(0xfff7892b),
+              AppColors.orange,
             ],
           ),
         ),
@@ -217,24 +217,23 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _privacyPolicy(Size size) {
     return RichText(
-      textAlign: TextAlign.center,
+      textAlign: TextAlign.start,
       text: TextSpan(
         style: TextStyle(
-          fontSize: 14.0,
-          color: Colors.black,
+          color: AppColors.gray1,
+          fontSize: size.height * .013,
+          fontWeight: FontWeight.w300,
         ),
         children: <TextSpan>[
           TextSpan(
             text:
                 'Ao criar sua conta você concorda com nossos Termos de Uso e ',
-            style: GoogleFonts.poppins(
-                fontSize: size.height * .015, fontWeight: FontWeight.w300),
+            style: GoogleFonts.poppins(),
           ),
           TextSpan(
             text: 'Políticas de Privacidade',
             style: GoogleFonts.poppins(
               color: AppColors.orange,
-              fontSize: size.height * .015,
             ),
           ),
         ],
@@ -295,8 +294,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
                               SizedBox(height: size.height * .12),
                               _formInput(context),
-                              SizedBox(height: size.height * .025),
+                              SizedBox(height: size.height * .03),
                               _privacyPolicy(size),
+                              SizedBox(height: size.height * .03),
                               _signUpButton(context),
                             ],
                           ),

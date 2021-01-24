@@ -16,6 +16,7 @@ import 'package:party_mobile/app/shared/widgets/loading_indicator.dart';
 import 'package:party_mobile/app/stores/login_store.dart';
 import 'package:party_mobile/app/view_models/user_login_vm.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -80,14 +81,13 @@ class _LoginPageState extends State<LoginPage> {
             autocorrect: false,
             enableSuggestions: false,
             decoration: InputDecoration(
-              icon: Icon(
-                Icons.person,
-                color: AppColors.purple,
+              icon: FaIcon(
+                FontAwesomeIcons.gamepad,
               ),
               labelText: 'Nome de usuário ou e-mail',
               labelStyle: TextStyle(color: AppColors.darkPurple),
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: AppColors.purple),
+                borderSide: BorderSide(color: AppColors.orange),
               ),
             ),
             validator: (value) {
@@ -104,12 +104,12 @@ class _LoginPageState extends State<LoginPage> {
             decoration: InputDecoration(
               icon: Icon(
                 Icons.lock,
-                color: AppColors.purple,
+                color: AppColors.darkPurple,
               ),
               labelText: 'Senha',
               labelStyle: TextStyle(color: AppColors.darkPurple),
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: AppColors.purple),
+                borderSide: BorderSide(color: AppColors.orange),
               ),
             ),
             validator: (value) {
@@ -216,30 +216,27 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _signUpButton() {
+  Widget _signUpButton(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return RawMaterialButton(
       onPressed: () {
         _navigationService.pushNamed(RouteNames.signUp);
       },
-      child: Container(
-        alignment: Alignment.bottomCenter,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Não tem uma conta?',
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            SizedBox(width: 5),
-            Text(
-              'Cadastre-se',
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          style: GoogleFonts.inter(
+            color: AppColors.gray1,
+            fontSize: size.height * .015,
+            fontWeight: FontWeight.w700,
+          ),
+          children: <TextSpan>[
+            TextSpan(text: 'Não tem uma conta? '),
+            TextSpan(
+              text: 'Cadastre-se',
               style: TextStyle(
                 color: AppColors.purple,
-                fontSize: 13,
-                fontWeight: FontWeight.w800,
               ),
             ),
           ],
@@ -314,7 +311,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ],
                               ),
                               SizedBox(height: size.height * .015),
-                              _signUpButton(),
+                              _signUpButton(context),
                             ],
                           ),
                         ),
