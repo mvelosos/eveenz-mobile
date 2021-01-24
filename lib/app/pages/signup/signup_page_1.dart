@@ -8,6 +8,7 @@ import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/signup/widgets/signup_bezier_container.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
+import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/shared/utils/commons.dart';
 import 'package:party_mobile/app/shared/widgets/loading_indicator.dart';
 import 'package:party_mobile/app/stores/signup_store.dart';
@@ -38,27 +39,31 @@ class _SignUpPage1State extends State<SignUpPage1> {
   }
 
   void _requestCreateUser(BuildContext context) {
-    var result = _signUpController.createUser(_createUser);
-    result.then(
-      (value) => {
-        value.fold(
-          (l) => {
-            Scaffold.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  l.message,
-                  style: TextStyle(fontSize: 16),
-                  textAlign: TextAlign.center,
-                ),
-                backgroundColor: AppColors.snackWarning,
-                behavior: SnackBarBehavior.floating,
-              ),
-            )
-          },
-          (r) => null,
-        )
-      },
-    );
+    _navigationService.pushReplacementNamedNoAnimation(RouteNames.signUp2);
+    // var result = _signUpController.createUser(_createUser);
+    // result.then(
+    //   (value) => {
+    //     value.fold(
+    //       (l) => {
+    //         Scaffold.of(context).showSnackBar(
+    //           SnackBar(
+    //             content: Text(
+    //               l.message,
+    //               style: TextStyle(fontSize: 16),
+    //               textAlign: TextAlign.center,
+    //             ),
+    //             backgroundColor: AppColors.snackWarning,
+    //             behavior: SnackBarBehavior.floating,
+    //           ),
+    //         )
+    //       },
+    //       (r) => {
+    //         _navigationService
+    //             .pushReplacementNamedNoAnimation(RouteNames.signUp2)
+    //       },
+    //     )
+    //   },
+    // );
   }
 
   // Widgets
@@ -83,7 +88,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
               labelText: 'Nome de usuário',
               labelStyle: TextStyle(color: AppColors.darkPurple),
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: AppColors.purple),
+                borderSide: BorderSide(color: AppColors.orange),
               ),
               suffixIcon: _createUser.username.length >= 3
                   ? Icon(
@@ -124,7 +129,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
               labelText: 'E-mail',
               labelStyle: TextStyle(color: AppColors.darkPurple),
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: AppColors.purple),
+                borderSide: BorderSide(color: AppColors.orange),
               ),
             ),
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -150,7 +155,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
               labelText: 'Senha',
               labelStyle: TextStyle(color: AppColors.darkPurple),
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: AppColors.purple),
+                borderSide: BorderSide(color: AppColors.orange),
               ),
               suffixIcon: IconButton(
                 onPressed: () {
