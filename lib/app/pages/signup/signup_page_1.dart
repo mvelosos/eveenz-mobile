@@ -43,7 +43,9 @@ class _SignUpPage1State extends State<SignUpPage1> {
   }
 
   void _requestCreateUser(BuildContext context) {
+    Size _size = MediaQuery.of(context).size;
     _setLoading(true);
+
     var result = _signUpController.createUser(_createUser);
     result
         .then(
@@ -54,7 +56,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
                   SnackBar(
                     content: Text(
                       l.message,
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: _size.height * .018),
                       textAlign: TextAlign.center,
                     ),
                     backgroundColor: AppColors.snackWarning,
@@ -246,7 +248,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
         ),
         child: Text(
           'Cadastrar',
-          style: TextStyle(fontSize: 20, color: Colors.white),
+          style: TextStyle(fontSize: _size.height * .022, color: Colors.white),
         ),
       ),
     );
@@ -324,17 +326,19 @@ class _SignUpPage1State extends State<SignUpPage1> {
                               Text(
                                 'Cadastre-se',
                                 style: GoogleFonts.inter(
-                                    fontSize: 31,
-                                    color: AppColors.darkPurple,
-                                    fontWeight: FontWeight.w800),
+                                  fontSize: size.height * .035,
+                                  color: AppColors.darkPurple,
+                                  fontWeight: FontWeight.w800,
+                                ),
                               ),
                               SizedBox(height: size.height * .005),
                               Text(
                                 'É rápido e grátis',
                                 style: GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    color: AppColors.darkPurple,
-                                    fontWeight: FontWeight.normal),
+                                  fontSize: size.height * .016,
+                                  color: AppColors.darkPurple,
+                                  fontWeight: FontWeight.normal,
+                                ),
                               ),
                               SizedBox(height: size.height * .12),
                               _formInput(context),
