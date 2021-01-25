@@ -6,7 +6,7 @@ class CreateUserVM {
   Map<String, dynamic> getData() {
     return {
       'user': {
-        'email': email,
+        'email': email.trim(),
         'username': username,
         'password': password,
       }
