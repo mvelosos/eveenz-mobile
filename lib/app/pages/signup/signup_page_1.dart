@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/signup_controller.dart';
@@ -11,7 +10,6 @@ import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/shared/utils/commons.dart';
 import 'package:party_mobile/app/shared/widgets/loading_indicator.dart';
-import 'package:party_mobile/app/stores/signup_store.dart';
 import 'package:party_mobile/app/view_models/create_user_vm.dart';
 
 class SignUpPage1 extends StatefulWidget {
@@ -21,15 +19,21 @@ class SignUpPage1 extends StatefulWidget {
 
 class _SignUpPage1State extends State<SignUpPage1> {
   final _createUser = CreateUserVM();
-  final _signUpStore = locator<SignUpStore>();
   final _signUpController = locator<SignUpController>();
   final _usersController = locator<UsersController>();
   final _formKey = GlobalKey<FormState>();
   NavigationService _navigationService;
   bool _hidePassword = true;
   bool _usernameAvailable = false;
+  bool _loading = false;
 
   // Functions
+
+  _setLoading(value) {
+    setState(() {
+      _loading = value;
+    });
+  }
 
   void _checkUsernameAvailablity(String username) async {
     bool available = await _usersController.usernameAvailable(username);
@@ -39,31 +43,33 @@ class _SignUpPage1State extends State<SignUpPage1> {
   }
 
   void _requestCreateUser(BuildContext context) {
-    _navigationService.pushReplacementNamedNoAnimation(RouteNames.signUp2);
-    // var result = _signUpController.createUser(_createUser);
-    // result.then(
-    //   (value) => {
-    //     value.fold(
-    //       (l) => {
-    //         Scaffold.of(context).showSnackBar(
-    //           SnackBar(
-    //             content: Text(
-    //               l.message,
-    //               style: TextStyle(fontSize: 16),
-    //               textAlign: TextAlign.center,
-    //             ),
-    //             backgroundColor: AppColors.snackWarning,
-    //             behavior: SnackBarBehavior.floating,
-    //           ),
-    //         )
-    //       },
-    //       (r) => {
-    //         _navigationService
-    //             .pushReplacementNamedNoAnimation(RouteNames.signUp2)
-    //       },
-    //     )
-    //   },
-    // );
+    _setLoading(true);
+    var result = _signUpController.createUser(_createUser);
+    result
+        .then(
+          (value) => {
+            value.fold(
+              (l) => {
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      l.message,
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.center,
+                    ),
+                    backgroundColor: AppColors.snackWarning,
+                    behavior: SnackBarBehavior.floating,
+                  ),
+                )
+              },
+              (r) => {
+                _navigationService
+                    .pushReplacementNamedNoAnimation(RouteNames.signUp2)
+              },
+            )
+          },
+        )
+        .whenComplete(() => _setLoading(false));
   }
 
   // Widgets
@@ -101,6 +107,8 @@ class _SignUpPage1State extends State<SignUpPage1> {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
               if (value.isEmpty) return "Campo obrigatório!";
+              if (!Commons.matchUsernameRegex(value))
+                return "Campo deve conter apenas letras, números, _ e .";
               if (value.length < 3) return "Mínimo de 3 caracteres";
               if (value.length > 25) return "Máximo de 25 caracteres";
               if (!_usernameAvailable) return "Nome de usuário indisponível";
@@ -234,14 +242,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
               spreadRadius: 2,
             ),
           ],
-          gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [
-              Color(0xfffbb448),
-              AppColors.orange,
-            ],
-          ),
+          color: AppColors.orange,
         ),
         child: Text(
           'Cadastrar',
@@ -272,7 +273,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
               TextSpan(
                 text: 'Faça login',
                 style: TextStyle(
-                  color: AppColors.darkPurple,
+                  color: AppColors.purple,
                 ),
               ),
             ],
@@ -289,12 +290,13 @@ class _SignUpPage1State extends State<SignUpPage1> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: _signUpStore.loading
-            ? AppColors.orange
+        backgroundColor: _loading
+            ? Color(0xFF000000).withOpacity(.3)
             : Color(0xFFC4C4C4).withOpacity(.15),
         shadowColor: Colors.transparent,
         iconTheme: IconThemeData(color: AppColors.orange),
         brightness: Brightness.light,
+        automaticallyImplyLeading: !_loading,
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
@@ -350,11 +352,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
                   ),
                 ),
               ),
-              Observer(
-                builder: (_) => _signUpStore.loading
-                    ? LoadingIndicator()
-                    : SizedBox.shrink(),
-              ),
+              _loading ? LoadingIndicator() : SizedBox.shrink(),
             ],
           );
         },

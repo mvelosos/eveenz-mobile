@@ -88,7 +88,7 @@ class _SignUpPage2State extends State<SignUpPage2> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(height: size.height * .02),
+                              SizedBox(height: size.height * .01),
                               Text(
                                 'Aêeeee!',
                                 style: GoogleFonts.inter(
