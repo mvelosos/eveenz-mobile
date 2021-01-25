@@ -4,7 +4,10 @@ class UserLoginVM {
 
   Map<String, dynamic> getData() {
     return {
-      'user': {'login': login, 'password': password}
+      'user': {
+        'login': login.trim(),
+        'password': password,
+      }
     };
   }
 }
