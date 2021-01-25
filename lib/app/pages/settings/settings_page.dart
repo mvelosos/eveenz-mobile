@@ -4,6 +4,7 @@ import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/services/local_storage_service.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
+import 'package:party_mobile/app/stores/auth_user_store.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  AuthUserStore _authUserStore = locator<AuthUserStore>();
   var _storage = locator<LocalStorageService>();
   var _navigationService =
       NavigationService(locator<RootNavigatorKey>().navigatorKey);
@@ -31,6 +33,7 @@ class _SettingsPageState extends State<SettingsPage> {
             onPressed: () => {
               _storage.clear().then(
                     (_) => {
+                      _authUserStore.clean(),
                       _navigationService
                           .pushReplacementNamedNoAnimation(RouteNames.login)
                     },
