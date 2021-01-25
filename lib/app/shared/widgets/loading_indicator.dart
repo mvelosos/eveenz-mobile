@@ -9,7 +9,7 @@ class LoadingIndicator extends StatelessWidget {
     return Container(
       width: size.width,
       height: size.height,
-      color: Color.fromRGBO(0, 0, 0, .3),
+      color: Color(0xFF000000).withOpacity(.3),
       child: Center(
         child: Container(
           width: size.height * .1,
