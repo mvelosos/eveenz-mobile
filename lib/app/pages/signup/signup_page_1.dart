@@ -236,14 +236,6 @@ class _SignUpPage1State extends State<SignUpPage1> {
           borderRadius: BorderRadius.all(
             Radius.circular(5),
           ),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.grey.shade200,
-              offset: Offset(2, 4),
-              blurRadius: 5,
-              spreadRadius: 2,
-            ),
-          ],
           color: AppColors.orange,
         ),
         child: Text(
@@ -309,7 +301,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
                   FocusScope.of(context).unfocus();
                 },
                 child: Container(
-                  height: constraints.maxHeight,
+                  height: size.height,
                   child: Stack(
                     children: [
                       SignUpBezierContainer(),

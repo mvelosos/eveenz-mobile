@@ -5,10 +5,12 @@ class SignUpBezierContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Container(
       color: Colors.white,
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
+      height: size.height,
+      width: size.width,
       child: CustomPaint(
         painter: _CurvePainter(),
       ),
