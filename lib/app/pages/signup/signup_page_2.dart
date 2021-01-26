@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:party_mobile/app/pages/signup/widgets/signup_bezier_container.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
@@ -60,7 +59,7 @@ class _SignUpPage2State extends State<SignUpPage2> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFC4C4C4).withOpacity(.15),
+        backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         iconTheme: IconThemeData(color: AppColors.orange),
         brightness: Brightness.light,
@@ -78,7 +77,6 @@ class _SignUpPage2State extends State<SignUpPage2> {
                   height: constraints.maxHeight,
                   child: Stack(
                     children: [
-                      SignUpBezierContainer(),
                       Container(
                         padding: EdgeInsets.only(
                           left: size.width * .08,

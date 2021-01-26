@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/signup_controller.dart';
 import 'package:party_mobile/app/controllers/users_controller.dart';
 import 'package:party_mobile/app/locator.dart';
-import 'package:party_mobile/app/pages/signup/widgets/signup_bezier_container.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
@@ -284,9 +283,8 @@ class _SignUpPage1State extends State<SignUpPage1> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: _loading
-            ? Color(0xFF000000).withOpacity(.3)
-            : Color(0xFFC4C4C4).withOpacity(.15),
+        backgroundColor:
+            _loading ? Color(0xFF000000).withOpacity(.3) : Colors.transparent,
         shadowColor: Colors.transparent,
         iconTheme: IconThemeData(color: AppColors.orange),
         brightness: Brightness.light,
@@ -304,7 +302,6 @@ class _SignUpPage1State extends State<SignUpPage1> {
                   height: size.height,
                   child: Stack(
                     children: [
-                      SignUpBezierContainer(),
                       Container(
                         padding: EdgeInsets.only(
                           left: size.width * .08,
