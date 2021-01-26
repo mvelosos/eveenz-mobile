@@ -175,12 +175,14 @@ class _SignUpPage1State extends State<SignUpPage1> {
                 icon: Icon(
                   _hidePassword ? Icons.visibility_off : Icons.visibility,
                 ),
-                color: AppColors.purple,
+                color: Colors.grey,
               ),
             ),
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
               if (value.isEmpty) return "Campo obrigatório!";
+              if (value.length < 6)
+                return "Senha deve ter no mínimo 6 caracteres";
               return null;
             },
             onChanged: (value) {
@@ -224,12 +226,13 @@ class _SignUpPage1State extends State<SignUpPage1> {
       onPressed: () {
         if (_formKey.currentState.validate()) {
           _requestCreateUser(context);
+          FocusScope.of(context).unfocus();
         }
       },
       child: Container(
         width: _size.width,
         margin: EdgeInsets.symmetric(vertical: _size.height * .007),
-        padding: EdgeInsets.symmetric(vertical: _size.height * .018),
+        padding: EdgeInsets.symmetric(vertical: _size.height * .024),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
@@ -238,8 +241,12 @@ class _SignUpPage1State extends State<SignUpPage1> {
           color: AppColors.orange,
         ),
         child: Text(
-          'Cadastrar',
-          style: TextStyle(fontSize: _size.height * .022, color: Colors.white),
+          'CADASTRAR',
+          style: GoogleFonts.roboto(
+            fontSize: _size.height * .015,
+            color: Colors.white,
+            letterSpacing: 4,
+          ),
         ),
       ),
     );
@@ -258,7 +265,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
           text: TextSpan(
             style: GoogleFonts.inter(
               color: AppColors.gray1,
-              fontSize: size.height * .015,
+              fontSize: size.height * .017,
               fontWeight: FontWeight.w700,
             ),
             children: <TextSpan>[

@@ -97,7 +97,7 @@ class _SignUpPage2State extends State<SignUpPage2> {
                               ),
                               SizedBox(height: size.height * .005),
                               Text(
-                                'Cadastro concluído com succeso. Você já está pronto para viver bons momentos com o Eveenz!',
+                                'Cadastro concluído com succeso. Você já está pronto para viver incríveis momentos com o Eveenz!',
                                 style: GoogleFonts.poppins(
                                   fontSize: size.height * 0.016,
                                   color: AppColors.darkPurple,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/passwords_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/forgot_password/forgot_password_3_page.dart';
@@ -66,6 +67,42 @@ class _ForgotPassword2PageState extends State<ForgotPassword2Page> {
 
   // Widgets
 
+  Widget _continueButton(BuildContext context) {
+    final _size = MediaQuery.of(context).size;
+
+    return RawMaterialButton(
+      onPressed: () {
+        return _loading ? null : _requestVerifyCode(context);
+      },
+      child: Container(
+        width: _size.width,
+        margin: EdgeInsets.symmetric(vertical: _size.height * .007),
+        padding: EdgeInsets.symmetric(vertical: _size.height * .024),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+          color: _loading ? Colors.grey[400] : AppColors.orange,
+        ),
+        child: _loading
+            ? SizedBox(
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+                height: _size.height * .019,
+                width: _size.height * .019,
+              )
+            : Text(
+                'CONTINUAR',
+                style: GoogleFonts.roboto(
+                    fontSize: _size.height * .015,
+                    color: Colors.white,
+                    letterSpacing: 4),
+              ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     _navigationService = NavigationService.currentNavigator(context);
@@ -73,13 +110,9 @@ class _ForgotPassword2PageState extends State<ForgotPassword2Page> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Forgot Password 2',
-          style: TextStyle(color: Colors.blue),
-        ),
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Colors.blue),
+        iconTheme: IconThemeData(color: AppColors.orange),
         brightness: Brightness.light,
       ),
       body: LayoutBuilder(
@@ -90,21 +123,33 @@ class _ForgotPassword2PageState extends State<ForgotPassword2Page> {
             },
             child: Container(
               height: constraints.maxHeight,
-              padding: EdgeInsets.only(left: 10, right: 10),
+              padding: EdgeInsets.only(
+                left: size.width * .08,
+                right: size.width * .08,
+              ),
               color: Colors.transparent,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: size.height * .03,
-                  ),
+                  SizedBox(height: size.height * .025),
                   Text(
-                    'Um e-mail foi enviado para ${widget.args.email} com seu código de recuperação',
-                    style: TextStyle(fontSize: 16),
-                    textAlign: TextAlign.center,
+                    'Código de recuperação',
+                    style: GoogleFonts.inter(
+                      fontSize: size.height * .04,
+                      color: AppColors.darkPurple,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                  SizedBox(
-                    height: size.height * .1,
+                  SizedBox(height: size.height * .005),
+                  Text(
+                    'Preencha abaixo com o código de recuperação enviado para ${widget.args.email} para prosseguir com a alteração de sua senha',
+                    style: GoogleFonts.poppins(
+                      fontSize: size.height * .016,
+                      color: AppColors.darkPurple,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
+                  SizedBox(height: size.height * .09),
                   Container(
                     padding: EdgeInsets.only(left: 10, right: 10),
                     child: PinCodeTextField(
@@ -126,30 +171,16 @@ class _ForgotPassword2PageState extends State<ForgotPassword2Page> {
                         borderRadius: BorderRadius.circular(50),
                         fieldHeight: 50,
                         fieldWidth: 40,
-                        inactiveColor: Colors.blue,
-                        activeColor: Colors.blue,
+                        inactiveColor: AppColors.darkPurple,
+                        activeColor: AppColors.orange,
+                        selectedColor: AppColors.darkPurple,
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: size.height * .07,
+                    height: size.height * .09,
                   ),
-                  RaisedButton(
-                    onPressed: () {
-                      return _loading ? null : _requestVerifyCode(context);
-                    },
-                    child: _loading
-                        ? SizedBox(
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.white),
-                            ),
-                            height: 13,
-                            width: 13,
-                          )
-                        : Text('Continuar'),
-                  )
+                  _continueButton(context)
                 ],
               ),
             ),

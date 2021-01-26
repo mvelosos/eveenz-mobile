@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Container(
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.symmetric(vertical: size.height * .007),
-        padding: EdgeInsets.symmetric(vertical: size.height * .018),
+        padding: EdgeInsets.symmetric(vertical: size.height * .024),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
@@ -169,8 +169,12 @@ class _LoginPageState extends State<LoginPage> {
           color: AppColors.orange,
         ),
         child: Text(
-          'Entrar',
-          style: TextStyle(fontSize: size.height * .022, color: Colors.white),
+          'ENTRAR',
+          style: GoogleFonts.roboto(
+            fontSize: size.height * .015,
+            color: Colors.white,
+            letterSpacing: 4,
+          ),
         ),
       ),
     );

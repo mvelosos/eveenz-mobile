@@ -102,7 +102,7 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
       child: Container(
         width: _size.width,
         margin: EdgeInsets.symmetric(vertical: _size.height * .007),
-        padding: EdgeInsets.symmetric(vertical: _size.height * .018),
+        padding: EdgeInsets.symmetric(vertical: _size.height * .024),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -118,10 +118,11 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
                 width: _size.height * .026,
               )
             : Text(
-                'Enviar',
-                style: TextStyle(
-                  fontSize: _size.height * .022,
+                'ENVIAR',
+                style: GoogleFonts.roboto(
+                  fontSize: _size.height * .015,
                   color: Colors.white,
+                  letterSpacing: 4,
                 ),
               ),
       ),
@@ -164,7 +165,7 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
                           Text(
                             'Esqueci a senha',
                             style: GoogleFonts.inter(
-                              fontSize: 27,
+                              fontSize: size.height * .035,
                               color: AppColors.darkPurple,
                               fontWeight: FontWeight.w800,
                             ),
