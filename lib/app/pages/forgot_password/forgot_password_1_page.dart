@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/passwords_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/forgot_password/forgot_password_2_page.dart';
-import 'package:party_mobile/app/pages/forgot_password/widgets/forgot_password_bezier_container.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
@@ -107,14 +106,6 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
-          // boxShadow: <BoxShadow>[
-          //   BoxShadow(
-          //     color: Colors.grey.shade200,
-          //     offset: Offset(2, 4),
-          //     blurRadius: 5,
-          //     spreadRadius: 2,
-          //   ),
-          // ],
           color: _loading ? Colors.grey[400] : AppColors.orange,
         ),
         child: _loading
@@ -144,7 +135,7 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFC4C4C4).withOpacity(.15),
+        backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         iconTheme: IconThemeData(color: AppColors.orange),
         brightness: Brightness.light,
@@ -159,7 +150,6 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
                 },
                 child: Stack(
                   children: [
-                    ForgotPasswordBezierContainer(),
                     Container(
                       height: constraints.maxHeight,
                       padding: EdgeInsets.only(
@@ -190,7 +180,7 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
                           ),
                           SizedBox(height: size.height * .1),
                           _formInput(context),
-                          SizedBox(height: size.height * .07),
+                          SizedBox(height: size.height * .1),
                           _passwordForgotButton(context)
                         ],
                       ),
