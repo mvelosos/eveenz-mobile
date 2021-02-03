@@ -8,20 +8,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:520585372978:android:c9c2dfe4b6ac033de3a32b",
+        "mobilesdk_app_id": "1:520585372978:android:8cbbfbd5c4a4eceee3a32b",
         "android_client_info": {
-          "package_name": "com.example.party_mobile"
+          "package_name": "com.eveenz"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "520585372978-8qu49ci23j7jqkp4oeo4uilgpslk2o5n.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.party_mobile",
-            "certificate_hash": "38f1fff2609f1a1eb231820fd13f3802e61a6515"
-          }
-        },
         {
           "client_id": "520585372978-ki8i78nch63iur46lchug537hb6ds8pm.apps.googleusercontent.com",
           "client_type": 3
