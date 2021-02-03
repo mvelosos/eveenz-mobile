@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>520585372978-fi9rbtn4ss9e9ii88q9nkcg3eroupder.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.520585372978-fi9rbtn4ss9e9ii88q9nkcg3eroupder</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>520585372978-8qu49ci23j7jqkp4oeo4uilgpslk2o5n.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCCLi5Mh3sCFc4CpyRTootQr2E4iEoWauE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>520585372978</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.eveenz</string>
+	<key>PROJECT_ID</key>
+	<string>party-project-1563938845242</string>
+	<key>STORAGE_BUCKET</key>
+	<string>party-project-1563938845242.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:520585372978:ios:2770fc94b5d7d785e3a32b</string>
+	<key>DATABASE_URL</key>
+	<string>https://party-project-1563938845242.firebaseio.com</string>
+</dict>
+</plist>
