@@ -1,21 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/services/navigation_service.dart';
+import 'package:party_mobile/app/view_models/google_login_vm.dart';
 
 class GoogleLoginButton extends StatelessWidget {
-  final LoginController _loginController;
+  final Function _setLoading;
+  final GoogleLoginVM _googleLogin = GoogleLoginVM();
+  final LoginController _loginController = locator<LoginController>();
+  final NavigationService _navigationService;
 
-  GoogleLoginButton(this._loginController);
+  GoogleLoginButton(this._setLoading, this._navigationService);
 
   // Functions
 
   Future<void> _initGoogleLogin() async {
+    _setLoading(true);
     GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
     try {
       var result = await _googleSignIn.signIn();
-      result.authentication.then((value) => {print(value.accessToken)});
-      print(result.id);
-      print(result.email);
+      result.authentication.then(
+        (value) => {
+          _googleLogin.accessToken = value.accessToken,
+          _loginController.loginWithGoogle(_googleLogin).then(
+                (value) => {
+                  print(value),
+                  _setLoading(false),
+                },
+              )
+        },
+      );
     } catch (error) {
       print(error);
     }
