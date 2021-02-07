@@ -309,7 +309,10 @@ class _LoginPageState extends State<LoginPage> {
                                     _setLoading,
                                     _navigationService,
                                   ),
-                                  GoogleLoginButton(_loginController),
+                                  GoogleLoginButton(
+                                    _setLoading,
+                                    _navigationService,
+                                  ),
                                   Platform.isIOS
                                       ? AppleLoginButton(_loginController)
                                       : SizedBox.shrink(),
