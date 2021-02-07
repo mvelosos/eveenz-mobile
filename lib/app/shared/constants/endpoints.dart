@@ -8,6 +8,7 @@ class Endpoints {
   // Auth Endpoints
   static const String authLogin = '/auth/login';
   static const String authFacebook = '/auth/facebook';
+  static const String authGoogle = '/auth/google';
 
   // Passwords Endpoints
   static const String passwordsForgot = '/passwords/forgot';
