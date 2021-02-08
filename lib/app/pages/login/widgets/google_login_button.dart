@@ -12,6 +12,7 @@ class GoogleLoginButton extends StatelessWidget {
   final GoogleLoginVM _googleLogin = GoogleLoginVM();
   final LoginController _loginController = locator<LoginController>();
   final NavigationService _navigationService;
+  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
   GoogleLoginButton(this._setLoading, this._navigationService);
 
@@ -19,7 +20,7 @@ class GoogleLoginButton extends StatelessWidget {
 
   Future<void> _initGoogleLogin(BuildContext context) async {
     _setLoading(true);
-    GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+    _logOutCurrentSession();
     try {
       var result = await _googleSignIn.signIn();
       result.authentication.then(
@@ -57,6 +58,10 @@ class GoogleLoginButton extends StatelessWidget {
     } catch (error) {
       _setLoading(false);
     }
+  }
+
+  Future<void> _logOutCurrentSession() {
+    return _googleSignIn.signOut();
   }
 
   // Widgets

@@ -25,6 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Observer(builder: (_) {
           return Text(_meStore.username, style: TextStyle(color: Colors.blue));
         }),
+        centerTitle: true,
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         brightness: Brightness.light,
