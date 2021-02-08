@@ -3,6 +3,8 @@ import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
+import 'package:party_mobile/app/shared/constants/app_colors.dart';
+import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/view_models/google_login_vm.dart';
 
 class GoogleLoginButton extends StatelessWidget {
@@ -15,7 +17,7 @@ class GoogleLoginButton extends StatelessWidget {
 
   // Functions
 
-  Future<void> _initGoogleLogin() async {
+  Future<void> _initGoogleLogin(BuildContext context) async {
     _setLoading(true);
     GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
     try {
@@ -23,16 +25,37 @@ class GoogleLoginButton extends StatelessWidget {
       result.authentication.then(
         (value) => {
           _googleLogin.accessToken = value.accessToken,
-          _loginController.loginWithGoogle(_googleLogin).then(
+          _loginController
+              .loginWithGoogle(_googleLogin)
+              .then(
                 (value) => {
-                  print(value),
-                  _setLoading(false),
+                  value.fold(
+                    (l) => {
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            l.message,
+                            style: TextStyle(fontSize: 14),
+                            textAlign: TextAlign.center,
+                          ),
+                          backgroundColor: AppColors.snackWarning,
+                          behavior: SnackBarBehavior.floating,
+                        ),
+                      )
+                    },
+                    (r) => {
+                      _navigationService.pushReplacementNamedNoAnimation(
+                        RouteNames.appContainer,
+                      )
+                    },
+                  )
                 },
               )
+              .whenComplete(() => _setLoading(false))
         },
       );
     } catch (error) {
-      print(error);
+      _setLoading(false);
     }
   }
 
@@ -44,7 +67,7 @@ class GoogleLoginButton extends StatelessWidget {
 
     return RawMaterialButton(
       onPressed: () {
-        _initGoogleLogin();
+        _initGoogleLogin(context);
       },
       splashColor: Colors.transparent,
       child: Image(

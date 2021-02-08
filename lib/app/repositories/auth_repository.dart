@@ -37,7 +37,7 @@ class AuthRepository implements IAuthRepositoryInterface {
 
       return Right(AuthUserModel.fromJson(user.data));
     } catch (e) {
-      return Left(LoginError(message: e.response.data['errors']));
+      return Left(LoginError(message: e.response.data['error']));
     }
   }
 
@@ -50,7 +50,7 @@ class AuthRepository implements IAuthRepositoryInterface {
 
       return Right(AuthUserModel.fromJson(user.data));
     } catch (e) {
-      return Left(LoginError(message: e.response.data['errors']));
+      return Left(LoginError(message: e.response.data['error']));
     }
   }
 }

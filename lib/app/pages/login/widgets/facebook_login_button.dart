@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
+import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/view_models/facebook_login_vm.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -14,7 +15,7 @@ class FacebookLoginButton extends StatelessWidget {
 
   FacebookLoginButton(this._setLoading, this._navigationService);
 
-  _initFacebookLogin() async {
+  _initFacebookLogin(BuildContext context) async {
     _setLoading(true);
     final facebookLogin = FacebookLogin();
     const permissions = ['email'];
@@ -29,7 +30,19 @@ class FacebookLoginButton extends StatelessWidget {
             .then(
               (value) => {
                 value.fold(
-                  (l) => null,
+                  (l) => {
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          l.message,
+                          style: TextStyle(fontSize: 14),
+                          textAlign: TextAlign.center,
+                        ),
+                        backgroundColor: AppColors.snackWarning,
+                        behavior: SnackBarBehavior.floating,
+                      ),
+                    )
+                  },
                   (r) => {
                     _navigationService.pushReplacementNamedNoAnimation(
                       RouteNames.appContainer,
@@ -55,7 +68,7 @@ class FacebookLoginButton extends StatelessWidget {
 
     return RawMaterialButton(
       onPressed: () {
-        _initFacebookLogin();
+        _initFacebookLogin(context);
       },
       splashColor: Colors.transparent,
       child: Image(

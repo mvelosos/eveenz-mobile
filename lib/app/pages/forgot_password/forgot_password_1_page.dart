@@ -33,31 +33,34 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
     Size _size = MediaQuery.of(context).size;
     _setLoading(true);
 
-    var result =
-        await _passwordsController.forgotPassword(_passwordForgotEmail);
-    result.fold(
-      (l) => {
-        Scaffold.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              l.message,
-              style: TextStyle(fontSize: _size.height * .018),
-              textAlign: TextAlign.center,
-            ),
-            backgroundColor: AppColors.snackWarning,
-            behavior: SnackBarBehavior.floating,
-            duration: Duration(seconds: 2),
-          ),
-        )
-      },
-      (r) => {
-        _navigationService.pushNamed(
-          RouteNames.forgotPassword2,
-          arguments: ForgotPasswordPage2Arguments(email: r['email']),
-        )
-      },
-    );
-    _setLoading(false);
+    _passwordsController
+        .forgotPassword(_passwordForgotEmail)
+        .then((value) => {
+              value.fold(
+                (l) => {
+                  print(l),
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        l.message,
+                        style: TextStyle(fontSize: _size.height * .018),
+                        textAlign: TextAlign.center,
+                      ),
+                      backgroundColor: AppColors.snackWarning,
+                      behavior: SnackBarBehavior.floating,
+                      duration: Duration(seconds: 3),
+                    ),
+                  )
+                },
+                (r) => {
+                  _navigationService.pushNamed(
+                    RouteNames.forgotPassword2,
+                    arguments: ForgotPasswordPage2Arguments(email: r['email']),
+                  )
+                },
+              )
+            })
+        .whenComplete(() => _setLoading(false));
   }
 
   // Widgets
@@ -96,8 +99,10 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
 
     return RawMaterialButton(
       onPressed: () {
-        if (_formKey.currentState.validate())
+        if (_formKey.currentState.validate()) {
+          FocusScope.of(context).unfocus();
           return _loading ? null : _requestPasswordForgot(context);
+        }
       },
       child: Container(
         width: _size.width,
