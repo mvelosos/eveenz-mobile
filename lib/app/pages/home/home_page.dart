@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
+import 'package:party_mobile/app/shared/constants/route_names.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -15,7 +16,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final _navigationService = NavigationService.currentNavigator(context);
+    _navigationService = NavigationService.currentNavigator(context);
 
     return DefaultTabController(
       length: 2,
@@ -71,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                       padding: EdgeInsets.all(0),
                       minWidth: 0,
                       onPressed: () {
-                        print('novo evento');
+                        _navigationService.pushNamed(RouteNames.newEvent1);
                       },
                       child: Icon(
                         Icons.add_circle,
