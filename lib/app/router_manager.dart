@@ -9,6 +9,7 @@ import 'package:party_mobile/app/pages/forgot_password/forgot_password_4_page.da
 import 'package:party_mobile/app/pages/home/home_page.dart';
 import 'package:party_mobile/app/pages/login/login_page.dart';
 import 'package:party_mobile/app/pages/map/map_page.dart';
+import 'package:party_mobile/app/pages/new_event/new_event_1_page.dart';
 import 'package:party_mobile/app/pages/notifications/notifications_page.dart';
 import 'package:party_mobile/app/pages/profile/profile_page.dart';
 import 'package:party_mobile/app/pages/root/root_page.dart';
@@ -107,6 +108,10 @@ class RouterManager {
 
       case RouteNames.settings:
         return MaterialPageRoute(builder: (_) => SettingsPage());
+
+      // Events
+      case RouteNames.newEvent1:
+        return MaterialPageRoute(builder: (_) => NewEvent1Page());
 
       default:
         return MaterialPageRoute(
