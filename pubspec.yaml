@@ -38,6 +38,7 @@ dependencies:
   google_fonts: ^1.1.1
   font_awesome_flutter: ^8.11.0
   google_sign_in: ^4.5.9
+  device_preview: ^0.5.5
 
 dev_dependencies:
   flutter_test:
