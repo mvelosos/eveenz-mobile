@@ -33,4 +33,5 @@ class RouteNames {
 
   // Events
   static const String newEvent1 = '/events/new/1';
+  static const String newEvent2 = '/events/new/2';
 }
