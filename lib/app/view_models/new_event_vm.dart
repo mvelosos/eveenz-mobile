@@ -1,6 +1,7 @@
 class NewEventVM {
   String name = '';
   String description = '';
+  String privacy = '';
   String startDate = '';
   String endDate = '';
   String startTime = '';
@@ -25,6 +26,7 @@ class NewEventVM {
       'event': {
         'name': name.trim(),
         'description': description.trim(),
+        'privacy': privacy,
         'startDate': startDate,
         'endDate': endDate,
         'startTime': startTime,
