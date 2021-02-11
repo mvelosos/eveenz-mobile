@@ -11,6 +11,7 @@ import 'package:party_mobile/app/pages/login/login_page.dart';
 import 'package:party_mobile/app/pages/map/map_page.dart';
 import 'package:party_mobile/app/pages/new_event/new_event_1_page.dart';
 import 'package:party_mobile/app/pages/new_event/new_event_2_page.dart';
+import 'package:party_mobile/app/pages/new_event/new_event_3_page.dart';
 import 'package:party_mobile/app/pages/notifications/notifications_page.dart';
 import 'package:party_mobile/app/pages/profile/profile_page.dart';
 import 'package:party_mobile/app/pages/root/root_page.dart';
@@ -117,6 +118,10 @@ class RouterManager {
       case RouteNames.newEvent2:
         NewEvent2PageArguments args = route.arguments;
         return MaterialPageRoute(builder: (_) => NewEvent2Page(args: args));
+
+      case RouteNames.newEvent3:
+        NewEvent3PageArguments args = route.arguments;
+        return MaterialPageRoute(builder: (_) => NewEvent3Page(args: args));
 
       default:
         return MaterialPageRoute(
