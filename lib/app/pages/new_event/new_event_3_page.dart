@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/services/google_places_service.dart';
@@ -27,6 +26,7 @@ class NewEvent3Page extends StatefulWidget {
 class _NewEvent3PageState extends State<NewEvent3Page> {
   NavigationService _navigationService;
   NewEventVM _newEvent;
+  String _googleSessionToken;
   List<dynamic> _placesSearchResult = [];
 
   // Functions
@@ -39,16 +39,30 @@ class _NewEvent3PageState extends State<NewEvent3Page> {
     });
   }
 
-  void _searchGoogleResults(String searchText) async {
-    if (searchText.isEmpty) return;
-    print(searchText);
+  void _setSessionToken() {
+    _googleSessionToken = GooglePlacesService.generateSessionToken();
+  }
 
-    var result = await GooglePlacesService.getSearchResults(searchText);
+  void _sanitizeAndSetResults(List results) {
+    results.removeWhere((item) =>
+        !item['structured_formatting'].containsKey('main_text') &&
+        !item['structured_formatting'].containsKey('secondary_text'));
+
     setState(() {
-      _placesSearchResult = result;
+      _placesSearchResult = results;
     });
+  }
 
-    print(result);
+  void _searchGoogleResults(String searchText) async {
+    if (_googleSessionToken == null) {
+      _setSessionToken();
+      print(_googleSessionToken);
+    }
+    if (searchText.isEmpty) return;
+    var results = await GooglePlacesService.getPlacesAutocomplete(
+        searchText, _googleSessionToken);
+
+    _sanitizeAndSetResults(results);
   }
 
   @override
@@ -126,14 +140,25 @@ class _NewEvent3PageState extends State<NewEvent3Page> {
                                 itemCount: _placesSearchResult.length,
                                 itemBuilder: (_, idx) {
                                   return ListTile(
+                                    leading: Icon(Icons.place),
                                     title: AutoSizeText(
                                       _placesSearchResult[idx]
-                                          ['formatted_address'],
+                                              ['structured_formatting']
+                                          ['main_text'],
                                       maxLines: 2,
-                                      // wrapWords: true,
-                                      // softWrap: true,
+                                      minFontSize: 15,
                                     ),
-                                    leading: Icon(Icons.place),
+                                    subtitle: _placesSearchResult[idx]
+                                                ['structured_formatting']
+                                            .containsKey('secondary_text')
+                                        ? AutoSizeText(
+                                            _placesSearchResult[idx]
+                                                    ['structured_formatting']
+                                                ['secondary_text'],
+                                            maxLines: 2,
+                                            minFontSize: 13,
+                                          )
+                                        : null,
                                   );
                                 },
                               )
