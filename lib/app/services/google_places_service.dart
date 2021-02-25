@@ -9,7 +9,7 @@ class GooglePlacesService {
       'https://maps.googleapis.com/maps/api/place/autocomplete/json';
   static final String placeDetailsUrl =
       'https://maps.googleapis.com/maps/api/place/details/json';
-  static final fields = 'formatted_address,geometry';
+  static final fields = 'formatted_address,geometry,address_component';
 
   static String generateSessionToken() {
     var random = new Random();
