@@ -7,6 +7,9 @@ class GooglePlacesService {
   static final String kGoogleApiKey = ApiKeys.kGoogleApiKey;
   static final String placesAutocompleteUrl =
       'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+  static final String placeDetailsUrl =
+      'https://maps.googleapis.com/maps/api/place/details/json';
+  static final fields = 'formatted_address,geometry';
 
   static String generateSessionToken() {
     var random = new Random();
@@ -20,5 +23,13 @@ class GooglePlacesService {
         '$placesAutocompleteUrl?input=$searchText&key=$kGoogleApiKey&sessiontoken=$sessionToken';
     Response response = await Dio().get(url);
     return response.data['predictions'];
+  }
+
+  static Future<dynamic> getPlaceDetails(
+      String placeId, String sessionToken) async {
+    String url =
+        '$placeDetailsUrl?place_id=$placeId&fields=$fields&key=$kGoogleApiKey&sessiontoken=$sessionToken';
+    Response response = await Dio().get(url);
+    return response.data;
   }
 }
