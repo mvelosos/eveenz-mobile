@@ -6,7 +6,7 @@ class NewEventVM {
   String endDate = '';
   String startTime = '';
   String endTime = '';
-  Map<String, String> addressAttributes = {
+  Map<String, dynamic> addressAttributes = {
     'street': '',
     'number': '',
     'neighborhood': '',
@@ -14,8 +14,9 @@ class NewEventVM {
     'state': '',
     'country': '',
     'zipCode': '',
+    'complement': ''
   };
-  Map<String, String> localizationAttributes = {
+  Map<String, dynamic> localizationAttributes = {
     'latitude': '',
     'longitude': '',
   };
@@ -47,6 +48,7 @@ class NewEventVM {
       'state': addressAttributes['state'].trim(),
       'country': addressAttributes['country'].trim(),
       'zipCode': addressAttributes['zipCode'].trim(),
+      'complement': addressAttributes['complement'].trim(),
     };
   }
 
