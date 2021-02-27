@@ -402,6 +402,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eveenz;
 				PRODUCT_NAME = Hango;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -543,6 +544,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eveenz;
 				PRODUCT_NAME = Hango;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -578,6 +580,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eveenz;
 				PRODUCT_NAME = Hango;
 				PROVISIONING_PROFILE_SPECIFIER = "";
