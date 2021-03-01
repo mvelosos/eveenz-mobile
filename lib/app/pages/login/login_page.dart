@@ -314,7 +314,10 @@ class _LoginPageState extends State<LoginPage> {
                                     _navigationService,
                                   ),
                                   Platform.isIOS
-                                      ? AppleLoginButton(_loginController)
+                                      ? AppleLoginButton(
+                                          _setLoading,
+                                          _navigationService,
+                                        )
                                       : SizedBox.shrink(),
                                 ],
                               ),
