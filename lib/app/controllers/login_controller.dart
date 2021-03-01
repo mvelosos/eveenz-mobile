@@ -6,6 +6,7 @@ import 'package:party_mobile/app/repositories/auth_repository.dart';
 import 'package:party_mobile/app/shared/errors/errors.dart';
 import 'package:party_mobile/app/shared/utils/commons.dart';
 import 'package:party_mobile/app/stores/auth_user_store.dart';
+import 'package:party_mobile/app/view_models/apple_login_vm.dart';
 import 'package:party_mobile/app/view_models/facebook_login_vm.dart';
 import 'package:party_mobile/app/view_models/google_login_vm.dart';
 import 'package:party_mobile/app/view_models/user_login_vm.dart';
@@ -42,6 +43,16 @@ class LoginController {
   Future<Either<Failure, AuthUserModel>> loginWithGoogle(
       GoogleLoginVM googleLogin) async {
     var authResult = await _authRepository.authGoogle(googleLogin);
+    if (authResult.isRight()) {
+      Commons.setAuthLocalStorage(authResult.getOrElse(null));
+      _authUserStore.setUser(authResult.getOrElse(null));
+    }
+    return authResult;
+  }
+
+  Future<Either<Failure, AuthUserModel>> loginWithApple(
+      AppleLoginVM appleLogin) async {
+    var authResult = await _authRepository.authApple(appleLogin);
     if (authResult.isRight()) {
       Commons.setAuthLocalStorage(authResult.getOrElse(null));
       _authUserStore.setUser(authResult.getOrElse(null));
