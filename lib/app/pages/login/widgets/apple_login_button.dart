@@ -33,13 +33,10 @@ class AppleLoginButton extends StatelessWidget {
 
       _setLoading(true);
 
-      // if (credentials.identityToken != null &&
-      //     credentials.identityToken.isNotEmpty) {
-      //   await _storeAppleJwt(credentials.identityToken);
-      // }
-      // TODO: FIX THIS
-
-      _getAppleJwt().then((value) => print(value));
+      if (credentials.identityToken != null &&
+          credentials.identityToken.isNotEmpty) {
+        await _storeAppleJwt(credentials.identityToken);
+      }
 
       _appleLogin.userId = credentials.userIdentifier;
       _appleLogin.jwt = await _getAppleJwt();
