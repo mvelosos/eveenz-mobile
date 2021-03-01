@@ -5,6 +5,7 @@ import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/services/local_storage_service.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
+import 'package:party_mobile/app/shared/constants/storage.dart';
 import 'package:party_mobile/app/stores/auth_user_store.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -34,14 +35,12 @@ class _SettingsPageState extends State<SettingsPage> {
             RaisedButton(
               child: Text('Logout'),
               onPressed: () => {
-                _storage.clear().then(
-                      (_) => {
-                        _authUserStore.clean(),
-                        OneSignal.shared.removeExternalUserId(),
-                        _navigationService
-                            .pushReplacementNamedNoAnimation(RouteNames.login)
-                      },
-                    )
+                _storage.delete(Storage.jwtToken),
+                _storage.delete(Storage.username),
+                _authUserStore.clean(),
+                OneSignal.shared.removeExternalUserId(),
+                _navigationService
+                    .pushReplacementNamedNoAnimation(RouteNames.login)
               },
             ),
           ],
