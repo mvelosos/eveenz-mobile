@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/services/local_storage_service.dart';
@@ -27,20 +28,24 @@ class _SettingsPageState extends State<SettingsPage> {
         iconTheme: IconThemeData(color: Colors.blue),
       ),
       body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          RaisedButton(
-            child: Text('Logout'),
-            onPressed: () => {
-              _storage.clear().then(
-                    (_) => {
-                      _authUserStore.clean(),
-                      _navigationService
-                          .pushReplacementNamedNoAnimation(RouteNames.login)
-                    },
-                  )
-            },
-          ),
-        ]),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RaisedButton(
+              child: Text('Logout'),
+              onPressed: () => {
+                _storage.clear().then(
+                      (_) => {
+                        _authUserStore.clean(),
+                        OneSignal.shared.removeExternalUserId(),
+                        _navigationService
+                            .pushReplacementNamedNoAnimation(RouteNames.login)
+                      },
+                    )
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
