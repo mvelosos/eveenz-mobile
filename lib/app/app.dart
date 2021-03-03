@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/router_manager.dart';
@@ -17,8 +19,13 @@ class App extends StatelessWidget {
       navigatorKey: locator<RootNavigatorKey>().navigatorKey,
       onGenerateRoute: RouterManager.generateRoute,
       initialRoute: RouteNames.root,
-      locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
+      locale: DevicePreview.locale(context),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
     );
   }
 }
