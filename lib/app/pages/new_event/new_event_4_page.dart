@@ -27,7 +27,7 @@ class NewEvent4Page extends StatefulWidget {
 class _NewEvent4PageState extends State<NewEvent4Page> {
   NewEventVM _newEvent;
   DateTime selectedDate = DateTime.now();
-  TimeOfDay selectedTime = TimeOfDay.now();
+  DateTime selectedTime = DateTime.now();
 
   // Functions
 
@@ -56,7 +56,9 @@ class _NewEvent4PageState extends State<NewEvent4Page> {
   }
 
   buildMaterialTimePicker(BuildContext context) async {
-    showTimePicker(context: context, initialTime: selectedTime);
+    // TimeOfDay time =
+    //     TimeOfDay(hour: selectedTime.hour, minute: selectedTime.minute);
+    // showTimePicker(context: context, initialTime: time);
   }
 
   buildCupertinoTimePicker(BuildContext context) async {
@@ -66,9 +68,30 @@ class _NewEvent4PageState extends State<NewEvent4Page> {
         return Container(
           height: MediaQuery.of(context).copyWith().size.height / 3,
           color: Colors.white,
-          child: CupertinoTimerPicker(
-            onTimerDurationChanged: (value) {},
-            mode: CupertinoTimerPickerMode.hm,
+          child: Stack(
+            children: [
+              CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.time,
+                minuteInterval: 5,
+                onDateTimeChanged: (picked) {
+                  if (picked != null && picked != selectedDate)
+                    setState(() {
+                      selectedDate = picked;
+                    });
+                },
+                use24hFormat: true,
+                initialDateTime: selectedDate,
+              ),
+              Positioned(
+                right: 0,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Ok'),
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -103,17 +126,31 @@ class _NewEvent4PageState extends State<NewEvent4Page> {
         return Container(
           height: MediaQuery.of(context).copyWith().size.height / 3,
           color: Colors.white,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            onDateTimeChanged: (picked) {
-              if (picked != null && picked != selectedDate)
-                setState(() {
-                  selectedDate = picked;
-                });
-            },
-            initialDateTime: selectedDate,
-            minimumYear: 2000,
-            maximumYear: 2025,
+          child: Stack(
+            children: [
+              CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.date,
+                onDateTimeChanged: (picked) {
+                  if (picked != null && picked != selectedDate)
+                    setState(() {
+                      selectedDate = picked;
+                    });
+                },
+                initialDateTime: selectedDate,
+                minimumYear: 2000,
+                maximumYear: 2025,
+                minimumDate: selectedDate,
+              ),
+              Positioned(
+                right: 0,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Ok'),
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -209,6 +246,7 @@ class _NewEvent4PageState extends State<NewEvent4Page> {
                             ),
                             color: Colors.greenAccent,
                           ),
+                          Text(selectedDate.toString()),
                           RaisedButton(
                             onPressed: () => _selectTime(context),
                             child: Text(
@@ -219,6 +257,7 @@ class _NewEvent4PageState extends State<NewEvent4Page> {
                             ),
                             color: Colors.greenAccent,
                           ),
+                          Text(selectedTime.toString()),
                         ],
                       ),
                     ),
