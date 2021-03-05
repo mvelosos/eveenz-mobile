@@ -13,6 +13,8 @@ import 'package:party_mobile/app/pages/new_event/new_event_1_page.dart';
 import 'package:party_mobile/app/pages/new_event/new_event_2_page.dart';
 import 'package:party_mobile/app/pages/new_event/new_event_3_page.dart';
 import 'package:party_mobile/app/pages/new_event/new_event_4_page.dart';
+import 'package:party_mobile/app/pages/new_event/new_event_5_page.dart';
+import 'package:party_mobile/app/pages/new_event/new_event_6_page.dart';
 import 'package:party_mobile/app/pages/notifications/notifications_page.dart';
 import 'package:party_mobile/app/pages/profile/profile_page.dart';
 import 'package:party_mobile/app/pages/root/root_page.dart';
@@ -127,6 +129,14 @@ class RouterManager {
       case RouteNames.newEvent4:
         NewEvent4PageArguments args = route.arguments;
         return MaterialPageRoute(builder: (_) => NewEvent4Page(args: args));
+
+      case RouteNames.newEvent5:
+        NewEvent5PageArguments args = route.arguments;
+        return MaterialPageRoute(builder: (_) => NewEvent5Page(args: args));
+
+      case RouteNames.newEvent6:
+        NewEvent6PageArguments args = route.arguments;
+        return MaterialPageRoute(builder: (_) => NewEvent6Page(args: args));
 
       default:
         return MaterialPageRoute(
