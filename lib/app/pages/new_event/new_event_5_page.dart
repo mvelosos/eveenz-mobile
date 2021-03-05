@@ -75,6 +75,19 @@ class _NewEvent5PageState extends State<NewEvent5Page> {
     return formattedTime;
   }
 
+  _onCheckUndefinedEnd(newValue) {
+    setState(() {
+      _newEvent.undefinedEnd = newValue;
+      if (newValue) {
+        _newEvent.endDate = '';
+        _newEvent.endTime = '';
+      } else {
+        _setDate(_selectedDate);
+        _setTime(_selectedTime);
+      }
+    });
+  }
+
   // Widgets
 
   Widget _continueButton(BuildContext context) {
@@ -82,12 +95,6 @@ class _NewEvent5PageState extends State<NewEvent5Page> {
 
     return RawMaterialButton(
       onPressed: () {
-        if (_newEvent.undefinedEnd) {
-          setState(() {
-            _newEvent.endDate = '';
-            _newEvent.endTime = '';
-          });
-        }
         _navigationService.pushNamed(
           RouteNames.newEvent6,
           arguments: NewEvent6PageArguments(newEvent: _newEvent),
@@ -239,9 +246,7 @@ class _NewEvent5PageState extends State<NewEvent5Page> {
                             controlAffinity: ListTileControlAffinity.leading,
                             value: _newEvent.undefinedEnd,
                             onChanged: (newValue) {
-                              setState(() {
-                                _newEvent.undefinedEnd = newValue;
-                              });
+                              _onCheckUndefinedEnd(newValue);
                             },
                             activeColor: AppColors.orange,
                             //  <-- leading Checkbox
