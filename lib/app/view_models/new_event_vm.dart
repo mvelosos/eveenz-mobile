@@ -6,6 +6,7 @@ class NewEventVM {
   String endDate = '';
   String startTime = '';
   String endTime = '';
+  bool undefinedEnd = false;
   Map<String, dynamic> addressAttributes = {
     'street': '',
     'number': '',
@@ -32,6 +33,7 @@ class NewEventVM {
         'endDate': endDate,
         'startTime': startTime,
         'endTime': endTime,
+        'undefinedEnd': undefinedEnd,
         'addressAttributes': _getAddressData(),
         'localizationAttributes': _getLocalizationData(),
         'images': images,
