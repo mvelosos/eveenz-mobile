@@ -1,10 +1,14 @@
-import 'dart:io';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:party_mobile/app/pages/new_event/new_event_5_page.dart';
+import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
+import 'package:party_mobile/app/shared/constants/route_names.dart';
+import 'package:party_mobile/app/shared/widgets/date_picker.dart';
+import 'package:party_mobile/app/shared/widgets/time_picker.dart';
 import 'package:party_mobile/app/view_models/new_event_vm.dart';
 
 // Page Arguments
@@ -26,8 +30,9 @@ class NewEvent4Page extends StatefulWidget {
 
 class _NewEvent4PageState extends State<NewEvent4Page> {
   NewEventVM _newEvent;
-  DateTime selectedDate = DateTime.now();
-  DateTime selectedTime = DateTime.now();
+  NavigationService _navigationService;
+  DateTime _selectedDate = DateTime.now();
+  DateTime _selectedTime = DateTime.now();
 
   // Functions
 
@@ -36,125 +41,37 @@ class _NewEvent4PageState extends State<NewEvent4Page> {
     super.initState();
     setState(() {
       _newEvent = widget.args.newEvent;
+      _setDate(_selectedDate);
+      _setTime(_selectedTime);
     });
   }
 
-  _selectDate(BuildContext context) async {
-    if (Platform.isIOS) {
-      return buildCupertinoDatePicker(context);
-    } else {
-      return buildMaterialDatePicker(context);
-    }
+  _setDate(DateTime dateTime) {
+    String formattedDate = DateFormat('y-MM-dd').format(dateTime);
+
+    setState(() {
+      _newEvent.startDate = formattedDate;
+      _selectedDate = dateTime;
+    });
   }
 
-  _selectTime(BuildContext context) async {
-    if (Platform.isIOS) {
-      return buildCupertinoTimePicker(context);
-    } else {
-      return buildMaterialTimePicker(context);
-    }
+  _setTime(DateTime dateTime) {
+    String formattedTime = DateFormat.Hms().format(dateTime);
+
+    setState(() {
+      _newEvent.startTime = formattedTime;
+      _selectedTime = dateTime;
+    });
   }
 
-  buildMaterialTimePicker(BuildContext context) async {
-    // TimeOfDay time =
-    //     TimeOfDay(hour: selectedTime.hour, minute: selectedTime.minute);
-    // showTimePicker(context: context, initialTime: time);
+  String _getDisplayDate() {
+    String formattedDate = DateFormat('dd/MM/y').format(_selectedDate);
+    return formattedDate;
   }
 
-  buildCupertinoTimePicker(BuildContext context) async {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext builder) {
-        return Container(
-          height: MediaQuery.of(context).copyWith().size.height / 3,
-          color: Colors.white,
-          child: Stack(
-            children: [
-              CupertinoDatePicker(
-                mode: CupertinoDatePickerMode.time,
-                minuteInterval: 5,
-                onDateTimeChanged: (picked) {
-                  if (picked != null && picked != selectedDate)
-                    setState(() {
-                      selectedDate = picked;
-                    });
-                },
-                use24hFormat: true,
-                initialDateTime: selectedDate,
-              ),
-              Positioned(
-                right: 0,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Ok'),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  /// This builds material date picker in Android
-  buildMaterialDatePicker(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2025),
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.light(),
-          child: child,
-        );
-      },
-    );
-    if (picked != null && picked != selectedDate)
-      setState(() {
-        selectedDate = picked;
-      });
-  }
-
-  /// This builds cupertion date picker in iOS
-  buildCupertinoDatePicker(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext builder) {
-        return Container(
-          height: MediaQuery.of(context).copyWith().size.height / 3,
-          color: Colors.white,
-          child: Stack(
-            children: [
-              CupertinoDatePicker(
-                mode: CupertinoDatePickerMode.date,
-                onDateTimeChanged: (picked) {
-                  if (picked != null && picked != selectedDate)
-                    setState(() {
-                      selectedDate = picked;
-                    });
-                },
-                initialDateTime: selectedDate,
-                minimumYear: 2000,
-                maximumYear: 2025,
-                minimumDate: selectedDate,
-              ),
-              Positioned(
-                right: 0,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Ok'),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+  String _getDisplayTime() {
+    String formattedTime = DateFormat.Hm().format(_selectedTime);
+    return formattedTime;
   }
 
   // Widgets
@@ -163,7 +80,12 @@ class _NewEvent4PageState extends State<NewEvent4Page> {
     final _size = MediaQuery.of(context).size;
 
     return RawMaterialButton(
-      onPressed: () {},
+      onPressed: () {
+        _navigationService.pushNamed(
+          RouteNames.newEvent5,
+          arguments: NewEvent5PageArguments(newEvent: _newEvent),
+        );
+      },
       child: Container(
         width: _size.width,
         margin: EdgeInsets.symmetric(vertical: _size.height * .007),
@@ -190,6 +112,7 @@ class _NewEvent4PageState extends State<NewEvent4Page> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    _navigationService = NavigationService.currentNavigator(context);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -232,32 +155,68 @@ class _NewEvent4PageState extends State<NewEvent4Page> {
                       fontWeight: FontWeight.normal,
                     ),
                   ),
+                  SizedBox(height: size.height * .05),
                   Expanded(
                     child: Container(
+                      constraints: BoxConstraints.expand(),
                       child: Column(
                         children: [
-                          RaisedButton(
-                            onPressed: () => _selectDate(context),
-                            child: Text(
-                              'Select date',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                          RawMaterialButton(
+                            onPressed: () {
+                              DatePicker(context, _selectedDate, _setDate);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                left: size.height * .025,
+                                top: size.height * .015,
+                                right: size.height * .025,
+                                bottom: size.height * .015,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: AppColors.orange),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                _getDisplayDate(),
+                                style: TextStyle(
+                                  fontSize: size.height * .04,
+                                  color: AppColors.darkPurple,
+                                ),
+                              ),
                             ),
-                            color: Colors.greenAccent,
                           ),
-                          Text(selectedDate.toString()),
-                          RaisedButton(
-                            onPressed: () => _selectTime(context),
-                            child: Text(
-                              'Select Time',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                          SizedBox(height: size.height * .02),
+                          Text(
+                            'às',
+                            style: TextStyle(
+                                fontSize: size.height * .02,
+                                fontWeight: FontWeight.w300),
+                          ),
+                          SizedBox(height: size.height * .02),
+                          RawMaterialButton(
+                            onPressed: () {
+                              TimePicker(context, _selectedTime, _setTime);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                left: size.height * .025,
+                                top: size.height * .015,
+                                right: size.height * .025,
+                                bottom: size.height * .015,
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: AppColors.orange),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                _getDisplayTime(),
+                                style: TextStyle(
+                                  fontSize: size.height * .04,
+                                  color: AppColors.darkPurple,
+                                ),
+                              ),
                             ),
-                            color: Colors.greenAccent,
                           ),
-                          Text(selectedTime.toString()),
                         ],
                       ),
                     ),
