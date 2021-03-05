@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:party_mobile/app/models/auth_user_model.dart';
 part 'auth_user_store.g.dart';
