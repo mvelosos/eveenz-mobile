@@ -10,16 +10,16 @@ import 'app/app.dart' as myApp;
 
 void main() async {
   if (kReleaseMode) {
-    runRelease();
+    await runRelease();
   } else {
-    runDebug();
+    await runDebug();
   }
 
   setupLocator();
   setupOneSignal();
 }
 
-void runRelease() async {
+Future<void> runRelease() async {
   await SentryFlutter.init(
     (options) {
       options.dsn = ApiKeys.kSentryDns;
@@ -28,10 +28,10 @@ void runRelease() async {
   );
 }
 
-void runDebug() {
+Future<void> runDebug() async {
   runApp(
     DevicePreview(
-      enabled: false, // Always set false when app will be deployed
+      enabled: false,
       builder: (context) => myApp.App(),
     ),
   );
