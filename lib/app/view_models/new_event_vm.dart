@@ -1,12 +1,14 @@
 class NewEventVM {
-  String name = '';
-  String description = '';
-  String privacy = '';
-  String startDate = '';
-  String endDate = '';
-  String startTime = '';
-  String endTime = '';
+  String name;
+  String description;
+  String privacy;
+  String startDate;
+  String endDate;
+  String startTime;
+  String endTime;
   bool undefinedEnd = false;
+  String externalUrl;
+  int minimumAge;
   Map<String, dynamic> addressAttributes = {
     'street': '',
     'number': '',
@@ -34,6 +36,8 @@ class NewEventVM {
         'startTime': startTime,
         'endTime': endTime,
         'undefinedEnd': undefinedEnd,
+        'externalUrl': externalUrl,
+        'minimumAge': minimumAge,
         'addressAttributes': _getAddressData(),
         'localizationAttributes': _getLocalizationData(),
         'images': images,
