@@ -341,6 +341,7 @@ class _NewEvent3PageState extends State<NewEvent3Page> {
                                           _newEvent.addressAttributes[
                                               'complement'] = value;
                                         },
+                                        autocorrect: false,
                                         decoration: InputDecoration(
                                           labelText: 'Apartamento, bloco...',
                                           labelStyle: GoogleFonts.inter(
