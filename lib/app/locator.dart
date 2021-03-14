@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:party_mobile/app/controllers/categories_controller.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/controllers/me_controller.dart';
 import 'package:party_mobile/app/controllers/passwords_controller.dart';
@@ -17,6 +18,7 @@ GetIt locator = GetIt.instance;
 void setupLocator() {
   // Controllers
   locator.registerLazySingleton(() => AccountsController());
+  locator.registerLazySingleton(() => CategoriesController());
   locator.registerLazySingleton(() => LoginController());
   locator.registerLazySingleton(() => MeController());
   locator.registerLazySingleton(() => PasswordsController());
