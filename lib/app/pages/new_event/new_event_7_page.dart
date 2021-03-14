@@ -1,9 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:party_mobile/app/controllers/categories_controller.dart';
+import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/models/category_model.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/view_models/new_event_vm.dart';
+import 'package:flutter_chips_input/flutter_chips_input.dart';
 
 // Page Arguments
 class NewEvent7PageArguments {
@@ -25,6 +29,8 @@ class NewEvent7Page extends StatefulWidget {
 class _NewEvent7PageState extends State<NewEvent7Page> {
   NewEventVM _newEvent;
   NavigationService _navigationService;
+  CategoriesController _categoriesController = locator<CategoriesController>();
+  List<CategoryModel> _categories;
 
   // Functions
 
@@ -34,6 +40,16 @@ class _NewEvent7PageState extends State<NewEvent7Page> {
     setState(() {
       _newEvent = widget.args.newEvent;
     });
+    _getCategories();
+  }
+
+  _getCategories() async {
+    var result = await _categoriesController.getCategories();
+    if (result.isRight()) {
+      setState(() {
+        _categories = result.getOrElse(null);
+      });
+    }
   }
 
   @override
@@ -80,28 +96,10 @@ class _NewEvent7PageState extends State<NewEvent7Page> {
                       fontWeight: FontWeight.normal,
                     ),
                   ),
-                  Chip(
-                    label: Text(
-                      'Aaron Burr',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.pink,
-                    deleteIcon: Icon(Icons.close),
-                    onDeleted: () {
-                      print('deleted');
-                    },
-                  ),
-                  Chip(
-                    label: Text(
-                      'Joãozin',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.blue,
-                    deleteIcon: Icon(Icons.close),
-                    onDeleted: () {
-                      print('deleted');
-                    },
-                  ),
+                  ChipsInput(
+                    suggestionBuilder: (context, state, dynamic) {},
+                    chipBuilder: (context, state, profile) {},
+                  )
                 ],
               ),
             ),
