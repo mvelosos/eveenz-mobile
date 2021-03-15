@@ -3,6 +3,7 @@ import 'package:party_mobile/app/controllers/categories_controller.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
 import 'package:party_mobile/app/controllers/me_controller.dart';
 import 'package:party_mobile/app/controllers/passwords_controller.dart';
+import 'package:party_mobile/app/controllers/request_categories_controller.dart';
 import 'package:party_mobile/app/controllers/search_controller.dart';
 import 'package:party_mobile/app/controllers/accounts_controller.dart';
 import 'package:party_mobile/app/controllers/signup_controller.dart';
@@ -22,6 +23,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => LoginController());
   locator.registerLazySingleton(() => MeController());
   locator.registerLazySingleton(() => PasswordsController());
+  locator.registerLazySingleton(() => RequestCategoriesController());
   locator.registerLazySingleton(() => SearchController());
   locator.registerLazySingleton(() => SignUpController());
   locator.registerLazySingleton(() => UsersController());

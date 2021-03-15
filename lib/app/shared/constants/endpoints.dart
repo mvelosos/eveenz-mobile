@@ -28,4 +28,7 @@ class Endpoints {
 
   // Categories Endpoints
   static const String categories = '/categories';
+
+  // RequestCategories Endpoint
+  static const String requestCategories = '/request_categories';
 }
