@@ -23,6 +23,7 @@ class NewEventVM {
     'latitude': '',
     'longitude': '',
   };
+  List<Map<String, dynamic>> eventCategories = [];
   List images = [];
 
   Map<String, dynamic> getData() {
@@ -40,6 +41,7 @@ class NewEventVM {
         'minimumAge': minimumAge,
         'addressAttributes': _getAddressData(),
         'localizationAttributes': _getLocalizationData(),
+        'eventCategoriesAttributes': eventCategories,
         'images': images,
       }
     };
