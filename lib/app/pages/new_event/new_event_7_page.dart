@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/categories_controller.dart';
@@ -7,7 +8,6 @@ import 'package:party_mobile/app/models/category_model.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/view_models/new_event_vm.dart';
-import 'package:flutter_chips_input/flutter_chips_input.dart';
 
 // Page Arguments
 class NewEvent7PageArguments {
@@ -31,6 +31,7 @@ class _NewEvent7PageState extends State<NewEvent7Page> {
   NavigationService _navigationService;
   CategoriesController _categoriesController = locator<CategoriesController>();
   List<CategoryModel> _categories;
+  List<String> _selectedCategoriesIds;
 
   // Functions
 
@@ -89,16 +90,32 @@ class _NewEvent7PageState extends State<NewEvent7Page> {
                   ),
                   SizedBox(height: size.height * .005),
                   AutoSizeText(
-                    'Você pode escolher até 3 categorias que seu evento se encaixa.',
+                    'Você pode escolher até 3 categorias que mais combinam com o seu evento',
                     style: GoogleFonts.poppins(
                       fontSize: size.height * .016,
                       color: AppColors.darkPurple,
                       fontWeight: FontWeight.normal,
                     ),
                   ),
-                  ChipsInput(
-                    suggestionBuilder: (context, state, dynamic) {},
-                    chipBuilder: (context, state, profile) {},
+                  ChipsChoice<String>.multiple(
+                    value: _selectedCategoriesIds,
+                    onChanged: (val) {
+                      if (val.length > 3) return;
+                      setState(() {
+                        _selectedCategoriesIds = val;
+                      });
+
+                      print(_selectedCategoriesIds);
+                    },
+                    choiceItems: C2Choice.listFrom<String, CategoryModel>(
+                      source: _categories,
+                      value: (i, v) => _categories[i].id.toString(),
+                      label: (i, v) => _categories[i].titleizedName,
+                    ),
+                    wrapped: true,
+                    padding: EdgeInsets.only(top: 10, bottom: 10),
+                    choiceStyle: C2ChoiceStyle(elevation: 4),
+                    choiceActiveStyle: C2ChoiceStyle(color: AppColors.orange),
                   )
                 ],
               ),
