@@ -24,7 +24,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
-    sdk: flutter  
+    sdk: flutter
+  get: ^3.26.0
   mobx: ^1.2.1+2
   flutter_mobx: ^1.1.0+2
   get_it: ^5.0.0
