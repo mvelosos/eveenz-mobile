@@ -13,12 +13,13 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  NavigationService _navigationService;
   var _meController = locator<MeController>();
   var _meStore = locator<MeStore>();
 
   @override
   Widget build(BuildContext context) {
-    final _navigationService = NavigationService.currentNavigator(context);
+    _navigationService = NavigationService.currentNavigator(context);
 
     return Scaffold(
       appBar: AppBar(
