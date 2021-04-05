@@ -1,35 +1,23 @@
-import 'package:mobx/mobx.dart';
+import 'package:get/get.dart';
 import 'package:party_mobile/app/models/auth_user_model.dart';
-part 'auth_user_store.g.dart';
 
-class AuthUserStore = _AuthUserStoreBase with _$AuthUserStore;
+class AuthUserStore {
+  RxString token = ''.obs;
+  RxString tokenType = ''.obs;
+  RxString exp = ''.obs;
+  RxString provider = ''.obs;
 
-abstract class _AuthUserStoreBase with Store {
-  @observable
-  String token = '';
-
-  @observable
-  String tokenType = '';
-
-  @observable
-  String exp = '';
-
-  @observable
-  String provider = '';
-
-  @action
   void setUser(AuthUserModel authUser) {
-    token = authUser.token;
-    tokenType = authUser.tokenType;
-    exp = authUser.exp;
-    provider = authUser.provider;
+    token.value = authUser.token;
+    tokenType.value = authUser.tokenType;
+    exp.value = authUser.exp;
+    provider.value = authUser.provider;
   }
 
-  @action
-  void clean() {
-    token = '';
-    tokenType = '';
-    exp = '';
-    provider = '';
+  void clear() {
+    token.value = '';
+    tokenType.value = '';
+    exp.value = '';
+    provider.value = '';
   }
 }

@@ -37,7 +37,7 @@ class _SettingsPageState extends State<SettingsPage> {
               onPressed: () => {
                 _storage.delete(Storage.jwtToken),
                 _storage.delete(Storage.username),
-                _authUserStore.clean(),
+                _authUserStore.clear(),
                 OneSignal.shared.removeExternalUserId(),
                 _navigationService
                     .pushReplacementNamedNoAnimation(RouteNames.login)

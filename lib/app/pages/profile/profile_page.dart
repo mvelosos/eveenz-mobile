@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get/get.dart';
 import 'package:party_mobile/app/controllers/me_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/follows/follows_page.dart';
@@ -13,18 +13,22 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  NavigationService _navigationService;
   var _meController = locator<MeController>();
   var _meStore = locator<MeStore>();
 
   @override
   Widget build(BuildContext context) {
-    final _navigationService = NavigationService.currentNavigator(context);
+    _navigationService = NavigationService.currentNavigator(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Observer(builder: (_) {
-          return Text(_meStore.username, style: TextStyle(color: Colors.blue));
-        }),
+        title: Obx(
+          () => Text(
+            _meStore.username.value,
+            style: TextStyle(color: Colors.blue),
+          ),
+        ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
@@ -63,9 +67,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         Column(
                           children: [
-                            Observer(
-                              builder: (_) => Text(
-                                _meStore.events.toString(),
+                            Obx(
+                              () => Text(
+                                _meStore.events.value.toString(),
                                 style: TextStyle(fontSize: 19),
                               ),
                             ),
@@ -77,16 +81,16 @@ class _ProfilePageState extends State<ProfilePage> {
                             _navigationService.pushNamed(
                               RouteNames.accountFollows,
                               arguments: FollowsPageArguments(
-                                username: _meStore.username,
+                                username: _meStore.username.value,
                                 initialIndex: 0,
                               ),
                             );
                           },
                           child: Column(
                             children: [
-                              Observer(
-                                builder: (_) => Text(
-                                  _meStore.followers.toString(),
+                              Obx(
+                                () => Text(
+                                  _meStore.followers.value.toString(),
                                   style: TextStyle(fontSize: 19),
                                 ),
                               ),
@@ -99,16 +103,16 @@ class _ProfilePageState extends State<ProfilePage> {
                             _navigationService.pushNamed(
                               RouteNames.accountFollows,
                               arguments: FollowsPageArguments(
-                                username: _meStore.username,
+                                username: _meStore.username.value,
                                 initialIndex: 1,
                               ),
                             );
                           },
                           child: Column(
                             children: [
-                              Observer(
-                                builder: (_) => Text(
-                                  _meStore.following.toString(),
+                              Obx(
+                                () => Text(
+                                  _meStore.following.value.toString(),
                                   style: TextStyle(fontSize: 19),
                                 ),
                               ),
@@ -118,11 +122,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(50),
-                          child: Observer(
-                            builder: (_) {
-                              return _meStore.avatarUrl != ''
+                          child: Obx(
+                            () {
+                              return _meStore.avatarUrl.value != ''
                                   ? Image.network(
-                                      _meStore.avatarUrl,
+                                      _meStore.avatarUrl.value,
                                       height: 85,
                                       width: 85,
                                     )
@@ -134,7 +138,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),

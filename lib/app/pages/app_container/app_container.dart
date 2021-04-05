@@ -45,7 +45,7 @@ class _AppContainerState extends State<AppContainer> {
   void _setOneSignalSubscription() async {
     await OneSignal.shared
         .promptUserForPushNotificationPermission(fallbackToSettings: true);
-    OneSignal.shared.setExternalUserId(_meStore.uuid);
+    OneSignal.shared.setExternalUserId(_meStore.uuid.value);
   }
 
   void _onTabTapped(int index) {
