@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
@@ -72,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                       padding: EdgeInsets.all(0),
                       minWidth: 0,
                       onPressed: () {
-                        _navigationService.pushNamed(RouteNames.newEvent1);
+                        // _navigationService.pushNamed(RouteNames.newEvent1);
                       },
                       child: Icon(
                         Icons.add_circle,

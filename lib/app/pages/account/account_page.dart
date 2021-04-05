@@ -52,7 +52,7 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   void _shouldShowFollowButton() {
-    if (_accountModel.uuid != _meStore.uuid) {
+    if (_accountModel.uuid != _meStore.uuid.value) {
       _showFollowButton = true;
     }
   }
