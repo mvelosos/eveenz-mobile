@@ -13,7 +13,7 @@ class LoadingIndicator extends StatelessWidget {
       child: Center(
         child: Container(
           width: size.height * .1,
-          height: size.height * .09,
+          height: size.height * .1,
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),

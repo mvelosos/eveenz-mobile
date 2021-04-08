@@ -168,9 +168,9 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
                         children: [
                           SizedBox(height: size.height * .025),
                           Text(
-                            'Esqueci a senha',
+                            'Esqueceu sua senha?',
                             style: GoogleFonts.inter(
-                              fontSize: size.height * .035,
+                              fontSize: size.height * .030,
                               color: AppColors.darkPurple,
                               fontWeight: FontWeight.w800,
                             ),
