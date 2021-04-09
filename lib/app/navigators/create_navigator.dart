@@ -4,21 +4,20 @@ import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/router_manager.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 
-class NotificationsNavigator extends StatefulWidget {
+class CreateNavigator extends StatefulWidget {
   @override
-  _NotificationsNavigatorState createState() => _NotificationsNavigatorState();
+  _CreateNavigatorState createState() => _CreateNavigatorState();
 }
 
-final _notificationsNavigatorKey =
-    locator<NotificationsNavigatorKey>().navigatorKey;
+final _notificationsNavigatorKey = locator<CreateNavigatorKey>().navigatorKey;
 
-class _NotificationsNavigatorState extends State<NotificationsNavigator> {
+class _CreateNavigatorState extends State<CreateNavigator> {
   @override
   Widget build(BuildContext context) {
     return Navigator(
       key: _notificationsNavigatorKey,
       onGenerateRoute: RouterManager.generateRoute,
-      initialRoute: RouteNames.notifications,
+      initialRoute: RouteNames.newEvent,
     );
   }
 }

@@ -33,7 +33,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => HomeNavigatorKey());
   locator.registerLazySingleton(() => SearchNavigatorKey());
   locator.registerLazySingleton(() => MapNavigatorKey());
-  locator.registerLazySingleton(() => NotificationsNavigatorKey());
+  locator.registerLazySingleton(() => CreateNavigatorKey());
   locator.registerLazySingleton(() => ProfileNavigatorKey());
 
   //Stores

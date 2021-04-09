@@ -100,11 +100,11 @@ class RouterManager {
             settings: RouteSettings(name: RouteNames.map),
             fullscreenDialog: true);
 
-      // Notifications
-      case RouteNames.notifications:
+      // Create
+      case RouteNames.newEvent:
         return MaterialPageRoute(
-            builder: (_) => NotificationsPage(),
-            settings: RouteSettings(name: RouteNames.notifications),
+            builder: (_) => NewEventPage(),
+            settings: RouteSettings(name: RouteNames.newEvent),
             fullscreenDialog: true);
 
       // Profile
@@ -114,13 +114,11 @@ class RouterManager {
             settings: RouteSettings(name: RouteNames.profile),
             fullscreenDialog: true);
 
+      // Settings
       case RouteNames.settings:
         return MaterialPageRoute(builder: (_) => SettingsPage());
 
       // Events
-      case RouteNames.newEvent:
-        return MaterialPageRoute(builder: (_) => NewEventPage());
-
       case RouteNames.newEvent1:
         return MaterialPageRoute(builder: (_) => NewEvent1Page());
 
@@ -151,6 +149,10 @@ class RouterManager {
       case RouteNames.newEvent8:
         NewEvent8PageArguments args = route.arguments;
         return MaterialPageRoute(builder: (_) => NewEvent8Page(args: args));
+
+      // Notifications
+      case RouteNames.notifications:
+        return MaterialPageRoute(builder: (_) => NotificationsPage());
 
       default:
         return MaterialPageRoute(

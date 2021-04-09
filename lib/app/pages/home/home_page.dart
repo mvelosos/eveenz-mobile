@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                       padding: EdgeInsets.all(0),
                       minWidth: 0,
                       onPressed: () {
-                        _navigationService.pushNamed(RouteNames.newEvent);
+                        _navigationService.pushNamed(RouteNames.newEvent1);
                       },
                       child: Icon(
                         Icons.add_circle,

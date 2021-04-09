@@ -17,6 +17,7 @@ class _NewEventPageState extends State<NewEventPage> {
             iconTheme: IconThemeData(color: AppColors.orange),
             shadowColor: Colors.transparent,
             brightness: Brightness.light,
+            automaticallyImplyLeading: false,
           ),
           body: Center(
             child: Text('new event'),

@@ -22,8 +22,8 @@ class BottomNavigationBarWidget extends StatelessWidget {
         icon: Icon(Icons.map),
       ),
       BottomNavigationBarItem(
-        label: 'Notifications',
-        icon: Icon(Icons.view_list),
+        label: 'Create',
+        icon: Icon(Icons.add),
       ),
       BottomNavigationBarItem(
         label: 'Profile',
