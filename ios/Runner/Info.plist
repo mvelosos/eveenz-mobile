@@ -57,9 +57,13 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location when in the background.</string>
+	<string>Eveenz needs access to location when in the background.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open.</string>
+	<string>Eveenz needs access to location when open.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Eveenz needs access to your photo library, so you will be able to upload your photos.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Eveenz needs access to your camera, so you will be able to take pictures.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
