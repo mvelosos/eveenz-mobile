@@ -680,7 +680,6 @@ class _NewEventPageState extends State<NewEventPage> {
                                       _placesSearchResult.length == 0 &&
                                       _formKey.currentState.validate()
                                   ? Container(
-                                      // constraints: BoxConstraints.expand(),
                                       child: SingleChildScrollView(
                                         child: Column(
                                           crossAxisAlignment:
