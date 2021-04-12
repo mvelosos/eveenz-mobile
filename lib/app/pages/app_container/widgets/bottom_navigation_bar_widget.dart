@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:party_mobile/app/shared/constants/app_colors.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {
   final int currentIndex;
@@ -11,23 +13,38 @@ class BottomNavigationBarWidget extends StatelessWidget {
     return [
       BottomNavigationBarItem(
         label: 'Home',
-        icon: Icon(Icons.home),
+        icon: FaIcon(
+          FontAwesomeIcons.home,
+          size: 20,
+        ),
       ),
       BottomNavigationBarItem(
         label: 'Search',
-        icon: Icon(Icons.search),
+        icon: FaIcon(
+          FontAwesomeIcons.search,
+          size: 20,
+        ),
       ),
       BottomNavigationBarItem(
         label: 'Map',
-        icon: Icon(Icons.map),
+        icon: FaIcon(
+          FontAwesomeIcons.map,
+          size: 20,
+        ),
       ),
       BottomNavigationBarItem(
         label: 'Create',
-        icon: Icon(Icons.add),
+        icon: FaIcon(
+          FontAwesomeIcons.solidBell,
+          size: 20,
+        ),
       ),
       BottomNavigationBarItem(
         label: 'Profile',
-        icon: Icon(Icons.account_circle),
+        icon: FaIcon(
+          FontAwesomeIcons.solidUser,
+          size: 20,
+        ),
       )
     ];
   }
@@ -35,12 +52,12 @@ class BottomNavigationBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: (idx) => onTabTapped(idx),
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      type: BottomNavigationBarType.fixed,
-      items: _barItems(),
-    );
+        currentIndex: currentIndex,
+        onTap: (idx) => onTabTapped(idx),
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        items: _barItems(),
+        selectedItemColor: AppColors.darkPurple);
   }
 }
