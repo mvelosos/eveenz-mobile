@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:party_mobile/app/controllers/categories_controller.dart';
 import 'package:party_mobile/app/controllers/request_categories_controller.dart';
 import 'package:party_mobile/app/locator.dart';
@@ -15,6 +16,8 @@ import 'package:party_mobile/app/shared/utils/google_place_details_formatter.dar
 import 'package:party_mobile/app/view_models/new_event_vm.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:party_mobile/app/view_models/new_request_category_vm.dart';
+import 'package:party_mobile/app/shared/widgets/date_picker.dart';
+import 'package:party_mobile/app/shared/widgets/time_picker.dart';
 
 class NewEventPage extends StatefulWidget {
   @override
@@ -39,18 +42,85 @@ class _NewEventPageState extends State<NewEventPage> {
   List<dynamic> _placesSearchResult = [];
   Map _selectedPlace;
   TextEditingController _inputTextController = TextEditingController(text: '');
+  DateTime _selectedStartDate = DateTime.now();
+  DateTime _selectedStartTime = DateTime.now();
+  DateTime _selectedEndDate = DateTime.now();
+  DateTime _selectedEndTime = DateTime.now();
+  bool _restrictedAge = false;
+  double _minimumAge = 18;
 
   // Functions
   void initState() {
     super.initState();
     _getCategories();
     _newEvent.privacy = 'public';
+    _setStartDate(_selectedStartDate);
+    _setStartTime(_selectedStartTime);
     setState(() {
       images.add("Add Image");
       images.add("Add Image");
       images.add("Add Image");
       images.add("Add Image");
       images.add("Add Image");
+    });
+  }
+
+  _setStartDate(DateTime dateTime) {
+    String formattedDate = DateFormat('y-MM-dd').format(dateTime);
+
+    setState(() {
+      _newEvent.startDate = formattedDate;
+      _selectedStartDate = dateTime;
+    });
+  }
+
+  _setStartTime(DateTime dateTime) {
+    String formattedTime = DateFormat.Hms().format(dateTime);
+
+    setState(() {
+      _newEvent.startTime = formattedTime;
+      _selectedStartTime = dateTime;
+    });
+  }
+
+  _setEndDate(DateTime dateTime) {
+    String formattedDate = DateFormat('y-MM-dd').format(dateTime);
+
+    setState(() {
+      _newEvent.endDate = formattedDate;
+      _selectedEndDate = dateTime;
+    });
+  }
+
+  _setEndTime(DateTime dateTime) {
+    String formattedTime = DateFormat.Hms().format(dateTime);
+
+    setState(() {
+      _newEvent.endTime = formattedTime;
+      _selectedEndTime = dateTime;
+    });
+  }
+
+  String _getDisplayDate(DateTime datetime) {
+    String formattedDate = DateFormat('dd/MM/y').format(datetime);
+    return formattedDate;
+  }
+
+  String _getDisplayTime(DateTime datetime) {
+    String formattedTime = DateFormat.Hm().format(datetime);
+    return formattedTime;
+  }
+
+  _onCheckUndefinedEnd(value) {
+    setState(() {
+      _newEvent.undefinedEnd = value;
+      if (value) {
+        _newEvent.endDate = '';
+        _newEvent.endTime = '';
+      } else {
+        _setEndDate(_selectedEndDate);
+        _setEndTime(_selectedEndTime);
+      }
     });
   }
 
@@ -321,6 +391,40 @@ class _NewEventPageState extends State<NewEventPage> {
     return currentDescription;
   }
 
+  Widget _continueButton(BuildContext context) {
+    final _size = MediaQuery.of(context).size;
+
+    return RawMaterialButton(
+      onPressed: () {
+        _setEventCategories();
+        if (_restrictedAge) {
+          _newEvent.minimumAge = _minimumAge.toInt();
+        }
+        print(_newEvent.getData());
+      },
+      child: Container(
+        width: _size.width,
+        margin: EdgeInsets.symmetric(vertical: _size.height * .007),
+        padding: EdgeInsets.symmetric(vertical: _size.height * .024),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(5),
+          ),
+          color: AppColors.orange,
+        ),
+        child: Text(
+          'CRIAR',
+          style: GoogleFonts.roboto(
+            fontSize: _size.height * .015,
+            color: Colors.white,
+            letterSpacing: 4,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -429,173 +533,7 @@ class _NewEventPageState extends State<NewEventPage> {
                               style: TextStyle(color: AppColors.gray1),
                             ),
                           ),
-                          SizedBox(height: _size.height * .04),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Imagens',
-                              style: GoogleFonts.inter(
-                                color: AppColors.darkPurple,
-                                fontWeight: FontWeight.w600,
-                                fontSize: _size.height * .017,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: _size.height * .015),
-                          Container(
-                            child: GridView.count(
-                              primary: false,
-                              shrinkWrap: true,
-                              crossAxisCount: 3,
-                              childAspectRatio: 1,
-                              children: List.generate(images.length, (index) {
-                                if (images[index] is ImageUploadModel) {
-                                  ImageUploadModel uploadModel = images[index];
-                                  return Card(
-                                    clipBehavior: Clip.antiAlias,
-                                    child: Stack(
-                                      children: <Widget>[
-                                        Image.file(
-                                          File(uploadModel.imagePath),
-                                          width: 300,
-                                          height: 300,
-                                        ),
-                                        Positioned(
-                                          right: 5,
-                                          top: 5,
-                                          child: InkWell(
-                                            child: Icon(
-                                              Icons.remove_circle,
-                                              size: 20,
-                                              color: Colors.red,
-                                            ),
-                                            onTap: () {
-                                              setState(() {
-                                                images.replaceRange(index,
-                                                    index + 1, ['Add Image']);
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                } else {
-                                  return Card(
-                                    child: IconButton(
-                                      icon: Icon(Icons.add),
-                                      onPressed: () {
-                                        // _onAddImageClick(index);
-                                      },
-                                    ),
-                                  );
-                                }
-                              }),
-                            ),
-                          ),
                           SizedBox(height: _size.height * .03),
-                          TextFormField(
-                            onChanged: (value) {
-                              _newEvent.description = value;
-                            },
-                            maxLines: null,
-                            maxLength: 250,
-                            decoration: InputDecoration(
-                              labelText: 'Descrição do evento',
-                              labelStyle: GoogleFonts.inter(
-                                  color: AppColors.darkPurple,
-                                  fontSize: _size.height * .017,
-                                  fontWeight: FontWeight.bold),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: AppColors.orange,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: _size.height * .03),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Categorias',
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.darkPurple,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: _size.height * .017,
-                                  ),
-                                ),
-                                SizedBox(height: _size.height * .005),
-                                AutoSizeText(
-                                  'Você pode escolher até 3 categorias que mais combinam com o seu evento',
-                                )
-                              ],
-                            ),
-                          ),
-                          ChipsChoice<String>.multiple(
-                            value: _selectedCategoriesIds,
-                            onChanged: (val) {
-                              if (val.length > 3) return;
-                              setState(() {
-                                _selectedCategoriesIds = val;
-                              });
-                            },
-                            choiceItems:
-                                C2Choice.listFrom<String, CategoryModel>(
-                              source: _categories,
-                              value: (i, v) => _categories[i].id.toString(),
-                              label: (i, v) => _categories[i].titleizedName,
-                            ),
-                            wrapped: true,
-                            padding: EdgeInsets.only(top: 10),
-                            choiceStyle: C2ChoiceStyle(elevation: 4),
-                            choiceActiveStyle:
-                                C2ChoiceStyle(color: AppColors.orange),
-                          ),
-                          SizedBox(height: _size.height * .03),
-                          TextFormField(
-                            controller: _newRequestCategoryController,
-                            onChanged: (value) {
-                              setState(() {
-                                _newRequestCategory.name = value;
-                              });
-                            },
-                            decoration: InputDecoration(
-                              labelText: 'Não encontrou sua categoria ideal?',
-                              hintText: 'Que tal sugerir uma nova?',
-                              hintStyle:
-                                  TextStyle(fontSize: _size.height * .015),
-                              labelStyle: GoogleFonts.inter(
-                                color: AppColors.darkPurple,
-                                fontWeight: FontWeight.w500,
-                                fontSize: _size.height * .016,
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: AppColors.orange,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: double.infinity,
-                            alignment: Alignment.center,
-                            child: TextButton(
-                              onPressed: () {
-                                if (_newRequestCategory.name.isNotEmpty) {
-                                  _requestNewRequestCategory(context);
-                                  setState(() {
-                                    _newRequestCategoryController.text = '';
-                                    _newRequestCategory.name = '';
-                                  });
-                                }
-                              },
-                              child: Text('Enviar'),
-                            ),
-                          ),
-                          SizedBox(height: _size.height * .01),
                           TextFormField(
                             controller: _inputTextController,
                             onTap: () {
@@ -744,10 +682,428 @@ class _NewEventPageState extends State<NewEventPage> {
                                   : SizedBox.shrink(),
                             ],
                           ),
-                          SizedBox(height: _size.height * .1),
+                          SizedBox(height: _size.height * .05),
+                          Divider(),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Data e hora de início',
+                              style: GoogleFonts.inter(
+                                color: AppColors.darkPurple,
+                                fontWeight: FontWeight.w600,
+                                fontSize: _size.height * .017,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: _size.height * .01),
+                          Row(
+                            children: [
+                              RawMaterialButton(
+                                onPressed: () {
+                                  DatePicker(
+                                    context,
+                                    _selectedStartDate,
+                                    _setStartDate,
+                                  );
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                    left: _size.height * .01,
+                                    top: _size.height * .012,
+                                    right: _size.height * .01,
+                                    bottom: _size.height * .012,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: AppColors.orange),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(
+                                    _getDisplayDate(_selectedStartDate),
+                                    style: TextStyle(
+                                      fontSize: _size.height * .02,
+                                      color: AppColors.darkPurple,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: _size.width * .025),
+                              Text('às'),
+                              RawMaterialButton(
+                                onPressed: () {
+                                  TimePicker(
+                                    context,
+                                    _selectedStartTime,
+                                    _setStartTime,
+                                  );
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                    left: _size.height * .01,
+                                    top: _size.height * .012,
+                                    right: _size.height * .01,
+                                    bottom: _size.height * .012,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: AppColors.orange),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(
+                                    _getDisplayTime(_selectedStartTime),
+                                    style: TextStyle(
+                                      fontSize: _size.height * .02,
+                                      color: AppColors.darkPurple,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: _size.height * .04),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Data e hora do término',
+                              style: GoogleFonts.inter(
+                                color: AppColors.darkPurple,
+                                fontWeight: FontWeight.w600,
+                                fontSize: _size.height * .017,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: _size.height * .01),
+                          Row(
+                            children: [
+                              RawMaterialButton(
+                                onPressed: () {
+                                  if (_newEvent.undefinedEnd) return;
+                                  DatePicker(
+                                    context,
+                                    _selectedEndDate,
+                                    _setEndDate,
+                                  );
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                    left: _size.height * .01,
+                                    top: _size.height * .012,
+                                    right: _size.height * .01,
+                                    bottom: _size.height * .012,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: _newEvent.undefinedEnd
+                                          ? Colors.grey
+                                          : AppColors.orange,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(
+                                    _getDisplayDate(_selectedEndDate),
+                                    style: TextStyle(
+                                      fontSize: _size.height * .02,
+                                      color: _newEvent.undefinedEnd
+                                          ? Colors.transparent
+                                          : AppColors.darkPurple,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: _size.width * .025),
+                              Text('às'),
+                              RawMaterialButton(
+                                onPressed: () {
+                                  if (_newEvent.undefinedEnd) return;
+                                  TimePicker(
+                                    context,
+                                    _selectedEndTime,
+                                    _setEndTime,
+                                  );
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                    left: _size.height * .01,
+                                    top: _size.height * .012,
+                                    right: _size.height * .01,
+                                    bottom: _size.height * .012,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: _newEvent.undefinedEnd
+                                          ? Colors.grey
+                                          : AppColors.orange,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(
+                                    _getDisplayTime(_selectedEndTime),
+                                    style: TextStyle(
+                                      fontSize: _size.height * .02,
+                                      color: _newEvent.undefinedEnd
+                                          ? Colors.transparent
+                                          : AppColors.darkPurple,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          CheckboxListTile(
+                            contentPadding: EdgeInsets.all(0),
+                            dense: true,
+                            subtitle: Text(
+                                'Não se preocupe. Você poderá alterar depois'),
+                            title:
+                                Text("Ainda não sei a data e hora de término"),
+                            controlAffinity: ListTileControlAffinity.leading,
+                            value: _newEvent.undefinedEnd,
+                            onChanged: (value) {
+                              _onCheckUndefinedEnd(value);
+                            },
+                            activeColor: AppColors.orange,
+                            //  <-- leading Checkbox
+                          ),
+                          Divider(),
+                          SizedBox(height: _size.height * .05),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Imagens',
+                              style: GoogleFonts.inter(
+                                color: AppColors.darkPurple,
+                                fontWeight: FontWeight.w600,
+                                fontSize: _size.height * .017,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: _size.height * .015),
+                          Container(
+                            child: GridView.count(
+                              primary: false,
+                              shrinkWrap: true,
+                              crossAxisCount: 3,
+                              childAspectRatio: 1,
+                              children: List.generate(images.length, (index) {
+                                if (images[index] is ImageUploadModel) {
+                                  ImageUploadModel uploadModel = images[index];
+                                  return Card(
+                                    clipBehavior: Clip.antiAlias,
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Image.file(
+                                          File(uploadModel.imagePath),
+                                          width: 300,
+                                          height: 300,
+                                        ),
+                                        Positioned(
+                                          right: 5,
+                                          top: 5,
+                                          child: InkWell(
+                                            child: Icon(
+                                              Icons.remove_circle,
+                                              size: 20,
+                                              color: Colors.red,
+                                            ),
+                                            onTap: () {
+                                              setState(() {
+                                                images.replaceRange(index,
+                                                    index + 1, ['Add Image']);
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                } else {
+                                  return Card(
+                                    child: IconButton(
+                                      icon: Icon(Icons.add),
+                                      onPressed: () {
+                                        // _onAddImageClick(index);
+                                      },
+                                    ),
+                                  );
+                                }
+                              }),
+                            ),
+                          ),
+                          SizedBox(height: _size.height * .03),
+                          TextFormField(
+                            onChanged: (value) {
+                              _newEvent.description = value;
+                            },
+                            maxLines: null,
+                            maxLength: 250,
+                            decoration: InputDecoration(
+                              labelText: 'Descrição do evento',
+                              labelStyle: GoogleFonts.inter(
+                                  color: AppColors.darkPurple,
+                                  fontSize: _size.height * .017,
+                                  fontWeight: FontWeight.bold),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: AppColors.orange,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: _size.height * .03),
+                          Divider(),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Categorias',
+                                  style: GoogleFonts.inter(
+                                    color: AppColors.darkPurple,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: _size.height * .017,
+                                  ),
+                                ),
+                                SizedBox(height: _size.height * .005),
+                                AutoSizeText(
+                                  'Você pode escolher até 3 categorias que mais combinam com o seu evento',
+                                )
+                              ],
+                            ),
+                          ),
+                          ChipsChoice<String>.multiple(
+                            value: _selectedCategoriesIds,
+                            onChanged: (val) {
+                              if (val.length > 3) return;
+                              setState(() {
+                                _selectedCategoriesIds = val;
+                              });
+                            },
+                            choiceItems:
+                                C2Choice.listFrom<String, CategoryModel>(
+                              source: _categories,
+                              value: (i, v) => _categories[i].id.toString(),
+                              label: (i, v) => _categories[i].titleizedName,
+                            ),
+                            wrapped: true,
+                            padding: EdgeInsets.only(top: 10),
+                            choiceStyle: C2ChoiceStyle(elevation: 4),
+                            choiceActiveStyle:
+                                C2ChoiceStyle(color: AppColors.orange),
+                          ),
+                          SizedBox(height: _size.height * .03),
+                          TextFormField(
+                            controller: _newRequestCategoryController,
+                            onChanged: (value) {
+                              setState(() {
+                                _newRequestCategory.name = value;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Não encontrou sua categoria ideal?',
+                              hintText: 'Que tal sugerir uma nova?',
+                              hintStyle:
+                                  TextStyle(fontSize: _size.height * .015),
+                              labelStyle: GoogleFonts.inter(
+                                color: AppColors.darkPurple,
+                                fontWeight: FontWeight.w500,
+                                fontSize: _size.height * .016,
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: AppColors.orange,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            alignment: Alignment.center,
+                            child: TextButton(
+                              onPressed: () {
+                                if (_newRequestCategory.name.isNotEmpty) {
+                                  _requestNewRequestCategory(context);
+                                  setState(() {
+                                    _newRequestCategoryController.text = '';
+                                    _newRequestCategory.name = '';
+                                  });
+                                }
+                              },
+                              child: Text('Enviar'),
+                            ),
+                          ),
+                          SizedBox(height: _size.height * .01),
+                          Divider(),
+                          SwitchListTile(
+                            value: _restrictedAge,
+                            onChanged: (value) {
+                              setState(() {
+                                if (!value) {
+                                  _newEvent.minimumAge = null;
+                                }
+                                _restrictedAge = value;
+                              });
+                            },
+                            contentPadding: EdgeInsets.all(0),
+                            activeColor: AppColors.orange,
+                            title: Text('Restrição de idade?'),
+                          ),
+                          SizedBox(height: _size.height * .005),
+                          _restrictedAge
+                              ? Column(
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        _minimumAge.toInt().toString(),
+                                        style: TextStyle(
+                                          fontSize: _size.height * .03,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: _size.height * .02),
+                                    Slider.adaptive(
+                                      value: _minimumAge,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _minimumAge = value;
+                                        });
+                                      },
+                                      max: 25,
+                                      min: 12,
+                                      divisions: 13,
+                                      activeColor: AppColors.orange,
+                                    )
+                                  ],
+                                )
+                              : SizedBox.shrink(),
+                          SizedBox(height: _size.height * .015),
+                          TextFormField(
+                            onChanged: (value) {
+                              setState(() {
+                                _newEvent.externalUrl = value;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Link externo',
+                              hintText: 'Ingressos, sites, redes sociais...',
+                              labelStyle: GoogleFonts.inter(
+                                  color: AppColors.darkPurple,
+                                  fontSize: _size.height * .018,
+                                  fontWeight: FontWeight.bold),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: AppColors.orange,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: _size.height * .05),
+                          Divider(),
+                          _continueButton(context),
+                          SizedBox(height: _size.height * .01),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
