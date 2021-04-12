@@ -71,9 +71,7 @@ class _HomePageState extends State<HomePage> {
                     child: MaterialButton(
                       padding: EdgeInsets.all(0),
                       minWidth: 0,
-                      onPressed: () {
-                        _navigationService.pushNamed(RouteNames.newEvent1);
-                      },
+                      onPressed: () {},
                       child: Icon(
                         Icons.add_circle,
                         size: 35,
