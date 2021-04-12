@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:party_mobile/app/pages/new_event/new_event_page.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
@@ -71,7 +73,9 @@ class _HomePageState extends State<HomePage> {
                     child: MaterialButton(
                       padding: EdgeInsets.all(0),
                       minWidth: 0,
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(() => NewEventPage());
+                      },
                       child: Icon(
                         Icons.add_circle,
                         size: 35,

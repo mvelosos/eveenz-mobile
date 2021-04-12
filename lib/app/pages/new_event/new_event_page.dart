@@ -479,7 +479,6 @@ class _NewEventPageState extends State<NewEventPage> {
                 iconTheme: IconThemeData(color: AppColors.orange),
                 shadowColor: Colors.transparent,
                 brightness: Brightness.light,
-                automaticallyImplyLeading: false,
               ),
               body: GestureDetector(
                 onTap: () {
@@ -1168,7 +1167,7 @@ class _NewEventPageState extends State<NewEventPage> {
                               SizedBox(height: _size.height * .05),
                               Divider(),
                               _continueButton(context),
-                              SizedBox(height: _size.height * .01),
+                              SizedBox(height: _size.height * .05),
                             ],
                           ),
                         ),

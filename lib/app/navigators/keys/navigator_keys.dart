@@ -16,7 +16,7 @@ class MapNavigatorKey {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 }
 
-class CreateNavigatorKey {
+class NotificationsNavigatorKey {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 }
 

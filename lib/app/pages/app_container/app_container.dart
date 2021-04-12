@@ -5,7 +5,7 @@ import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/navigators/home_navigator.dart';
 import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/navigators/map_navigator.dart';
-import 'package:party_mobile/app/navigators/create_navigator.dart';
+import 'package:party_mobile/app/navigators/notifications_navigator.dart';
 import 'package:party_mobile/app/navigators/profile_navigator.dart';
 import 'package:party_mobile/app/navigators/search_navigator.dart';
 import 'package:party_mobile/app/pages/app_container/widgets/bottom_navigation_bar_widget.dart';
@@ -20,7 +20,8 @@ class AppContainer extends StatefulWidget {
 final _homeNavigatorKey = locator<HomeNavigatorKey>().navigatorKey;
 final _searchNavigatorKey = locator<SearchNavigatorKey>().navigatorKey;
 final _mapNavigatorKey = locator<MapNavigatorKey>().navigatorKey;
-final _createNavigatorKey = locator<CreateNavigatorKey>().navigatorKey;
+final _notificationsNavigatorKey =
+    locator<NotificationsNavigatorKey>().navigatorKey;
 final _profileNavigatorKey = locator<ProfileNavigatorKey>().navigatorKey;
 final _meStore = locator<MeStore>();
 
@@ -68,7 +69,7 @@ class _AppContainerState extends State<AppContainer> {
       RouteNames.home,
       RouteNames.search,
       RouteNames.map,
-      RouteNames.newEvent,
+      RouteNames.notifications,
       RouteNames.profile
     ];
     // SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
@@ -86,7 +87,7 @@ class _AppContainerState extends State<AppContainer> {
     _homeNavigatorKey,
     _searchNavigatorKey,
     _mapNavigatorKey,
-    _createNavigatorKey,
+    _notificationsNavigatorKey,
     _profileNavigatorKey
   ];
 
@@ -94,7 +95,7 @@ class _AppContainerState extends State<AppContainer> {
     HomeNavigator(),
     SearchNavigator(),
     MapNavigator(),
-    CreateNavigator(),
+    NotificationsNavigator(),
     ProfileNavigator()
   ];
 
