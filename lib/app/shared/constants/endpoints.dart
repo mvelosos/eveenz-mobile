@@ -29,6 +29,9 @@ class Endpoints {
   // Categories Endpoints
   static const String categories = '/categories';
 
-  // RequestCategories Endpoint
+  // RequestCategories Endpoints
   static const String requestCategories = '/request_categories';
+
+  // Events Endpoints
+  static const String events = '/events';
 }

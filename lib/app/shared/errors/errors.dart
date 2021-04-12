@@ -12,6 +12,11 @@ class CreateUserError extends Failure {
   CreateUserError({this.message});
 }
 
+class CreateEventError extends Failure {
+  final String message;
+  CreateEventError({this.message});
+}
+
 class LoginError extends Failure {
   final String message;
   LoginError({this.message});
