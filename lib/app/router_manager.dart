@@ -9,14 +9,6 @@ import 'package:party_mobile/app/pages/forgot_password/forgot_password_4_page.da
 import 'package:party_mobile/app/pages/home/home_page.dart';
 import 'package:party_mobile/app/pages/login/login_page.dart';
 import 'package:party_mobile/app/pages/map/map_page.dart';
-import 'package:party_mobile/app/pages/new_event/new_event_1_page.dart';
-import 'package:party_mobile/app/pages/new_event/new_event_2_page.dart';
-import 'package:party_mobile/app/pages/new_event/new_event_3_page.dart';
-import 'package:party_mobile/app/pages/new_event/new_event_4_page.dart';
-import 'package:party_mobile/app/pages/new_event/new_event_5_page.dart';
-import 'package:party_mobile/app/pages/new_event/new_event_6_page.dart';
-import 'package:party_mobile/app/pages/new_event/new_event_7_page.dart';
-import 'package:party_mobile/app/pages/new_event/new_event_8_page.dart';
 import 'package:party_mobile/app/pages/new_event/new_event_page.dart';
 import 'package:party_mobile/app/pages/notifications/notifications_page.dart';
 import 'package:party_mobile/app/pages/profile/profile_page.dart';
@@ -119,36 +111,8 @@ class RouterManager {
         return MaterialPageRoute(builder: (_) => SettingsPage());
 
       // Events
-      case RouteNames.newEvent1:
-        return MaterialPageRoute(builder: (_) => NewEvent1Page());
-
-      case RouteNames.newEvent2:
-        NewEvent2PageArguments args = route.arguments;
-        return MaterialPageRoute(builder: (_) => NewEvent2Page(args: args));
-
-      case RouteNames.newEvent3:
-        NewEvent3PageArguments args = route.arguments;
-        return MaterialPageRoute(builder: (_) => NewEvent3Page(args: args));
-
-      case RouteNames.newEvent4:
-        NewEvent4PageArguments args = route.arguments;
-        return MaterialPageRoute(builder: (_) => NewEvent4Page(args: args));
-
-      case RouteNames.newEvent5:
-        NewEvent5PageArguments args = route.arguments;
-        return MaterialPageRoute(builder: (_) => NewEvent5Page(args: args));
-
-      case RouteNames.newEvent6:
-        NewEvent6PageArguments args = route.arguments;
-        return MaterialPageRoute(builder: (_) => NewEvent6Page(args: args));
-
-      case RouteNames.newEvent7:
-        NewEvent7PageArguments args = route.arguments;
-        return MaterialPageRoute(builder: (_) => NewEvent7Page(args: args));
-
-      case RouteNames.newEvent8:
-        NewEvent8PageArguments args = route.arguments;
-        return MaterialPageRoute(builder: (_) => NewEvent8Page(args: args));
+      case RouteNames.newEvent:
+        return MaterialPageRoute(builder: (_) => NewEventPage());
 
       // Notifications
       case RouteNames.notifications:
