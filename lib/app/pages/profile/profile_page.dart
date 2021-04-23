@@ -105,90 +105,148 @@ class _ProfilePageState extends State<ProfilePage> {
                         fontSize: 22,
                       ),
                     ),
-                  )
+                  ),
+                  SizedBox(height: _size.height * .02),
+                  Container(
+                    width: 110,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 7,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(.3),
+                          spreadRadius: 2,
+                          blurRadius: 10,
+                          offset: Offset(0, 2), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FaIcon(
+                          FontAwesomeIcons.trophy,
+                          size: 15,
+                          color: AppColors.yellowGold,
+                        ),
+                        SizedBox(width: 7),
+                        Obx(
+                          () => Text(
+                            _meStore.popularity.value.toString(),
+                            style: GoogleFonts.inter(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: _size.height * .02),
+                  Obx(
+                    () => AutoSizeText(
+                      _meStore.bio.value,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(),
+                    ),
+                  ),
+                  SizedBox(height: _size.height * .02),
+                  IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {},
+                          child: Column(
+                            children: [
+                              Obx(
+                                () => Text(
+                                  _meStore.events.value.toString(),
+                                  style: TextStyle(
+                                    fontSize: 19,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Text('Eveenz'),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        VerticalDivider(
+                          thickness: 1,
+                          color: AppColors.gray1,
+                          indent: 6,
+                          endIndent: 6,
+                        ),
+                        SizedBox(width: 10),
+                        GestureDetector(
+                          onTap: () {
+                            _navigationService.pushNamed(
+                              RouteNames.accountFollows,
+                              arguments: FollowsPageArguments(
+                                username: _meStore.username.value,
+                                initialIndex: 0,
+                              ),
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              Obx(
+                                () => Text(
+                                  _meStore.followers.value.toString(),
+                                  style: TextStyle(
+                                    fontSize: 19,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Text('Seguidores'),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        VerticalDivider(
+                          thickness: 1,
+                          color: AppColors.gray1,
+                          indent: 6,
+                          endIndent: 6,
+                        ),
+                        SizedBox(width: 10),
+                        GestureDetector(
+                          onTap: () {
+                            _navigationService.pushNamed(
+                              RouteNames.accountFollows,
+                              arguments: FollowsPageArguments(
+                                username: _meStore.username.value,
+                                initialIndex: 1,
+                              ),
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              Obx(
+                                () => Text(
+                                  _meStore.followers.value.toString(),
+                                  style: TextStyle(
+                                    fontSize: 19,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Text('Seguindo'),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-              // child: Column(
-              //   children: [
-              //     Row(
-              //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //       children: [
-              //         Column(
-              //           children: [
-              //             Obx(
-              //               () => Text(
-              //                 _meStore.events.value.toString(),
-              //                 style: TextStyle(fontSize: 19),
-              //               ),
-              //             ),
-              //             Text('Festas'),
-              //           ],
-              //         ),
-              //         GestureDetector(
-              //           onTap: () {
-              //             _navigationService.pushNamed(
-              //               RouteNames.accountFollows,
-              //               arguments: FollowsPageArguments(
-              //                 username: _meStore.username.value,
-              //                 initialIndex: 0,
-              //               ),
-              //             );
-              //           },
-              //           child: Column(
-              //             children: [
-              //               Obx(
-              //                 () => Text(
-              //                   _meStore.followers.value.toString(),
-              //                   style: TextStyle(fontSize: 19),
-              //                 ),
-              //               ),
-              //               Text('Seguidores'),
-              //             ],
-              //           ),
-              //         ),
-              //         GestureDetector(
-              //           onTap: () {
-              //             _navigationService.pushNamed(
-              //               RouteNames.accountFollows,
-              //               arguments: FollowsPageArguments(
-              //                 username: _meStore.username.value,
-              //                 initialIndex: 1,
-              //               ),
-              //             );
-              //           },
-              //           child: Column(
-              //             children: [
-              //               Obx(
-              //                 () => Text(
-              //                   _meStore.following.value.toString(),
-              //                   style: TextStyle(fontSize: 19),
-              //                 ),
-              //               ),
-              //               Text('Seguindo'),
-              //             ],
-              //           ),
-              //         ),
-              //         ClipRRect(
-              //           borderRadius: BorderRadius.circular(50),
-              //           child: Obx(
-              //             () {
-              //               return _meStore.avatarUrl.value != ''
-              //                   ? Image.network(
-              //                       _meStore.avatarUrl.value,
-              //                       height: 85,
-              //                       width: 85,
-              //                     )
-              //                   : CircleAvatar(
-              //                       radius: 45,
-              //                       backgroundColor: Color(0xffd3d5db),
-              //                     );
-              //             },
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ],
-              // ),
             ),
           ),
         ),
