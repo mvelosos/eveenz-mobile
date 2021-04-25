@@ -69,182 +69,220 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Container(
               height: constraints.maxHeight,
               width: constraints.maxWidth,
-              padding: EdgeInsets.only(
-                left: _size.width * .06,
-                right: _size.width * .06,
-              ),
               child: Column(
                 children: [
-                  SizedBox(height: _size.height * .03),
-                  Obx(
-                    () => _meStore.avatarUrl.value != ''
-                        ? Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: NetworkImage(_meStore.avatarUrl.value),
-                              ),
-                            ),
-                          )
-                        : CircleAvatar(
-                            radius: 50,
-                            backgroundColor: Color(0xffd3d5db),
-                          ),
-                  ),
-                  SizedBox(height: _size.height * .03),
-                  Obx(
-                    () => AutoSizeText(
-                      _meStore.name.value,
-                      minFontSize: 17,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: _size.height * .02),
                   Container(
-                    width: 110,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 7,
+                    padding: EdgeInsets.only(
+                      left: _size.width * .06,
+                      right: _size.width * .06,
                     ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(.3),
-                          spreadRadius: 2,
-                          blurRadius: 10,
-                          offset: Offset(0, 2), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Column(
                       children: [
-                        FaIcon(
-                          FontAwesomeIcons.trophy,
-                          size: 15,
-                          color: AppColors.yellowGold,
-                        ),
-                        SizedBox(width: 7),
+                        SizedBox(height: _size.height * .03),
                         Obx(
-                          () => Text(
-                            _meStore.popularity.value.toString(),
+                          () => _meStore.avatarUrl.value != ''
+                              ? Container(
+                                  width: 100,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: NetworkImage(
+                                          _meStore.avatarUrl.value),
+                                    ),
+                                  ),
+                                )
+                              : CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Color(0xffd3d5db),
+                                ),
+                        ),
+                        SizedBox(height: _size.height * .03),
+                        Obx(
+                          () => AutoSizeText(
+                            _meStore.name.value,
+                            minFontSize: 17,
+                            textAlign: TextAlign.center,
                             style: GoogleFonts.inter(
-                              fontSize: 16,
                               fontWeight: FontWeight.bold,
+                              fontSize: 22,
                             ),
                           ),
-                        )
+                        ),
+                        SizedBox(height: _size.height * .02),
+                        Container(
+                          width: 110,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 7,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(.3),
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                offset:
+                                    Offset(0, 2), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              FaIcon(
+                                FontAwesomeIcons.trophy,
+                                size: 15,
+                                color: AppColors.yellowGold,
+                              ),
+                              SizedBox(width: 7),
+                              Obx(
+                                () => Text(
+                                  _meStore.popularity.value.toString(),
+                                  style: GoogleFonts.inter(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: _size.height * .02),
+                        Obx(
+                          () => AutoSizeText(
+                            _meStore.bio.value,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(),
+                          ),
+                        ),
+                        SizedBox(height: _size.height * .02),
+                        IntrinsicHeight(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () {},
+                                child: Column(
+                                  children: [
+                                    Obx(
+                                      () => Text(
+                                        _meStore.events.value.toString(),
+                                        style: TextStyle(
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Text('Eveenz'),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              VerticalDivider(
+                                thickness: 1,
+                                color: AppColors.gray1,
+                                indent: 6,
+                                endIndent: 6,
+                              ),
+                              SizedBox(width: 10),
+                              GestureDetector(
+                                onTap: () {
+                                  _navigationService.pushNamed(
+                                    RouteNames.accountFollows,
+                                    arguments: FollowsPageArguments(
+                                      username: _meStore.username.value,
+                                      initialIndex: 0,
+                                    ),
+                                  );
+                                },
+                                child: Column(
+                                  children: [
+                                    Obx(
+                                      () => Text(
+                                        _meStore.followers.value.toString(),
+                                        style: TextStyle(
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Text('Seguidores'),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              VerticalDivider(
+                                thickness: 1,
+                                color: AppColors.gray1,
+                                indent: 6,
+                                endIndent: 6,
+                              ),
+                              SizedBox(width: 10),
+                              GestureDetector(
+                                onTap: () {
+                                  _navigationService.pushNamed(
+                                    RouteNames.accountFollows,
+                                    arguments: FollowsPageArguments(
+                                      username: _meStore.username.value,
+                                      initialIndex: 1,
+                                    ),
+                                  );
+                                },
+                                child: Column(
+                                  children: [
+                                    Obx(
+                                      () => Text(
+                                        _meStore.followers.value.toString(),
+                                        style: TextStyle(
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Text('Seguindo'),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(height: _size.height * .02),
-                  Obx(
-                    () => AutoSizeText(
-                      _meStore.bio.value,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(),
-                    ),
-                  ),
-                  SizedBox(height: _size.height * .02),
-                  IntrinsicHeight(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {},
-                          child: Column(
-                            children: [
-                              Obx(
-                                () => Text(
-                                  _meStore.events.value.toString(),
-                                  style: TextStyle(
-                                    fontSize: 19,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Text('Eveenz'),
-                            ],
+                  SizedBox(height: _size.height * .05),
+                  DefaultTabController(
+                    length: 2,
+                    child: TabBar(
+                      indicatorColor: AppColors.purple,
+                      indicatorWeight: 3,
+                      tabs: [
+                        Tab(
+                          child: Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            color: Colors.green,
+                            alignment: Alignment.center,
+                            child: FaIcon(
+                              FontAwesomeIcons.calendarAlt,
+                              size: 20,
+                              color: AppColors.purple,
+                            ),
                           ),
                         ),
-                        SizedBox(width: 10),
-                        VerticalDivider(
-                          thickness: 1,
-                          color: AppColors.gray1,
-                          indent: 6,
-                          endIndent: 6,
-                        ),
-                        SizedBox(width: 10),
-                        GestureDetector(
-                          onTap: () {
-                            _navigationService.pushNamed(
-                              RouteNames.accountFollows,
-                              arguments: FollowsPageArguments(
-                                username: _meStore.username.value,
-                                initialIndex: 0,
-                              ),
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              Obx(
-                                () => Text(
-                                  _meStore.followers.value.toString(),
-                                  style: TextStyle(
-                                    fontSize: 19,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Text('Seguidores'),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        VerticalDivider(
-                          thickness: 1,
-                          color: AppColors.gray1,
-                          indent: 6,
-                          endIndent: 6,
-                        ),
-                        SizedBox(width: 10),
-                        GestureDetector(
-                          onTap: () {
-                            _navigationService.pushNamed(
-                              RouteNames.accountFollows,
-                              arguments: FollowsPageArguments(
-                                username: _meStore.username.value,
-                                initialIndex: 1,
-                              ),
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              Obx(
-                                () => Text(
-                                  _meStore.followers.value.toString(),
-                                  style: TextStyle(
-                                    fontSize: 19,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Text('Seguindo'),
-                            ],
+                        Tab(
+                          icon: FaIcon(
+                            FontAwesomeIcons.commentAlt,
+                            size: 20,
+                            color: AppColors.purple,
                           ),
                         ),
                       ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
