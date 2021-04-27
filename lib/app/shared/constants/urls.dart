@@ -7,13 +7,13 @@ class Urls {
 
   static String protocol = 'http';
   static String apiVersion = 'v1';
-  static String baseUrl = 'localhost:3000';
+  // static String baseUrl = 'localhost:3000';
 
   //Use Android Emulator ip when running on Android Emulators
   // static String baseUrl = '10.0.2.2:3000';
 
   // Use when running on iPhone Simulator
-  // static String baseUrl = '127.0.0.1:3000';
+  static String baseUrl = '192.168.0.12:3000';
 
   String get apiUrl {
     if (kReleaseMode) {
