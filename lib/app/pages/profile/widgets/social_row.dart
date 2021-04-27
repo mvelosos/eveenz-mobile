@@ -11,6 +11,33 @@ class SocialRow extends StatelessWidget {
   NavigationService _navigationService;
   var _meStore = locator<MeStore>();
 
+  String _formattedSocialValue(int value) {
+    var strValue = value.toString();
+    var formattedValue = value.toString();
+
+    if (strValue.length == 5) {
+      formattedValue = '${strValue[0]}${strValue[1]},${strValue[2]} mil';
+    }
+
+    if (strValue.length == 6) {
+      formattedValue = '${strValue[0]}${strValue[1]}${strValue[2]} mil';
+    }
+
+    if (strValue.length == 7) {
+      formattedValue = '${strValue[0]},${strValue[1]}M';
+    }
+
+    if (strValue.length == 8) {
+      formattedValue = '${strValue[0]}${strValue[1]},${strValue[2]}M';
+    }
+
+    if (strValue.length == 9) {
+      formattedValue = '${strValue[0]}${strValue[1]}${strValue[2]}M';
+    }
+
+    return formattedValue;
+  }
+
   @override
   Widget build(BuildContext context) {
     _navigationService = NavigationService.currentNavigator(context);
@@ -58,7 +85,7 @@ class SocialRow extends StatelessWidget {
               children: [
                 Obx(
                   () => Text(
-                    _meStore.followers.value.toString(),
+                    _formattedSocialValue(_meStore.followers.value),
                     style: TextStyle(
                       fontSize: 19,
                       fontWeight: FontWeight.bold,
@@ -91,7 +118,7 @@ class SocialRow extends StatelessWidget {
               children: [
                 Obx(
                   () => Text(
-                    _meStore.followers.value.toString(),
+                    _formattedSocialValue(_meStore.following.value),
                     style: TextStyle(
                       fontSize: 19,
                       fontWeight: FontWeight.bold,

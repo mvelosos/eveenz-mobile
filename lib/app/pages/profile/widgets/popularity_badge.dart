@@ -10,7 +10,7 @@ import 'package:party_mobile/app/stores/me_store.dart';
 class PopularityBadge extends StatelessWidget {
   final MeStore _meStore = locator<MeStore>();
 
-  String formattedPopularity() {
+  String _formattedPopularity() {
     var numberFormat = NumberFormat('0,000', 'pt_BR');
     return numberFormat.format(_meStore.popularity.value).toString();
   }
@@ -47,7 +47,7 @@ class PopularityBadge extends StatelessWidget {
             SizedBox(width: 7),
             Obx(
               () => Text(
-                formattedPopularity(),
+                _formattedPopularity(),
                 style: GoogleFonts.inter(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,

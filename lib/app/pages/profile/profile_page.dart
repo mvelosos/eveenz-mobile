@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/me_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/profile/widgets/popularity_badge.dart';
+import 'package:party_mobile/app/pages/profile/widgets/profile_avatar.dart';
 import 'package:party_mobile/app/pages/profile/widgets/profile_bio.dart';
 import 'package:party_mobile/app/pages/profile/widgets/social_row.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
@@ -84,25 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Column(
                           children: [
                             SizedBox(height: _size.height * .03),
-                            Obx(
-                              () => _meStore.avatarUrl.value != ''
-                                  ? Container(
-                                      width: 100,
-                                      height: 100,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          fit: BoxFit.fill,
-                                          image: NetworkImage(
-                                              _meStore.avatarUrl.value),
-                                        ),
-                                      ),
-                                    )
-                                  : CircleAvatar(
-                                      radius: 50,
-                                      backgroundColor: Color(0xffd3d5db),
-                                    ),
-                            ),
+                            ProfileAvatar(),
                             SizedBox(height: _size.height * .03),
                             Obx(
                               () => AutoSizeText(
