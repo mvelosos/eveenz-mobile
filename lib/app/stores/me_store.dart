@@ -12,6 +12,8 @@ class MeStore {
   RxInt followers = 0.obs;
   RxString avatarUrl = ''.obs;
 
+  String get atUsername => username.value != '' ? '@${username.value}' : '';
+
   void setMe(ProfileModel profileModel) {
     uuid.value = profileModel.account.uuid ?? '';
     username.value = profileModel.account.username ?? '';
