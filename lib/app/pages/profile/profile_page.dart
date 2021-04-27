@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/me_controller.dart';
 import 'package:party_mobile/app/locator.dart';
-import 'package:party_mobile/app/pages/follows/follows_page.dart';
+import 'package:party_mobile/app/pages/profile/widgets/popularity_badge.dart';
+import 'package:party_mobile/app/pages/profile/widgets/profile_bio.dart';
+import 'package:party_mobile/app/pages/profile/widgets/social_row.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
@@ -34,7 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
             appBar: AppBar(
               title: Obx(
                 () => Text(
-                  '@${_meStore.username.value}',
+                  _meStore.atUsername,
                   style: GoogleFonts.poppins(
                     color: AppColors.darkPurple,
                     fontSize: 16,
@@ -114,149 +116,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             SizedBox(height: _size.height * .02),
-                            Container(
-                              width: 110,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 7,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(.3),
-                                    spreadRadius: 2,
-                                    blurRadius: 10,
-                                    offset: Offset(
-                                        0, 2), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.trophy,
-                                    size: 15,
-                                    color: AppColors.yellowGold,
-                                  ),
-                                  SizedBox(width: 7),
-                                  Obx(
-                                    () => Text(
-                                      _meStore.popularity.value.toString(),
-                                      style: GoogleFonts.inter(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
+                            PopularityBadge(),
                             SizedBox(height: _size.height * .02),
-                            Obx(
-                              () => AutoSizeText(
-                                _meStore.bio.value,
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.poppins(),
-                              ),
-                            ),
-                            SizedBox(height: _size.height * .02),
-                            IntrinsicHeight(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: Column(
-                                      children: [
-                                        Obx(
-                                          () => Text(
-                                            _meStore.events.value.toString(),
-                                            style: TextStyle(
-                                              fontSize: 19,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        Text('Eveenz'),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  VerticalDivider(
-                                    thickness: 1,
-                                    color: AppColors.gray1,
-                                    indent: 6,
-                                    endIndent: 6,
-                                  ),
-                                  SizedBox(width: 10),
-                                  GestureDetector(
-                                    onTap: () {
-                                      _navigationService.pushNamed(
-                                        RouteNames.accountFollows,
-                                        arguments: FollowsPageArguments(
-                                          username: _meStore.username.value,
-                                          initialIndex: 0,
-                                        ),
-                                      );
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Obx(
-                                          () => Text(
-                                            _meStore.followers.value.toString(),
-                                            style: TextStyle(
-                                              fontSize: 19,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        Text('Seguidores'),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  VerticalDivider(
-                                    thickness: 1,
-                                    color: AppColors.gray1,
-                                    indent: 6,
-                                    endIndent: 6,
-                                  ),
-                                  SizedBox(width: 10),
-                                  GestureDetector(
-                                    onTap: () {
-                                      _navigationService.pushNamed(
-                                        RouteNames.accountFollows,
-                                        arguments: FollowsPageArguments(
-                                          username: _meStore.username.value,
-                                          initialIndex: 1,
-                                        ),
-                                      );
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Obx(
-                                          () => Text(
-                                            _meStore.followers.value.toString(),
-                                            style: TextStyle(
-                                              fontSize: 19,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        Text('Seguindo'),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            ProfileBio(),
+                            SocialRow()
                           ],
                         ),
                       ),
-                      SizedBox(height: _size.height * .05),
+                      SizedBox(height: _size.height * .03),
                       SizedBox(
                         height: 50,
                         child: AppBar(
