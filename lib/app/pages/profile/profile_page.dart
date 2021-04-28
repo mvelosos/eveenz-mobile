@@ -102,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             PopularityBadge(),
                             SizedBox(height: _size.height * .02),
                             ProfileBio(),
-                            SocialRow()
+                            SocialRow(_navigationService)
                           ],
                         ),
                       ),

@@ -17,46 +17,50 @@ class PopularityBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // width: 120,
-      padding: EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 7,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(.3),
-            spreadRadius: 2,
-            blurRadius: 10,
-            offset: Offset(0, 2), // changes position of shadow
-          ),
-        ],
-      ),
-      child: IntrinsicWidth(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FaIcon(
-              FontAwesomeIcons.trophy,
-              size: 15,
-              color: AppColors.yellowGold,
-            ),
-            SizedBox(width: 7),
-            Obx(
-              () => Text(
-                _formattedPopularity(),
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+    return Obx(
+      () => _meStore.popularity.value != 0
+          ? Container(
+              // width: 120,
+              padding: EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 7,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(.3),
+                    spreadRadius: 2,
+                    blurRadius: 10,
+                    offset: Offset(0, 2), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: IntrinsicWidth(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.trophy,
+                      size: 15,
+                      color: AppColors.yellowGold,
+                    ),
+                    SizedBox(width: 7),
+                    Obx(
+                      () => Text(
+                        _formattedPopularity(),
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
             )
-          ],
-        ),
-      ),
+          : SizedBox.shrink(),
     );
   }
 }

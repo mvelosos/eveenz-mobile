@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/follows/follows_page.dart';
-import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/stores/me_store.dart';
 
 class SocialRow extends StatelessWidget {
-  NavigationService _navigationService;
-  var _meStore = locator<MeStore>();
+  final _navigationService;
+  final MeStore _meStore = locator<MeStore>();
+
+  SocialRow(this._navigationService);
 
   String _formattedSocialValue(int value) {
     var strValue = value.toString();
@@ -40,8 +41,6 @@ class SocialRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _navigationService = NavigationService.currentNavigator(context);
-
     return IntrinsicHeight(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
