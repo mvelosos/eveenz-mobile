@@ -1,14 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/me_controller.dart';
 import 'package:party_mobile/app/locator.dart';
-import 'package:party_mobile/app/pages/profile/widgets/popularity_badge.dart';
+import 'package:party_mobile/app/pages/profile/widgets/profile_popularity_badge.dart';
 import 'package:party_mobile/app/pages/profile/widgets/profile_avatar.dart';
 import 'package:party_mobile/app/pages/profile/widgets/profile_bio.dart';
-import 'package:party_mobile/app/pages/profile/widgets/social_row.dart';
+import 'package:party_mobile/app/pages/profile/widgets/profile_tab_view.dart';
+import 'package:party_mobile/app/pages/profile/widgets/profile_social_row.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
@@ -99,61 +100,15 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             SizedBox(height: _size.height * .02),
-                            PopularityBadge(),
+                            ProfilePopularityBadge(),
                             SizedBox(height: _size.height * .02),
                             ProfileBio(),
-                            SocialRow(_navigationService)
+                            ProfileSocialRow(_navigationService)
                           ],
                         ),
                       ),
                       SizedBox(height: _size.height * .03),
-                      SizedBox(
-                        height: 50,
-                        child: AppBar(
-                          backgroundColor: AppColors.grayLight2,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25),
-                              topRight: Radius.circular(25),
-                            ),
-                          ),
-                          bottom: TabBar(
-                            indicatorWeight: 4,
-                            indicatorColor: AppColors.purple,
-                            tabs: [
-                              Tab(
-                                icon: FaIcon(
-                                  FontAwesomeIcons.calendarAlt,
-                                  size: 20,
-                                  color: AppColors.purple,
-                                ),
-                              ),
-                              Tab(
-                                icon: FaIcon(
-                                  FontAwesomeIcons.commentAlt,
-                                  size: 20,
-                                  color: AppColors.purple,
-                                ),
-                              ),
-                            ],
-                          ),
-                          elevation: 0,
-                        ),
-                      ),
-                      Expanded(
-                        child: TabBarView(
-                          children: [
-                            Container(
-                              color: AppColors.grayLight2,
-                              child: Text('oi'),
-                            ),
-                            Container(
-                              color: AppColors.grayLight2,
-                              child: Text('fon'),
-                            )
-                          ],
-                        ),
-                      )
+                      ProfileTabView()
                     ],
                   ),
                 ),
