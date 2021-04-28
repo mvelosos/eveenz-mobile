@@ -7,7 +7,7 @@ import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/stores/me_store.dart';
 
-class PopularityBadge extends StatelessWidget {
+class ProfilePopularityBadge extends StatelessWidget {
   final MeStore _meStore = locator<MeStore>();
 
   String _formattedPopularity() {

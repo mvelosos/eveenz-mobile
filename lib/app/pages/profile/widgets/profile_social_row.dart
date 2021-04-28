@@ -6,11 +6,11 @@ import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/stores/me_store.dart';
 
-class SocialRow extends StatelessWidget {
+class ProfileSocialRow extends StatelessWidget {
   final _navigationService;
   final MeStore _meStore = locator<MeStore>();
 
-  SocialRow(this._navigationService);
+  ProfileSocialRow(this._navigationService);
 
   String _formattedSocialValue(int value) {
     var strValue = value.toString();
