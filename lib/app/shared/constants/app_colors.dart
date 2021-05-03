@@ -10,5 +10,5 @@ class AppColors {
   static Color red = Color(0xFFEC4825);
   static Color yellowGold = Color(0xFFF3CD49);
   static Color snackWarning = Colors.red;
-  static Color profileTabViewContainer = Color(0xFFEEEEEE);
+  static Color profileTabViewContainer = Color(0xFFF8F8F8);
 }

@@ -35,6 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
         return DefaultTabController(
           length: 2,
           child: Scaffold(
+            backgroundColor: Colors.white,
             appBar: AppBar(
               title: Obx(
                 () => Text(
@@ -46,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               centerTitle: true,
-              backgroundColor: Colors.transparent,
+              backgroundColor: Colors.white,
               shadowColor: Colors.transparent,
               brightness: Brightness.light,
               automaticallyImplyLeading: false,
@@ -65,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             body: RefreshIndicator(
-              color: Colors.blue,
+              color: AppColors.purple,
               displacement: 0,
               onRefresh: () async {
                 await _meController.getMe();
@@ -74,6 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 physics: AlwaysScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 child: Container(
+                  color: Colors.white,
                   height: constraints.maxHeight,
                   width: constraints.maxWidth,
                   child: Column(
