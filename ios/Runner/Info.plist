@@ -58,16 +58,6 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Eveenz needs access to your camera, so you will be able to take pictures.</string>
-	<key>NSContactsUsageDescription</key>
-	<string>Eveenz needs access to your contacts to increase your experience and easily follow your friends</string>
-    <key>NSCalendarsUsageDescription</key>
-    <string>Eveenz needs access to your calendar to make it easy for you to organize your events</string>
-    <key>NSAppleMusicUsageDescription</key>
-    <string>Eveenz needs access to your media library to increase your experience with your photos and videos</string>
-    <key>NSMotionUsageDescription</key>
-    <string>Eveenz needs access to your media library to increase your experience with the app</string>
-    <key>NSSpeechRecognitionUsageDescription</key>
-    <string>Eveenz needs access to your media library to increase your experience with the app</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Eveenz needs access to location when in the background.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
