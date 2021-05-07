@@ -12,6 +12,7 @@ import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/category_model.dart';
 import 'package:party_mobile/app/models/image_upload_model.dart';
 import 'package:party_mobile/app/services/google_places_service.dart';
+import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/utils/google_place_details_formatter.dart';
 import 'package:party_mobile/app/shared/widgets/loading_indicator.dart';
@@ -32,6 +33,7 @@ class _NewEventPageState extends State<NewEventPage> {
   final picker = ImagePicker();
   final _eventsController = locator<EventsController>();
 
+  NavigationService _navigationService;
   CategoriesController _categoriesController = locator<CategoriesController>();
   RequestCategoriesController _requestCategoriesController =
       locator<RequestCategoriesController>();
@@ -57,10 +59,12 @@ class _NewEventPageState extends State<NewEventPage> {
   // Functions
   void initState() {
     super.initState();
-    _getCategories();
     _newEvent.privacy = 'public';
+    _getCategories();
     _setStartDate(_selectedStartDate);
     _setStartTime(_selectedStartTime);
+    _setEndDate(_selectedEndDate);
+    _setEndTime(_selectedEndTime);
     setState(() {
       images.add("Add Image");
       images.add("Add Image");
@@ -98,7 +102,7 @@ class _NewEventPageState extends State<NewEventPage> {
                   ),
                 )
               },
-              (r) => {print(r)},
+              (r) => {_navigationService.goBack()},
             )
           },
         )
@@ -151,10 +155,10 @@ class _NewEventPageState extends State<NewEventPage> {
     return formattedTime;
   }
 
-  _onCheckUndefinedEnd(value) {
+  void _onCheckUndefinedEnd(bool isUndefined) {
     setState(() {
-      _newEvent.undefinedEnd = value;
-      if (value) {
+      _newEvent.undefinedEnd = isUndefined;
+      if (isUndefined) {
         _newEvent.endDate = '';
         _newEvent.endTime = '';
       } else {
@@ -468,6 +472,7 @@ class _NewEventPageState extends State<NewEventPage> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
+    _navigationService = NavigationService.currentNavigator(context);
 
     return Stack(
       children: [

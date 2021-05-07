@@ -49,14 +49,14 @@ class NewEventVM {
 
   Map<String, dynamic> _getAddressData() {
     return {
-      'street': addressAttributes['street'].trim(),
-      'number': addressAttributes['number'].trim(),
-      'neighborhood': addressAttributes['neighborhood'].trim(),
-      'city': addressAttributes['city'].trim(),
-      'state': addressAttributes['state'].trim(),
-      'country': addressAttributes['country'].trim(),
-      'zipCode': addressAttributes['zipCode'].trim(),
-      'complement': addressAttributes['complement'].trim(),
+      'street': addressAttributes['street'],
+      'number': addressAttributes['number'],
+      'neighborhood': addressAttributes['neighborhood'],
+      'city': addressAttributes['city'],
+      'state': addressAttributes['state'],
+      'country': addressAttributes['country'],
+      'zipCode': addressAttributes['zipCode'],
+      'complement': addressAttributes['complement'],
     };
   }
 
