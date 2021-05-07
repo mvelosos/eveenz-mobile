@@ -39,10 +39,11 @@ class _ProfilePageState extends State<ProfilePage> {
             appBar: AppBar(
               title: Obx(
                 () => Text(
-                  _meStore.atUsername,
+                  _meStore.username.value,
                   style: GoogleFonts.poppins(
                     color: AppColors.darkPurple,
-                    fontSize: 16,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
