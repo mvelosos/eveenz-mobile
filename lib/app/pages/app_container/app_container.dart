@@ -38,7 +38,7 @@ class _AppContainerState extends State<AppContainer> {
   }
 
   void _initUser() async {
-    await _profileController.getMe();
+    await _profileController.getProfile();
     _setOneSignalSubscription();
   }
 

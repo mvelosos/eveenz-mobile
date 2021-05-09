@@ -34,7 +34,7 @@ class ProfileRepository implements IProfileRepository {
           .put(Endpoints.profile, data: meProfile.getData());
       return Right(ApiSuccessModel.fromJson(result.data));
     } catch (e) {
-      return Left(RequestError(message: e.response.data['errors']));
+      return Left(RequestError(message: e.response.data['error'].join(', ')));
     }
   }
 

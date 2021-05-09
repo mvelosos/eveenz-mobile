@@ -39,7 +39,7 @@ class _MapPageState extends State<MapPage> {
   }
 
   void _updateUserLocalization() {
-    _meController.updateMe(_meProfile);
+    _meController.updateProfile(_meProfile);
   }
 
   Future<Position> _determinePosition() async {

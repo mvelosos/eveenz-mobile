@@ -33,7 +33,7 @@ class SettingsListTile extends StatelessWidget {
       ),
       title: Text(_title, style: GoogleFonts.poppins(fontSize: 14)),
       onTap: () => {
-        _navigationService.pushNamed(_routeName),
+        if (_routeName.isNotEmpty) _navigationService.pushNamed(_routeName),
       },
     );
   }

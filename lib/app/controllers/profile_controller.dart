@@ -6,32 +6,33 @@ import 'package:party_mobile/app/stores/profile_store.dart';
 import 'package:party_mobile/app/view_models/me_profile_vm.dart';
 
 class ProfileController {
-  ProfileRepository _meRepository;
-  ProfileStore _meStore;
+  ProfileRepository _profileRepository;
+  ProfileStore _profileStore;
 
   ProfileController() {
-    _meRepository = ProfileRepository();
-    _meStore = locator<ProfileStore>();
+    _profileRepository = ProfileRepository();
+    _profileStore = locator<ProfileStore>();
   }
 
-  Future<void> getMe() async {
-    var profileResult = await _meRepository.getMe();
+  Future<void> getProfile() async {
+    var profileResult = await _profileRepository.getMe();
     if (profileResult.isRight()) {
-      _meStore.setMe(profileResult.getOrElse(null));
+      _profileStore.setMe(profileResult.getOrElse(null));
     }
   }
 
-  void updateMe(MeProfileVM meProfile) async {
-    await _meRepository.updateMe(meProfile);
+  Future<Either<Failure, dynamic>> updateProfile(MeProfileVM meProfile) async {
+    var result = await _profileRepository.updateMe(meProfile);
+    return result;
   }
 
   Future<Either<Failure, Object>> followAccount(String uuid) async {
-    var result = await _meRepository.followAccount(uuid);
+    var result = await _profileRepository.followAccount(uuid);
     return result;
   }
 
   Future<Either<Failure, Object>> unfollowAccount(String uuid) async {
-    var result = await _meRepository.unfollowAccount(uuid);
+    var result = await _profileRepository.unfollowAccount(uuid);
     return result;
   }
 }

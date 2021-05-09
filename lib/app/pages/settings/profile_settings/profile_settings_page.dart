@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
+import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/stores/profile_store.dart';
 
 class ProfileSettingsPage extends StatefulWidget {
@@ -10,9 +13,12 @@ class ProfileSettingsPage extends StatefulWidget {
 
 class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   final ProfileStore _profileStore = locator<ProfileStore>();
+  NavigationService _navigationService;
 
   @override
   Widget build(BuildContext context) {
+    _navigationService = NavigationService.currentNavigator(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -61,15 +67,17 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   width: 60,
                   child: Text('Nome'),
                 ),
-                title: Text(_profileStore.name.value),
-                onTap: () {},
+                title: Obx(() => Text(_profileStore.name.value)),
+                onTap: () {
+                  _navigationService.pushNamed(RouteNames.updateNameSettings);
+                },
               ),
               ListTile(
                 leading: Container(
                   width: 60,
                   child: Text('Nome de usuário'),
                 ),
-                title: Text(_profileStore.username.value),
+                title: Obx(() => Text(_profileStore.username.value)),
                 onTap: () {},
               ),
               ListTile(
@@ -77,8 +85,10 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   width: 60,
                   child: Text('Bio'),
                 ),
-                title: Text(_profileStore.bio.value),
-                onTap: () {},
+                title: Obx(() => Text(_profileStore.bio.value)),
+                onTap: () {
+                  _navigationService.pushNamed(RouteNames.updateBioSettings);
+                },
               ),
               Divider(),
             ],

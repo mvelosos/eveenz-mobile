@@ -67,10 +67,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             body: RefreshIndicator(
-              color: AppColors.purple,
+              color: AppColors.orange,
               displacement: 0,
               onRefresh: () async {
-                await _meController.getMe();
+                await _meController.getProfile();
               },
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
