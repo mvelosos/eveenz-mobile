@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:party_mobile/app/locator.dart';
-import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
-import 'package:party_mobile/app/services/local_storage_service.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:party_mobile/app/pages/settings/widgets/settings_list_tile.dart';
+import 'package:party_mobile/app/pages/settings/widgets/sign_out_list_tile.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
+import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
-import 'package:party_mobile/app/shared/constants/storage.dart';
-import 'package:party_mobile/app/stores/auth_user_store.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -14,36 +13,60 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  AuthUserStore _authUserStore = locator<AuthUserStore>();
-  var _storage = locator<LocalStorageService>();
-  var _navigationService =
-      NavigationService(locator<RootNavigatorKey>().navigatorKey);
+  NavigationService _navigationService;
 
   @override
   Widget build(BuildContext context) {
+    Size _size = MediaQuery.of(context).size;
+    _navigationService = NavigationService.currentNavigator(context);
+
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        title: Text(
+          'Configurações',
+          style: TextStyle(color: AppColors.darkPurple, fontSize: 17),
+        ),
+        backgroundColor: Colors.white,
         shadowColor: Colors.transparent,
         brightness: Brightness.light,
-        iconTheme: IconThemeData(color: Colors.blue),
+        iconTheme: IconThemeData(color: AppColors.orange),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            RaisedButton(
-              child: Text('Logout'),
-              onPressed: () => {
-                _storage.delete(Storage.jwtToken),
-                _storage.delete(Storage.username),
-                _authUserStore.clear(),
-                OneSignal.shared.removeExternalUserId(),
-                _navigationService
-                    .pushReplacementNamedNoAnimation(RouteNames.login)
-              },
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(
+            left: _size.width * .06,
+            right: _size.width * .06,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 15),
+              Text(
+                'CONTA',
+                style: GoogleFonts.poppins(
+                  color: AppColors.darkPurple,
+                  fontSize: 13,
+                ),
+              ),
+              SettingsListTile(
+                'Perfil',
+                FontAwesomeIcons.user,
+                FontAwesomeIcons.chevronRight,
+                _navigationService,
+                RouteNames.profileSettings,
+              ),
+              SettingsListTile(
+                'Senha',
+                FontAwesomeIcons.key,
+                FontAwesomeIcons.chevronRight,
+                _navigationService,
+                '',
+              ),
+              Divider(),
+              SignOutListTile(this._navigationService),
+            ],
+          ),
         ),
       ),
     );
