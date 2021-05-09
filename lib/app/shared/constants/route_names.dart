@@ -29,7 +29,10 @@ class RouteNames {
 
   // Profile
   static const String profile = '/profile';
+
+  // Settings
   static const String settings = '/settings';
+  static const String profileSettings = '/settings/profile';
 
   // Events
   static const String newEvent = '/events/new';
