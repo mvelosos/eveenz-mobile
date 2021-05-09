@@ -21,9 +21,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final MeController _meController = locator<MeController>();
+  final MeStore _meStore = locator<MeStore>();
   NavigationService _navigationService;
-  var _meController = locator<MeController>();
-  var _meStore = locator<MeStore>();
 
   @override
   Widget build(BuildContext context) {
