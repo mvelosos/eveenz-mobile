@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:party_mobile/app/controllers/me_controller.dart';
+import 'package:party_mobile/app/controllers/profile_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/account_model.dart';
 
@@ -15,7 +15,7 @@ class FollowButton extends StatefulWidget {
 }
 
 class _FollowButtonState extends State<FollowButton> {
-  MeController _meController = locator<MeController>();
+  ProfileController _meController = locator<ProfileController>();
   bool _loading = false;
 
   void _setLoading(bool value) {

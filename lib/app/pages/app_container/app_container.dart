@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:party_mobile/app/controllers/me_controller.dart';
+import 'package:party_mobile/app/controllers/profile_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/navigators/home_navigator.dart';
 import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
@@ -10,7 +10,7 @@ import 'package:party_mobile/app/navigators/profile_navigator.dart';
 import 'package:party_mobile/app/navigators/search_navigator.dart';
 import 'package:party_mobile/app/pages/app_container/widgets/bottom_navigation_bar_widget.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
-import 'package:party_mobile/app/stores/me_store.dart';
+import 'package:party_mobile/app/stores/profile_store.dart';
 
 class AppContainer extends StatefulWidget {
   @override
@@ -23,10 +23,10 @@ final _mapNavigatorKey = locator<MapNavigatorKey>().navigatorKey;
 final _notificationsNavigatorKey =
     locator<NotificationsNavigatorKey>().navigatorKey;
 final _profileNavigatorKey = locator<ProfileNavigatorKey>().navigatorKey;
-final _meStore = locator<MeStore>();
+final _profileStore = locator<ProfileStore>();
 
 class _AppContainerState extends State<AppContainer> {
-  var _profileController = locator<MeController>();
+  var _profileController = locator<ProfileController>();
   int _currentIndex = 0;
 
   // Functions
@@ -45,7 +45,7 @@ class _AppContainerState extends State<AppContainer> {
   void _setOneSignalSubscription() async {
     await OneSignal.shared
         .promptUserForPushNotificationPermission(fallbackToSettings: true);
-    OneSignal.shared.setExternalUserId(_meStore.uuid.value);
+    OneSignal.shared.setExternalUserId(_profileStore.uuid.value);
   }
 
   void _onTabTapped(int index) {

@@ -1,17 +1,17 @@
 import 'package:dartz/dartz.dart';
 import 'package:party_mobile/app/locator.dart';
-import 'package:party_mobile/app/repositories/me_repository.dart';
+import 'package:party_mobile/app/repositories/profile_repository.dart';
 import 'package:party_mobile/app/shared/errors/errors.dart';
-import 'package:party_mobile/app/stores/me_store.dart';
+import 'package:party_mobile/app/stores/profile_store.dart';
 import 'package:party_mobile/app/view_models/me_profile_vm.dart';
 
-class MeController {
-  MeRepository _meRepository;
-  MeStore _meStore;
+class ProfileController {
+  ProfileRepository _meRepository;
+  ProfileStore _meStore;
 
-  MeController() {
-    _meRepository = MeRepository();
-    _meStore = locator<MeStore>();
+  ProfileController() {
+    _meRepository = ProfileRepository();
+    _meStore = locator<ProfileStore>();
   }
 
   Future<void> getMe() async {

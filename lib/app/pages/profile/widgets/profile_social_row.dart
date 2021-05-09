@@ -4,11 +4,11 @@ import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/follows/follows_page.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
-import 'package:party_mobile/app/stores/me_store.dart';
+import 'package:party_mobile/app/stores/profile_store.dart';
 
 class ProfileSocialRow extends StatelessWidget {
   final _navigationService;
-  final MeStore _meStore = locator<MeStore>();
+  final ProfileStore _profileStore = locator<ProfileStore>();
 
   ProfileSocialRow(this._navigationService);
 
@@ -51,7 +51,7 @@ class ProfileSocialRow extends StatelessWidget {
               children: [
                 Obx(
                   () => Text(
-                    _meStore.events.value.toString(),
+                    _profileStore.events.value.toString(),
                     style: TextStyle(
                       fontSize: 19,
                       fontWeight: FontWeight.bold,
@@ -75,7 +75,7 @@ class ProfileSocialRow extends StatelessWidget {
               _navigationService.pushNamed(
                 RouteNames.accountFollows,
                 arguments: FollowsPageArguments(
-                  username: _meStore.username.value,
+                  username: _profileStore.username.value,
                   initialIndex: 0,
                 ),
               );
@@ -84,7 +84,7 @@ class ProfileSocialRow extends StatelessWidget {
               children: [
                 Obx(
                   () => Text(
-                    _formattedSocialValue(_meStore.followers.value),
+                    _formattedSocialValue(_profileStore.followers.value),
                     style: TextStyle(
                       fontSize: 19,
                       fontWeight: FontWeight.bold,
@@ -108,7 +108,7 @@ class ProfileSocialRow extends StatelessWidget {
               _navigationService.pushNamed(
                 RouteNames.accountFollows,
                 arguments: FollowsPageArguments(
-                  username: _meStore.username.value,
+                  username: _profileStore.username.value,
                   initialIndex: 1,
                 ),
               );
@@ -117,7 +117,7 @@ class ProfileSocialRow extends StatelessWidget {
               children: [
                 Obx(
                   () => Text(
-                    _formattedSocialValue(_meStore.following.value),
+                    _formattedSocialValue(_profileStore.following.value),
                     style: TextStyle(
                       fontSize: 19,
                       fontWeight: FontWeight.bold,

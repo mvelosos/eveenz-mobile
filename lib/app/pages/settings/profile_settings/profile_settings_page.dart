@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
-import 'package:party_mobile/app/stores/me_store.dart';
+import 'package:party_mobile/app/stores/profile_store.dart';
 
 class ProfileSettingsPage extends StatefulWidget {
   @override
@@ -9,7 +9,7 @@ class ProfileSettingsPage extends StatefulWidget {
 }
 
 class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
-  final MeStore _meStore = locator<MeStore>();
+  final ProfileStore _profileStore = locator<ProfileStore>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   image: DecorationImage(
                     fit: BoxFit.fill,
                     image: Image.network(
-                      _meStore.avatarUrl.value,
+                      _profileStore.avatarUrl.value,
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) {
                           return child;
@@ -61,7 +61,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   width: 60,
                   child: Text('Nome'),
                 ),
-                title: Text(_meStore.name.value),
+                title: Text(_profileStore.name.value),
                 onTap: () {},
               ),
               ListTile(
@@ -69,7 +69,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   width: 60,
                   child: Text('Nome de usuário'),
                 ),
-                title: Text(_meStore.username.value),
+                title: Text(_profileStore.username.value),
                 onTap: () {},
               ),
               ListTile(
@@ -77,7 +77,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   width: 60,
                   child: Text('Bio'),
                 ),
-                title: Text(_meStore.bio.value),
+                title: Text(_profileStore.bio.value),
                 onTap: () {},
               ),
               Divider(),

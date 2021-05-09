@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:party_mobile/app/models/profile_model.dart';
 
-class MeStore {
+class ProfileStore {
   RxString uuid = ''.obs;
   RxString username = ''.obs;
   RxString name = ''.obs;

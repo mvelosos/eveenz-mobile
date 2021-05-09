@@ -5,20 +5,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
-import 'package:party_mobile/app/stores/me_store.dart';
+import 'package:party_mobile/app/stores/profile_store.dart';
 
 class ProfilePopularityBadge extends StatelessWidget {
-  final MeStore _meStore = locator<MeStore>();
+  final ProfileStore _profileStore = locator<ProfileStore>();
 
   String _formattedPopularity() {
     var numberFormat = NumberFormat('0,000', 'pt_BR');
-    return numberFormat.format(_meStore.popularity.value).toString();
+    return numberFormat.format(_profileStore.popularity.value).toString();
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => _meStore.popularity.value != 0
+      () => _profileStore.popularity.value != 0
           ? Container(
               // width: 120,
               padding: EdgeInsets.symmetric(

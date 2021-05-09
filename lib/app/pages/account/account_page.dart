@@ -6,7 +6,7 @@ import 'package:party_mobile/app/pages/account/widgets/follow_button.dart';
 import 'package:party_mobile/app/pages/follows/follows_page.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
-import 'package:party_mobile/app/stores/me_store.dart';
+import 'package:party_mobile/app/stores/profile_store.dart';
 
 // Page Arguments
 class AccountPageArguments {
@@ -27,7 +27,7 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   final AccountsController _accountsController = locator<AccountsController>();
-  final MeStore _meStore = locator<MeStore>();
+  final ProfileStore _profileStore = locator<ProfileStore>();
   AccountModel _accountModel;
   bool _loading = true;
   bool _showFollowButton = false;
@@ -52,7 +52,7 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   void _shouldShowFollowButton() {
-    if (_accountModel.uuid != _meStore.uuid.value) {
+    if (_accountModel.uuid != _profileStore.uuid.value) {
       _showFollowButton = true;
     }
   }

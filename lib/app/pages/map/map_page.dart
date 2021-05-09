@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:party_mobile/app/controllers/me_controller.dart';
+import 'package:party_mobile/app/controllers/profile_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/view_models/me_profile_vm.dart';
 
@@ -14,7 +14,7 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   Completer<GoogleMapController> _gmController = Completer();
   CameraPosition _initialPosition;
-  MeController _meController = locator<MeController>();
+  ProfileController _meController = locator<ProfileController>();
   MeProfileVM _meProfile = MeProfileVM();
   bool _loadingPosition = true;
 

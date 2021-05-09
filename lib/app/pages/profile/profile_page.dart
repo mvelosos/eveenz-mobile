@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:party_mobile/app/controllers/me_controller.dart';
+import 'package:party_mobile/app/controllers/profile_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/profile/widgets/profile_popularity_badge.dart';
 import 'package:party_mobile/app/pages/profile/widgets/profile_avatar.dart';
@@ -13,7 +13,7 @@ import 'package:party_mobile/app/pages/profile/widgets/profile_social_row.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
-import 'package:party_mobile/app/stores/me_store.dart';
+import 'package:party_mobile/app/stores/profile_store.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -21,8 +21,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final MeController _meController = locator<MeController>();
-  final MeStore _meStore = locator<MeStore>();
+  final ProfileController _meController = locator<ProfileController>();
+  final ProfileStore _profileStore = locator<ProfileStore>();
   NavigationService _navigationService;
 
   @override
@@ -39,7 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
             appBar: AppBar(
               title: Obx(
                 () => Text(
-                  _meStore.username.value,
+                  _profileStore.username.value,
                   style: GoogleFonts.poppins(
                     color: AppColors.darkPurple,
                     fontSize: 18,
@@ -93,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             SizedBox(height: _size.height * .03),
                             Obx(
                               () => AutoSizeText(
-                                _meStore.name.value,
+                                _profileStore.name.value,
                                 minFontSize: 17,
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.inter(

@@ -17,7 +17,7 @@ class Endpoints {
   static const String passwordsRecover = '/passwords/recover_password';
 
   // Profile Endpoints
-  static const String me = '/me';
+  static const String profile = '/profile';
 
   // Search Endpoints
   static const String search = '/search';
