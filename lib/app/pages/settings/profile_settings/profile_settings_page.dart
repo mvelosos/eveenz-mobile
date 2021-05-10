@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:party_mobile/app/controllers/profile_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
+import 'package:party_mobile/app/shared/utils/commons.dart';
 import 'package:party_mobile/app/stores/profile_store.dart';
+import 'package:party_mobile/app/view_models/me_profile_vm.dart';
 
 class ProfileSettingsPage extends StatefulWidget {
   @override
@@ -16,26 +19,25 @@ class ProfileSettingsPage extends StatefulWidget {
 }
 
 class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
+  final ProfileController _profileController = locator<ProfileController>();
   final ProfileStore _profileStore = locator<ProfileStore>();
   final ImagePicker _picker = ImagePicker();
-  File _image;
+  final MeProfileVM _profile = MeProfileVM();
   NavigationService _navigationService;
 
   void _onImagePick() async {
-    final pickedFile = await _picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        _initImageCropper();
-      } else {
-        print('No image selected.');
-      }
-    });
+    final PickedFile pickedFile =
+        await _picker.getImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      File fileImage = File(pickedFile.path);
+      _initImageCropper(fileImage);
+    }
   }
 
-  void _initImageCropper() async {
+  void _initImageCropper(File image) async {
     File croppedFile = await ImageCropper.cropImage(
-      sourcePath: _image.path,
+      sourcePath: image.path,
       aspectRatioPresets: [
         CropAspectRatioPreset.square,
         CropAspectRatioPreset.ratio3x2,
@@ -54,6 +56,21 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
         doneButtonTitle: 'Ok',
         cancelButtonTitle: 'Cancelar',
       ),
+    );
+    if (croppedFile != null) _requestUpdateAvatar(croppedFile);
+  }
+
+  void _requestUpdateAvatar(File file) async {
+    var base64image = Commons.encodeBase64(file);
+    base64image = Commons.base64dataUri(base64image);
+    _profile.avatar = {'data': base64image, 'filename': file.path};
+
+    var result = await _profileController.updateProfile(_profile);
+    result.fold(
+      (l) => {print(l.message)},
+      (r) async => {
+        await _profileController.getProfile(),
+      },
     );
   }
 
@@ -86,26 +103,28 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   // color: Colors.blue,
                   child: Column(
                     children: [
-                      Container(
-                        width: 90,
-                        height: 90,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: Image.network(
-                              _profileStore.avatarUrl.value,
-                              loadingBuilder:
-                                  (context, child, loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child;
-                                }
-                                return CircleAvatar(
-                                  radius: 50,
-                                  backgroundColor: Color(0xffd3d5db),
-                                );
-                              },
-                            ).image,
+                      Obx(
+                        () => Container(
+                          width: 90,
+                          height: 90,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: Image.network(
+                                _profileStore.avatarUrl.value,
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  }
+                                  return CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor: Color(0xffd3d5db),
+                                  );
+                                },
+                              ).image,
+                            ),
                           ),
                         ),
                       ),

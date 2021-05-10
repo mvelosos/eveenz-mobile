@@ -2,6 +2,7 @@ class MeProfileVM {
   String name;
   String bio;
   int popularity;
+  Map avatar;
   double latitude;
   double longitude;
   String street;
@@ -33,6 +34,7 @@ class MeProfileVM {
     if (name != null) account['name'] = name;
     if (bio != null) account['bio'] = bio;
     if (popularity != null) account['popularity'] = popularity;
+    if (avatar != null) account['avatar'] = avatar;
     if (latitude != null)
       account['localizationAttributes']['latitude'] = latitude;
     if (longitude != null)
