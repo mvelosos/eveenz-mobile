@@ -9,6 +9,7 @@ class NewEventVM {
   bool undefinedEnd = false;
   String externalUrl;
   int minimumAge;
+  List<Map> images = [];
   Map<String, dynamic> addressAttributes = {
     'street': '',
     'number': '',
@@ -24,7 +25,6 @@ class NewEventVM {
     'longitude': '',
   };
   List<Map<String, dynamic>> eventCategories = [];
-  List images = [];
 
   Map<String, dynamic> getData() {
     return {
@@ -39,10 +39,10 @@ class NewEventVM {
         'undefinedEnd': undefinedEnd,
         'externalUrl': externalUrl,
         'minimumAge': minimumAge,
+        'images': images,
         'addressAttributes': _getAddressData(),
         'localizationAttributes': _getLocalizationData(),
         'eventCategoriesAttributes': eventCategories,
-        'images': images,
       }
     };
   }

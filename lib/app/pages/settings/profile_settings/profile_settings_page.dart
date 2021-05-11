@@ -2,14 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:party_mobile/app/controllers/profile_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/shared/utils/commons.dart';
+import 'package:party_mobile/app/shared/utils/image_crop_picker.dart';
 import 'package:party_mobile/app/stores/profile_store.dart';
 import 'package:party_mobile/app/view_models/me_profile_vm.dart';
 
@@ -21,46 +20,20 @@ class ProfileSettingsPage extends StatefulWidget {
 class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   final ProfileController _profileController = locator<ProfileController>();
   final ProfileStore _profileStore = locator<ProfileStore>();
-  final ImagePicker _picker = ImagePicker();
   final MeProfileVM _profile = MeProfileVM();
   NavigationService _navigationService;
 
   void _onImagePick() async {
-    final PickedFile pickedFile =
-        await _picker.getImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      File fileImage = File(pickedFile.path);
-      _initImageCropper(fileImage);
-    }
-  }
-
-  void _initImageCropper(File image) async {
-    File croppedFile = await ImageCropper.cropImage(
-      sourcePath: image.path,
-      aspectRatioPresets: [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9
-      ],
-      androidUiSettings: AndroidUiSettings(
-          toolbarTitle: 'Cortar',
-          toolbarColor: Colors.transparent,
-          toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false),
-      iosUiSettings: IOSUiSettings(
-        minimumAspectRatio: 1.0,
-        doneButtonTitle: 'Ok',
-        cancelButtonTitle: 'Cancelar',
-      ),
-    );
-    if (croppedFile != null) _requestUpdateAvatar(croppedFile);
+    var _pickedImage = await ImageCropPicker(
+      enableCrop: true,
+      pickerType: 'gallery',
+    ).initPicker();
+    _requestUpdateAvatar(_pickedImage);
   }
 
   void _requestUpdateAvatar(File file) async {
+    if (file == null) return;
+
     var base64image = Commons.encodeBase64(file);
     base64image = Commons.base64dataUri(base64image);
     _profile.avatar = {'data': base64image, 'filename': file.path};

@@ -15,9 +15,9 @@ import 'package:party_mobile/app/services/google_places_service.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/utils/google_place_details_formatter.dart';
+import 'package:party_mobile/app/shared/utils/image_crop_picker.dart';
 import 'package:party_mobile/app/shared/widgets/loading_indicator.dart';
 import 'package:party_mobile/app/view_models/new_event_vm.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:party_mobile/app/view_models/new_request_category_vm.dart';
 import 'package:party_mobile/app/shared/widgets/date_picker.dart';
 import 'package:party_mobile/app/shared/widgets/time_picker.dart';
@@ -30,7 +30,6 @@ class NewEventPage extends StatefulWidget {
 class _NewEventPageState extends State<NewEventPage> {
   final _formKey = GlobalKey<FormState>();
   final _newEvent = NewEventVM();
-  final picker = ImagePicker();
   final _eventsController = locator<EventsController>();
 
   NavigationService _navigationService;
@@ -42,8 +41,7 @@ class _NewEventPageState extends State<NewEventPage> {
       TextEditingController(text: '');
   List<CategoryModel> _categories = [];
   List<String> _selectedCategoriesIds = [];
-  List<Object> images = List<Object>();
-  Future<PickedFile> _imageFile;
+  List<Object> _images = List<Object>();
   String _googleSessionToken;
   List<dynamic> _placesSearchResult = [];
   Map _selectedPlace;
@@ -66,11 +64,11 @@ class _NewEventPageState extends State<NewEventPage> {
     _setEndDate(_selectedEndDate);
     _setEndTime(_selectedEndTime);
     setState(() {
-      images.add("Add Image");
-      images.add("Add Image");
-      images.add("Add Image");
-      images.add("Add Image");
-      images.add("Add Image");
+      _images.add("Add Image");
+      _images.add("Add Image");
+      _images.add("Add Image");
+      _images.add("Add Image");
+      _images.add("Add Image");
     });
   }
 
@@ -80,8 +78,22 @@ class _NewEventPageState extends State<NewEventPage> {
     });
   }
 
-  void _requestCreateEvent(BuildContext context) {
+  _handleImages() {
+    _newEvent.images = [];
+    _images.forEach((image) {
+      if (image is ImageUploadModel) {
+        _newEvent.images.add(
+          {'data': image.base64Image, 'filename': image.imagePath},
+        );
+      }
+    });
+  }
+
+  void _requestCreateEvent(BuildContext context) async {
+    if (!_formKey.currentState.validate()) return;
+
     Size _size = MediaQuery.of(context).size;
+    _handleImages();
     _setLoading(true);
 
     var result = _eventsController.createEvent(_newEvent);
@@ -298,27 +310,24 @@ class _NewEventPageState extends State<NewEventPage> {
     }
   }
 
-  Future getImage() async {
-    var pickedFile = await picker.getImage(
-      source: ImageSource.gallery,
-    );
-
-    print(pickedFile.path);
-    pickedFile = null;
-
-    // setState(() {
-    //   if (pickedFile != null) {
-    //     _image = File(pickedFile.path);
-    //   } else {
-    //     print('No image selected.');
-    //   }
-    // });
+  Future _onAddImageClick(int index) async {
+    var _pickedImage = await ImageCropPicker(
+      enableCrop: true,
+      pickerType: 'gallery',
+    ).initPicker();
+    getFileImage(_pickedImage, index);
   }
 
-  Future _onAddImageClick(int index) async {
+  void getFileImage(File imageFile, int index) async {
+    if (imageFile == null) return;
+
     setState(() {
-      _imageFile = picker.getImage(source: ImageSource.gallery);
-      getFileImage(index);
+      ImageUploadModel imageUpload = new ImageUploadModel();
+      imageUpload.isUploaded = false;
+      imageUpload.uploading = false;
+      imageUpload.imageFile = imageFile;
+      imageUpload.imageUrl = '';
+      _images.replaceRange(index, index + 1, [imageUpload]);
     });
   }
 
@@ -328,22 +337,6 @@ class _NewEventPageState extends State<NewEventPage> {
       _selectedCategoriesIds.forEach((categoryId) {
         var data = {'categoryId': categoryId};
         _newEvent.eventCategories.add(data);
-      });
-    }
-  }
-
-  void getFileImage(int index) async {
-    //    var dir = await path_provider.getTemporaryDirectory();
-    if (_imageFile != null) {
-      _imageFile.then((file) async {
-        setState(() {
-          ImageUploadModel imageUpload = new ImageUploadModel();
-          imageUpload.isUploaded = false;
-          imageUpload.uploading = false;
-          imageUpload.imageFile = file;
-          imageUpload.imageUrl = '';
-          images.replaceRange(index, index + 1, [imageUpload]);
-        });
       });
     }
   }
@@ -949,10 +942,10 @@ class _NewEventPageState extends State<NewEventPage> {
                                   crossAxisCount: 3,
                                   childAspectRatio: 1,
                                   children:
-                                      List.generate(images.length, (index) {
-                                    if (images[index] is ImageUploadModel) {
+                                      List.generate(_images.length, (index) {
+                                    if (_images[index] is ImageUploadModel) {
                                       ImageUploadModel uploadModel =
-                                          images[index];
+                                          _images[index];
                                       return Card(
                                         clipBehavior: Clip.antiAlias,
                                         child: Stack(
@@ -961,6 +954,7 @@ class _NewEventPageState extends State<NewEventPage> {
                                               File(uploadModel.imagePath),
                                               width: 300,
                                               height: 300,
+                                              fit: BoxFit.cover,
                                             ),
                                             Positioned(
                                               right: 5,
@@ -973,7 +967,7 @@ class _NewEventPageState extends State<NewEventPage> {
                                                 ),
                                                 onTap: () {
                                                   setState(() {
-                                                    images.replaceRange(
+                                                    _images.replaceRange(
                                                         index,
                                                         index + 1,
                                                         ['Add Image']);
@@ -986,11 +980,11 @@ class _NewEventPageState extends State<NewEventPage> {
                                       );
                                     } else {
                                       return Card(
-                                        child: IconButton(
-                                          icon: Icon(Icons.add),
-                                          onPressed: () {
-                                            // _onAddImageClick(index);
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            _onAddImageClick(index);
                                           },
+                                          child: Icon(Icons.add),
                                         ),
                                       );
                                     }
@@ -1016,6 +1010,13 @@ class _NewEventPageState extends State<NewEventPage> {
                                     ),
                                   ),
                                 ),
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (value.isEmpty)
+                                    return "A descrição é necessária";
+                                  return null;
+                                },
                               ),
                               SizedBox(height: _size.height * .03),
                               Divider(),
