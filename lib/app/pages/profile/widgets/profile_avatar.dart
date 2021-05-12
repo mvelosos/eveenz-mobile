@@ -11,12 +11,12 @@ class ProfileAvatar extends StatelessWidget {
     return Obx(
       () => _profileStore.avatarUrl.value != ''
           ? Container(
-              width: 100,
-              height: 100,
+              width: 110,
+              height: 110,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                   image: Image.network(
                     _profileStore.avatarUrl.value,
                     loadingBuilder: (context, child, loadingProgress) {
