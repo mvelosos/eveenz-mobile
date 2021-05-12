@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:party_mobile/app/controllers/profile_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
@@ -24,9 +25,10 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   NavigationService _navigationService;
 
   void _onImagePick() async {
-    var _pickedImage = await ImageCropPicker(
+    File _pickedImage = await ImageCropPicker(
       enableCrop: true,
       pickerType: 'gallery',
+      cropStyle: CropStyle.circle,
     ).initPicker();
     _requestUpdateAvatar(_pickedImage);
   }
@@ -36,7 +38,10 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
 
     var base64image = Commons.encodeBase64(file);
     base64image = Commons.base64dataUri(base64image);
-    _profile.avatar = {'data': base64image, 'filename': file.path};
+    _profile.avatar = {
+      'data': base64image,
+      'filename': DateTime.now().millisecondsSinceEpoch
+    };
 
     var result = await _profileController.updateProfile(_profile);
     result.fold(
@@ -83,7 +88,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
                               image: Image.network(
                                 _profileStore.avatarUrl.value,
                                 loadingBuilder:

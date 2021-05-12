@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/profile_controller.dart';
 import 'package:party_mobile/app/locator.dart';
@@ -12,7 +13,6 @@ import 'package:party_mobile/app/pages/profile/widgets/profile_tab_view.dart';
 import 'package:party_mobile/app/pages/profile/widgets/profile_social_row.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
-import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/stores/profile_store.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -61,7 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: Colors.grey,
                   tooltip: 'Show Snackbar',
                   onPressed: () {
-                    _navigationService.pushNamed(RouteNames.settings);
+                    Get.toNamed('/settings');
                   },
                 ),
               ],

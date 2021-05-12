@@ -7,11 +7,13 @@ import 'package:image_picker/image_picker.dart';
 class ImageCropPicker {
   ImagePicker _picker = ImagePicker();
   String pickerType = 'gallery';
+  CropStyle cropStyle = CropStyle.rectangle;
   bool enableCrop = true;
 
-  ImageCropPicker({bool enableCrop, String pickerType}) {
+  ImageCropPicker({bool enableCrop, String pickerType, CropStyle cropStyle}) {
     this.enableCrop = enableCrop;
     this.pickerType = pickerType;
+    this.cropStyle = cropStyle;
   }
 
   Future<File> initPicker() async {
@@ -31,23 +33,26 @@ class ImageCropPicker {
   Future<File> _initCropper(File image) async {
     File croppedFile = await ImageCropper.cropImage(
       sourcePath: image.path,
+      compressFormat: ImageCompressFormat.png,
+      cropStyle: this.cropStyle,
       aspectRatioPresets: [
         CropAspectRatioPreset.square,
         CropAspectRatioPreset.ratio3x2,
         CropAspectRatioPreset.original,
         CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9
       ],
       androidUiSettings: AndroidUiSettings(
-          toolbarTitle: 'Cortar',
-          toolbarColor: Colors.transparent,
-          toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false),
+        toolbarTitle: 'Cortar',
+        toolbarColor: Colors.transparent,
+        toolbarWidgetColor: Colors.white,
+        initAspectRatio: CropAspectRatioPreset.original,
+        lockAspectRatio: false,
+      ),
       iosUiSettings: IOSUiSettings(
         minimumAspectRatio: 1.0,
         doneButtonTitle: 'Ok',
         cancelButtonTitle: 'Cancelar',
+        aspectRatioLockEnabled: true,
       ),
     );
 

@@ -31,6 +31,7 @@ class _NewEventPageState extends State<NewEventPage> {
   final _formKey = GlobalKey<FormState>();
   final _newEvent = NewEventVM();
   final _eventsController = locator<EventsController>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   NavigationService _navigationService;
   CategoriesController _categoriesController = locator<CategoriesController>();
@@ -273,7 +274,7 @@ class _NewEventPageState extends State<NewEventPage> {
         .newRequestCategory(_newRequestCategory);
     result.fold(
       (l) => {
-        Scaffold.of(context).showSnackBar(
+        _scaffoldKey.currentState.showSnackBar(
           SnackBar(
             content: Text(
               'Ops, tente novamente mais tarde!',
@@ -286,7 +287,7 @@ class _NewEventPageState extends State<NewEventPage> {
         )
       },
       (r) => {
-        Scaffold.of(context).showSnackBar(
+        _scaffoldKey.currentState.showSnackBar(
           SnackBar(
             content: Text(
               'Recebemos sua sugestão! Entraremos em contato caso sua sugestão for aceita',
@@ -470,8 +471,9 @@ class _NewEventPageState extends State<NewEventPage> {
     return Stack(
       children: [
         LayoutBuilder(
-          builder: (context, constraint) {
+          builder: (_, constraint) {
             return Scaffold(
+              key: _scaffoldKey,
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
                 iconTheme: IconThemeData(color: AppColors.orange),
@@ -662,8 +664,7 @@ class _NewEventPageState extends State<NewEventPage> {
                                         : SizedBox.shrink(),
                                   ),
                                   _selectedPlace != null &&
-                                          _placesSearchResult.length == 0 &&
-                                          _formKey.currentState.validate()
+                                          _placesSearchResult.length == 0
                                       ? Container(
                                           child: SingleChildScrollView(
                                             child: Column(

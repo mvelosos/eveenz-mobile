@@ -57,7 +57,7 @@ class _UpdateBioPageState extends State<UpdateBioPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          'Nome',
+          'Bio',
           style: TextStyle(color: AppColors.darkPurple, fontSize: 17),
         ),
         backgroundColor: Colors.white,
@@ -83,7 +83,7 @@ class _UpdateBioPageState extends State<UpdateBioPage> {
               TextFormField(
                 controller: _bioInputController,
                 decoration: InputDecoration(
-                  labelText: 'Nome',
+                  labelText: 'Bio',
                   labelStyle: TextStyle(color: AppColors.darkPurple),
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: AppColors.orange),
