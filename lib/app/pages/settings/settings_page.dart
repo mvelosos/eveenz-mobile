@@ -64,7 +64,7 @@ class _SettingsPageState extends State<SettingsPage> {
               //   '',
               // ),
               Divider(),
-              SignOutListTile(this._navigationService),
+              SignOutListTile(),
             ],
           ),
         ),

@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/services/local_storage_service.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
@@ -13,9 +14,10 @@ import 'package:party_mobile/app/stores/auth_user_store.dart';
 class SignOutListTile extends StatelessWidget {
   final AuthUserStore _authUserStore = locator<AuthUserStore>();
   final LocalStorageService _storage = locator<LocalStorageService>();
-  final NavigationService _navigationService;
+  final NavigationService _navigationService =
+      NavigationService(locator<RootNavigatorKey>().navigatorKey);
 
-  SignOutListTile(this._navigationService);
+  SignOutListTile();
 
   @override
   Widget build(BuildContext context) {
