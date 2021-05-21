@@ -36,7 +36,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   void _requestUpdateAvatar(File file) async {
     if (file == null) return;
 
-    var base64image = Commons.encodeBase64(file);
+    var base64image = await Commons.encodeBase64(file);
     base64image = Commons.base64dataUri(base64image);
     _profile.avatar = {
       'data': base64image,

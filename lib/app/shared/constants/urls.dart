@@ -13,7 +13,7 @@ class Urls {
   // static String baseUrl = '10.0.2.2:3000';
 
   // Use when running on iPhone Simulator
-  static String baseUrl = '192.168.0.12:3000';
+  static String baseUrl = '192.168.15.18:3000';
 
   String get apiUrl {
     if (kReleaseMode) {
