@@ -5,7 +5,7 @@ import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/view_models/facebook_login_vm.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class FacebookLoginButton extends StatelessWidget {
   final Function _setLoading;
@@ -17,13 +17,15 @@ class FacebookLoginButton extends StatelessWidget {
 
   _initFacebookLogin(BuildContext context) async {
     _setLoading(true);
-    final facebookLogin = FacebookLogin();
+
     const permissions = ['email'];
 
-    final result = await facebookLogin.logIn(permissions);
+    final LoginResult result = await FacebookAuth.instance.login(
+      permissions: permissions,
+    );
 
     switch (result.status) {
-      case FacebookLoginStatus.loggedIn:
+      case LoginStatus.success:
         _fbLogin.accessToken = result.accessToken.token;
         _loginController
             .loginWithFacebook(_fbLogin)
@@ -53,12 +55,13 @@ class FacebookLoginButton extends StatelessWidget {
             )
             .whenComplete(() => _setLoading(false));
         break;
-      case FacebookLoginStatus.cancelledByUser:
+      case LoginStatus.cancelled:
         _setLoading(false);
         break;
-      case FacebookLoginStatus.error:
+      case LoginStatus.failed:
         _setLoading(false);
         break;
+      default:
     }
   }
 
