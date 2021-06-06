@@ -44,7 +44,7 @@ dependencies:
   onesignal_flutter: ^2.6.2
   intl: ^0.16.1
   sentry_flutter: ^4.0.6
-  chips_choice: ^2.0.1 # no null safety
+  # chips_choice: ^2.0.1 # no null safety
   image_picker: ^0.6.7+22
   image_cropper: ^1.3.1
 

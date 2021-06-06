@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:chips_choice/chips_choice.dart';
+// import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -1041,26 +1041,26 @@ class _NewEventPageState extends State<NewEventPage> {
                                   ],
                                 ),
                               ),
-                              ChipsChoice<String>.multiple(
-                                value: _selectedCategoriesIds,
-                                onChanged: (val) {
-                                  if (val.length > 3) return;
-                                  setState(() {
-                                    _selectedCategoriesIds = val;
-                                  });
-                                },
-                                choiceItems:
-                                    C2Choice.listFrom<String, CategoryModel>(
-                                  source: _categories,
-                                  value: (i, v) => _categories[i].id.toString(),
-                                  label: (i, v) => _categories[i].titleizedName,
-                                ),
-                                wrapped: true,
-                                padding: EdgeInsets.only(top: 10),
-                                choiceStyle: C2ChoiceStyle(elevation: 4),
-                                choiceActiveStyle:
-                                    C2ChoiceStyle(color: AppColors.orange),
-                              ),
+                              // ChipsChoice<String>.multiple(
+                              //   value: _selectedCategoriesIds,
+                              //   onChanged: (val) {
+                              //     if (val.length > 3) return;
+                              //     setState(() {
+                              //       _selectedCategoriesIds = val;
+                              //     });
+                              //   },
+                              //   choiceItems:
+                              //       C2Choice.listFrom<String, CategoryModel>(
+                              //     source: _categories,
+                              //     value: (i, v) => _categories[i].id.toString(),
+                              //     label: (i, v) => _categories[i].titleizedName,
+                              //   ),
+                              //   wrapped: true,
+                              //   padding: EdgeInsets.only(top: 10),
+                              //   choiceStyle: C2ChoiceStyle(elevation: 4),
+                              //   choiceActiveStyle:
+                              //       C2ChoiceStyle(color: AppColors.orange),
+                              // ),
                               SizedBox(height: _size.height * .03),
                               TextFormField(
                                 controller: _newRequestCategoryController,
