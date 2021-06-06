@@ -312,11 +312,11 @@ class _NewEventPageState extends State<NewEventPage> {
   }
 
   Future _onAddImageClick(int index) async {
-    var _pickedImage = await ImageCropPicker(
-      enableCrop: true,
-      pickerType: 'gallery',
-    ).initPicker();
-    getFileImage(_pickedImage, index);
+    // var _pickedImage = await ImageCropPicker(
+    //   enableCrop: true,
+    //   pickerType: 'gallery',
+    // ).initPicker();
+    // getFileImage(_pickedImage, index);
   }
 
   void getFileImage(File imageFile, int index) async {
