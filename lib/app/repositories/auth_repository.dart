@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:party_mobile/app/interfaces/auth_repository_interface.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/shared/constants/endpoints.dart';
@@ -11,11 +12,7 @@ import 'package:party_mobile/app/view_models/google_login_vm.dart';
 import 'package:party_mobile/app/view_models/user_login_vm.dart';
 
 class AuthRepository implements IAuthRepositoryInterface {
-  DioHttp _dio;
-
-  AuthRepository() {
-    _dio = locator<DioHttp>();
-  }
+  DioHttp _dio = locator<DioHttp>();
 
   @override
   Future<Either<Failure, AuthUserModel>> authLogin(
@@ -24,8 +21,8 @@ class AuthRepository implements IAuthRepositoryInterface {
       var user = await _dio.instance
           .post(Endpoints.authLogin, data: userLogin.getData());
       return Right(AuthUserModel.fromJson(user.data));
-    } catch (e) {
-      return Left(LoginError(message: e.response.data['error']));
+    } on DioError catch (e) {
+      return Left(LoginError(message: e.response?.data['error']));
     }
   }
 
@@ -37,8 +34,8 @@ class AuthRepository implements IAuthRepositoryInterface {
           .post(Endpoints.authFacebook, data: fbLogin.getData());
 
       return Right(AuthUserModel.fromJson(user.data));
-    } catch (e) {
-      return Left(LoginError(message: e.response.data['error']));
+    } on DioError catch (e) {
+      return Left(LoginError(message: e.response?.data['error']));
     }
   }
 
@@ -50,8 +47,8 @@ class AuthRepository implements IAuthRepositoryInterface {
           .post(Endpoints.authGoogle, data: googleLogin.getData());
 
       return Right(AuthUserModel.fromJson(user.data));
-    } catch (e) {
-      return Left(LoginError(message: e.response.data['error']));
+    } on DioError catch (e) {
+      return Left(LoginError(message: e.response?.data['error']));
     }
   }
 
@@ -63,8 +60,8 @@ class AuthRepository implements IAuthRepositoryInterface {
           .post(Endpoints.authApple, data: appleLogin.getData());
 
       return Right(AuthUserModel.fromJson(user.data));
-    } catch (e) {
-      return Left(LoginError(message: e.response.data['error']));
+    } on DioError catch (e) {
+      return Left(LoginError(message: e.response?.data['error']));
     }
   }
 }
