@@ -23,9 +23,9 @@ class GoogleLoginButton extends StatelessWidget {
     _logOutCurrentSession();
     try {
       var result = await _googleSignIn.signIn();
-      result.authentication.then(
+      result?.authentication.then(
         (value) => {
-          _googleLogin.accessToken = value.accessToken,
+          _googleLogin.accessToken = value.accessToken!,
           _loginController
               .loginWithGoogle(_googleLogin)
               .then(
@@ -35,7 +35,7 @@ class GoogleLoginButton extends StatelessWidget {
                       Scaffold.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                            l.message,
+                            l.message!,
                             style: TextStyle(fontSize: 14),
                             textAlign: TextAlign.center,
                           ),

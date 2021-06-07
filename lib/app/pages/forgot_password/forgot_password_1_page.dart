@@ -18,7 +18,7 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
   final _passwordsController = locator<PasswordsController>();
   final _passwordForgotEmail = PasswordForgotEmailVM();
   final _formKey = GlobalKey<FormState>();
-  NavigationService _navigationService;
+  NavigationService? _navigationService;
   bool _loading = false;
 
   // Fuctions
@@ -42,7 +42,7 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        l.message,
+                        l.message!,
                         style: TextStyle(fontSize: _size.height * .018),
                         textAlign: TextAlign.center,
                       ),
@@ -53,7 +53,7 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
                   )
                 },
                 (r) => {
-                  _navigationService.pushNamed(
+                  _navigationService?.pushNamed(
                     RouteNames.forgotPassword2,
                     arguments: ForgotPasswordPage2Arguments(email: r['email']),
                   )
@@ -87,7 +87,7 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
           ),
         ),
         validator: (value) {
-          if (value.isEmpty) return "Campo obrigatório!";
+          if (value!.isEmpty) return "Campo obrigatório!";
           return null;
         },
       ),
@@ -99,7 +99,7 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
 
     return RawMaterialButton(
       onPressed: () {
-        if (_formKey.currentState.validate()) {
+        if (_formKey.currentState!.validate()) {
           FocusScope.of(context).unfocus();
           return _loading ? null : _requestPasswordForgot(context);
         }

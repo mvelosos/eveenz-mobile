@@ -25,7 +25,7 @@ class AppleLoginButton extends StatelessWidget {
 
     try {
       credentials = await SignInWithApple.getAppleIDCredential(
-        List: [
+        scopes: [
           AppleIDAuthorizationScopes.email,
           AppleIDAuthorizationScopes.fullName,
         ],
@@ -34,11 +34,11 @@ class AppleLoginButton extends StatelessWidget {
       _setLoading(true);
 
       if (credentials.identityToken != null &&
-          credentials.identityToken.isNotEmpty) {
+          credentials.identityToken!.isNotEmpty) {
         await _storeAppleJwt(credentials.identityToken);
       }
 
-      _appleLogin.userId = credentials.userIdentifier;
+      _appleLogin.userId = credentials.userIdentifier!;
       _appleLogin.jwt = await _getAppleJwt();
 
       _loginController
@@ -50,7 +50,7 @@ class AppleLoginButton extends StatelessWidget {
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        l.message,
+                        l.message!,
                         style: TextStyle(fontSize: 14),
                         textAlign: TextAlign.center,
                       ),

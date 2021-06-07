@@ -9,12 +9,13 @@ class FollowsTabView extends StatelessWidget {
   final List<AccountModel> followersList;
   final List<AccountModel> followingList;
 
-  FollowsTabView(
-      {@required this.constraints,
-      @required this.followersList,
-      @required this.followingList,
-      @required this.getFollowers,
-      @required this.getFollowing});
+  FollowsTabView({
+    required this.constraints,
+    required this.followersList,
+    required this.followingList,
+    required this.getFollowers,
+    required this.getFollowing,
+  });
 
   @override
   Widget build(BuildContext context) {

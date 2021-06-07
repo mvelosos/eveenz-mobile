@@ -26,7 +26,7 @@ class FacebookLoginButton extends StatelessWidget {
 
     switch (result.status) {
       case LoginStatus.success:
-        _fbLogin.accessToken = result.accessToken.token;
+        _fbLogin.accessToken = result.accessToken!.token;
         _loginController
             .loginWithFacebook(_fbLogin)
             .then(
@@ -36,7 +36,7 @@ class FacebookLoginButton extends StatelessWidget {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          l.message,
+                          l.message!,
                           style: TextStyle(fontSize: 14),
                           textAlign: TextAlign.center,
                         ),

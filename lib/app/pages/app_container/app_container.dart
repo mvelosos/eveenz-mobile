@@ -50,8 +50,8 @@ class _AppContainerState extends State<AppContainer> {
 
   void _onTabTapped(int index) {
     if (_currentIndex == index) {
-      NavigatorState navigator = _navigatorKeys[_currentIndex].currentState;
-      navigator.popUntil(
+      NavigatorState? navigator = _navigatorKeys[_currentIndex].currentState;
+      navigator!.popUntil(
         (route) => route.settings.name == navigator.widget.initialRoute,
       );
     }
@@ -61,7 +61,7 @@ class _AppContainerState extends State<AppContainer> {
   }
 
   Future<bool> _systemBackButtonPressed() async {
-    NavigatorState navigator = _navigatorKeys[_currentIndex].currentState;
+    NavigatorState? navigator = _navigatorKeys[_currentIndex].currentState;
 
     if (navigator == null) return Future.value(false);
 
@@ -75,7 +75,7 @@ class _AppContainerState extends State<AppContainer> {
     // SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
 
     navigator.popUntil(
-      (route) => routeNames.contains(route.settings.name) ? null : null,
+      (route) => routeNames.contains(route.settings.name) ? false : false,
     );
 
     return Future.value();

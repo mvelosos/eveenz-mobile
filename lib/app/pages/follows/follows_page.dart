@@ -7,16 +7,16 @@ import 'package:party_mobile/app/pages/follows/widgets/follows_tab_view.dart';
 // Page Arguments
 class FollowsPageArguments {
   final String username;
-  final int initialIndex;
+  final int? initialIndex;
 
-  FollowsPageArguments({@required this.username, this.initialIndex});
+  FollowsPageArguments({required this.username, this.initialIndex});
 }
 
 // Page
 class FollowsPage extends StatefulWidget {
   final FollowsPageArguments args;
 
-  FollowsPage({@required this.args});
+  FollowsPage({required this.args});
 
   @override
   _FollowsPageState createState() => _FollowsPageState();
@@ -24,8 +24,8 @@ class FollowsPage extends StatefulWidget {
 
 class _FollowsPageState extends State<FollowsPage> {
   final AccountsController _accountsController = locator<AccountsController>();
-  List<AccountModel> _followersList;
-  List<AccountModel> _followingList;
+  List<AccountModel>? _followersList;
+  List<AccountModel>? _followingList;
   bool _loading = true;
 
   // Functions
@@ -61,7 +61,7 @@ class _FollowsPageState extends State<FollowsPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      initialIndex: widget.args.initialIndex,
+      initialIndex: widget.args.initialIndex ?? 0,
       length: 2,
       child: Scaffold(
           appBar: AppBar(
@@ -77,14 +77,14 @@ class _FollowsPageState extends State<FollowsPage> {
                 Tab(
                     icon: Text(
                   _followersList != null
-                      ? "${_followersList.length}  Seguidores"
+                      ? "${_followersList?.length}  Seguidores"
                       : 'Seguidores',
                   style: TextStyle(color: Colors.black),
                 )),
                 Tab(
                     icon: Text(
                   _followingList != null
-                      ? "${_followingList.length}  Seguindo"
+                      ? "${_followingList?.length}  Seguindo"
                       : 'Seguindo',
                   style: TextStyle(color: Colors.black),
                 )),
@@ -103,8 +103,8 @@ class _FollowsPageState extends State<FollowsPage> {
                     )
                   : FollowsTabView(
                       constraints: constraints,
-                      followersList: _followersList,
-                      followingList: _followingList,
+                      followersList: _followersList ?? [],
+                      followingList: _followingList ?? [],
                       getFollowers: _getFollowers,
                       getFollowing: _getFollowing,
                     );

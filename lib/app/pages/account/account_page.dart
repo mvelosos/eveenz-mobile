@@ -12,14 +12,14 @@ import 'package:party_mobile/app/stores/profile_store.dart';
 class AccountPageArguments {
   final String username;
 
-  AccountPageArguments({@required this.username});
+  AccountPageArguments({required this.username});
 }
 
 // Page
 class AccountPage extends StatefulWidget {
   final AccountPageArguments args;
 
-  AccountPage({@required this.args});
+  AccountPage({required this.args});
 
   @override
   _AccountPageState createState() => _AccountPageState();
@@ -28,7 +28,7 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage> {
   final AccountsController _accountsController = locator<AccountsController>();
   final ProfileStore _profileStore = locator<ProfileStore>();
-  AccountModel _accountModel;
+  AccountModel? _accountModel;
   bool _loading = true;
   bool _showFollowButton = false;
 
@@ -52,7 +52,7 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   void _shouldShowFollowButton() {
-    if (_accountModel.uuid != _profileStore.uuid.value) {
+    if (_accountModel!.uuid != _profileStore.uuid.value) {
       _showFollowButton = true;
     }
   }
@@ -64,7 +64,7 @@ class _AccountPageState extends State<AccountPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _loading ? '' : _accountModel.username,
+          _loading ? '' : _accountModel!.username,
           style: TextStyle(color: Colors.blue),
         ),
         backgroundColor: Colors.transparent,
@@ -99,7 +99,7 @@ class _AccountPageState extends State<AccountPage> {
                               Column(
                                 children: [
                                   Text(
-                                    _accountModel.events.toString(),
+                                    _accountModel!.events.toString(),
                                     style: TextStyle(fontSize: 19),
                                   ),
                                   Text('Festas'),
@@ -110,7 +110,7 @@ class _AccountPageState extends State<AccountPage> {
                                   _navigationService.pushNamed(
                                     RouteNames.accountFollows,
                                     arguments: FollowsPageArguments(
-                                      username: _accountModel.username,
+                                      username: _accountModel!.username,
                                       initialIndex: 0,
                                     ),
                                   );
@@ -118,7 +118,7 @@ class _AccountPageState extends State<AccountPage> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      _accountModel.followers.toString(),
+                                      _accountModel!.followers.toString(),
                                       style: TextStyle(fontSize: 19),
                                     ),
                                     Text('Seguidores'),
@@ -130,7 +130,7 @@ class _AccountPageState extends State<AccountPage> {
                                   _navigationService.pushNamed(
                                     RouteNames.accountFollows,
                                     arguments: FollowsPageArguments(
-                                      username: _accountModel.username,
+                                      username: _accountModel!.username,
                                       initialIndex: 1,
                                     ),
                                   );
@@ -138,7 +138,7 @@ class _AccountPageState extends State<AccountPage> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      _accountModel.following.toString(),
+                                      _accountModel!.following.toString(),
                                       style: TextStyle(fontSize: 19),
                                     ),
                                     Text('Seguindo'),
@@ -147,9 +147,9 @@ class _AccountPageState extends State<AccountPage> {
                               ),
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(50),
-                                child: _accountModel.avatarUrl != ''
+                                child: _accountModel?.avatarUrl != ''
                                     ? Image.network(
-                                        _accountModel.avatarUrl,
+                                        _accountModel?.avatarUrl ?? '',
                                         height: 85,
                                         width: 85,
                                       )
@@ -165,7 +165,7 @@ class _AccountPageState extends State<AccountPage> {
                             children: [
                               _showFollowButton
                                   ? FollowButton(
-                                      constraints, _accountModel, _getAccount)
+                                      constraints, _accountModel!, _getAccount)
                                   : SizedBox.shrink(),
                             ],
                           )

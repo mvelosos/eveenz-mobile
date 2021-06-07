@@ -10,7 +10,7 @@ class ForgotPassword4Page extends StatefulWidget {
 }
 
 class _ForgotPassword4PageState extends State<ForgotPassword4Page> {
-  NavigationService _navigationService;
+  NavigationService? _navigationService;
 
   // Widgets
 
@@ -19,7 +19,7 @@ class _ForgotPassword4PageState extends State<ForgotPassword4Page> {
 
     return RawMaterialButton(
       onPressed: () {
-        _navigationService.pushReplacementNamedNoAnimation(RouteNames.login);
+        _navigationService?.pushReplacementNamedNoAnimation(RouteNames.login);
       },
       child: Container(
         width: _size.width,

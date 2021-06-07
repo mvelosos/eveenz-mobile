@@ -33,7 +33,7 @@ class _NewEventPageState extends State<NewEventPage> {
   final _eventsController = locator<EventsController>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  NavigationService _navigationService;
+  NavigationService? _navigationService;
   CategoriesController _categoriesController = locator<CategoriesController>();
   RequestCategoriesController _requestCategoriesController =
       locator<RequestCategoriesController>();
@@ -42,10 +42,10 @@ class _NewEventPageState extends State<NewEventPage> {
       TextEditingController(text: '');
   List<CategoryModel> _categories = [];
   List<String> _selectedCategoriesIds = [];
-  List<Object> _images = List<Object>();
-  String _googleSessionToken;
+  List<Object> _images = [];
+  String? _googleSessionToken;
   List<dynamic> _placesSearchResult = [];
-  Map _selectedPlace;
+  Map? _selectedPlace;
   TextEditingController _inputTextController = TextEditingController(text: '');
   DateTime _selectedStartDate = DateTime.now();
   DateTime _selectedStartTime = DateTime.now();
@@ -91,7 +91,7 @@ class _NewEventPageState extends State<NewEventPage> {
   }
 
   void _requestCreateEvent(BuildContext context) async {
-    if (!_formKey.currentState.validate()) return;
+    if (!_formKey.currentState!.validate()) return;
 
     Size _size = MediaQuery.of(context).size;
     _handleImages();
@@ -106,7 +106,7 @@ class _NewEventPageState extends State<NewEventPage> {
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      l.message,
+                      l.message!,
                       style: TextStyle(fontSize: _size.height * .018),
                       textAlign: TextAlign.center,
                     ),
@@ -115,7 +115,7 @@ class _NewEventPageState extends State<NewEventPage> {
                   ),
                 )
               },
-              (r) => {_navigationService.goBack()},
+              (r) => {_navigationService!.goBack()},
             )
           },
         )
@@ -205,7 +205,7 @@ class _NewEventPageState extends State<NewEventPage> {
     }
     if (searchText.isEmpty) return;
     var results = await GooglePlacesService.getPlacesAutocomplete(
-        searchText, _googleSessionToken);
+        searchText, _googleSessionToken!);
 
     _sanitizeAndSetResults(results);
   }
@@ -219,7 +219,7 @@ class _NewEventPageState extends State<NewEventPage> {
     String placeId = listItem['place_id'];
     if (placeId.isNotEmpty) {
       var result = await GooglePlacesService.getPlaceDetails(
-          placeId, _googleSessionToken);
+          placeId, _googleSessionToken!);
       setState(() {
         _selectedPlace = result;
       });
@@ -229,10 +229,10 @@ class _NewEventPageState extends State<NewEventPage> {
   }
 
   void _setNewEventObject() {
-    Map formattedAddress =
-        GooglePlaceDetailsFormatter.formatAddress(_selectedPlace);
-    Map formattedLocalization =
-        GooglePlaceDetailsFormatter.formatLocalization(_selectedPlace);
+    Map<String, dynamic> formattedAddress =
+        GooglePlaceDetailsFormatter.formatAddress(_selectedPlace!);
+    Map<String, dynamic> formattedLocalization =
+        GooglePlaceDetailsFormatter.formatLocalization(_selectedPlace!);
 
     _newEvent.addressAttributes = formattedAddress;
     _newEvent.localizationAttributes = formattedLocalization;
@@ -258,7 +258,7 @@ class _NewEventPageState extends State<NewEventPage> {
       _placesSearchResult = [];
     });
     await _getGooglePlaceDetails(listItem);
-    _formKey.currentState.validate();
+    _formKey.currentState!.validate();
   }
 
   dynamic addressInputTextValidator(dynamic value) {
@@ -274,7 +274,7 @@ class _NewEventPageState extends State<NewEventPage> {
         .newRequestCategory(_newRequestCategory);
     result.fold(
       (l) => {
-        _scaffoldKey.currentState.showSnackBar(
+        _scaffoldKey.currentState!.showSnackBar(
           SnackBar(
             content: Text(
               'Ops, tente novamente mais tarde!',
@@ -287,7 +287,7 @@ class _NewEventPageState extends State<NewEventPage> {
         )
       },
       (r) => {
-        _scaffoldKey.currentState.showSnackBar(
+        _scaffoldKey.currentState!.showSnackBar(
           SnackBar(
             content: Text(
               'Recebemos sua sugestão! Entraremos em contato caso sua sugestão for aceita',
@@ -534,7 +534,7 @@ class _NewEventPageState extends State<NewEventPage> {
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
-                                  if (value.isEmpty)
+                                  if (value!.isEmpty)
                                     return "O evento precisa de um nome!";
                                   if (value.length > 60)
                                     return "O nome só pode ter no máximo 60 caracteres";
@@ -686,7 +686,7 @@ class _NewEventPageState extends State<NewEventPage> {
                                                 SizedBox(
                                                     height: _size.height * .01),
                                                 AutoSizeText(
-                                                  _selectedPlace['result']
+                                                  _selectedPlace?['result']
                                                       ['formatted_address'],
                                                   style: GoogleFonts.poppins(
                                                     fontSize:
@@ -917,7 +917,7 @@ class _NewEventPageState extends State<NewEventPage> {
                                     ListTileControlAffinity.leading,
                                 value: _newEvent.undefinedEnd,
                                 onChanged: (value) {
-                                  _onCheckUndefinedEnd(value);
+                                  _onCheckUndefinedEnd(value!);
                                 },
                                 activeColor: AppColors.orange,
                                 //  <-- leading Checkbox
@@ -946,7 +946,7 @@ class _NewEventPageState extends State<NewEventPage> {
                                       List.generate(_images.length, (index) {
                                     if (_images[index] is ImageUploadModel) {
                                       ImageUploadModel uploadModel =
-                                          _images[index];
+                                          _images[index] as ImageUploadModel;
                                       return Card(
                                         clipBehavior: Clip.antiAlias,
                                         child: Stack(
@@ -1014,7 +1014,7 @@ class _NewEventPageState extends State<NewEventPage> {
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
-                                  if (value.isEmpty)
+                                  if (value!.isEmpty)
                                     return "A descrição é necessária";
                                   return null;
                                 },

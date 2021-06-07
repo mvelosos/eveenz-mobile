@@ -11,16 +11,16 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 // Page Arguments
 class ForgotPasswordPage2Arguments {
-  final String email;
+  String email;
 
-  ForgotPasswordPage2Arguments({@required this.email});
+  ForgotPasswordPage2Arguments({required this.email});
 }
 
 // Page
 class ForgotPassword2Page extends StatefulWidget {
   final ForgotPasswordPage2Arguments args;
 
-  ForgotPassword2Page({@required this.args});
+  ForgotPassword2Page({required this.args});
 
   @override
   _ForgotPassword2PageState createState() => _ForgotPassword2PageState();
@@ -28,7 +28,7 @@ class ForgotPassword2Page extends StatefulWidget {
 
 class _ForgotPassword2PageState extends State<ForgotPassword2Page> {
   final _passwordsController = locator<PasswordsController>();
-  NavigationService _navigationService;
+  NavigationService? _navigationService;
   PasswordRecoveryVM _passwordRecovery = PasswordRecoveryVM();
   bool _loading = false;
 
@@ -48,7 +48,7 @@ class _ForgotPassword2PageState extends State<ForgotPassword2Page> {
               Scaffold.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    l.message,
+                    l.message!,
                     style: TextStyle(fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
@@ -59,7 +59,7 @@ class _ForgotPassword2PageState extends State<ForgotPassword2Page> {
               )
             },
         (r) => {
-              _navigationService.pushNamed(RouteNames.forgotPassword3,
+              _navigationService?.pushNamed(RouteNames.forgotPassword3,
                   arguments: ForgotPasswordPage3Arguments(token: r['token']))
             });
     _setLoading(false);
