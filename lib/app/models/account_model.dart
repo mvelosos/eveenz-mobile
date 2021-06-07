@@ -1,26 +1,27 @@
 class AccountModel {
-  String uuid;
-  String username;
-  String name;
-  String bio;
-  int popularity;
-  int events;
-  int following;
-  int followers;
-  String avatarUrl;
-  bool followedByMe;
+  late String uuid;
+  late String username;
+  late String name;
+  late int popularity;
+  late int events;
+  late int following;
+  late int followers;
+  late bool followedByMe;
+  String? bio;
+  String? avatarUrl;
 
-  AccountModel(
-      {this.uuid,
-      this.username,
-      this.name,
-      this.bio,
-      this.popularity,
-      this.events,
-      this.following,
-      this.followers,
-      this.avatarUrl,
-      this.followedByMe});
+  AccountModel({
+    required this.uuid,
+    required this.username,
+    required this.name,
+    required this.popularity,
+    required this.events,
+    required this.following,
+    required this.followers,
+    required this.followedByMe,
+    this.bio,
+    this.avatarUrl,
+  });
 
   AccountModel.fromJson(Map<String, dynamic> json) {
     uuid = json['uuid'];

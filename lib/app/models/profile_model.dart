@@ -1,42 +1,39 @@
 class ProfileModel {
-  Account account;
+  late Account account;
 
-  ProfileModel({this.account});
+  ProfileModel({required this.account});
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
-    account =
-        json['account'] != null ? new Account.fromJson(json['account']) : null;
+    account = new Account.fromJson(json['account']);
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.account != null) {
-      data['account'] = this.account.toJson();
-    }
+    data['account'] = this.account.toJson();
     return data;
   }
 }
 
 class Account {
-  String uuid;
-  String username;
-  String name;
-  String bio;
-  int popularity;
-  int events;
-  int following;
-  int followers;
-  String avatarUrl;
+  late String uuid;
+  late String username;
+  late String name;
+  late int popularity;
+  late int events;
+  late int following;
+  late int followers;
+  String? bio;
+  String? avatarUrl;
 
   Account(
-      {this.uuid,
-      this.username,
-      this.name,
+      {required this.uuid,
+      required this.username,
+      required this.name,
+      required this.popularity,
+      required this.events,
+      required this.following,
+      required this.followers,
       this.bio,
-      this.popularity,
-      this.events,
-      this.following,
-      this.followers,
       this.avatarUrl});
 
   Account.fromJson(Map<String, dynamic> json) {

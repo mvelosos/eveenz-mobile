@@ -3,15 +3,15 @@ import 'dart:io';
 import 'package:party_mobile/app/shared/utils/commons.dart';
 
 class ImageUploadModel {
-  bool isUploaded;
-  bool uploading;
-  File imageFile;
-  String imageUrl;
+  late File imageFile;
+  bool? isUploaded;
+  bool? uploading;
+  String? imageUrl;
 
   ImageUploadModel({
+    required this.imageFile,
     this.isUploaded,
     this.uploading,
-    this.imageFile,
     this.imageUrl,
   });
 

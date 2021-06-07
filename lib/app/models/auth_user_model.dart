@@ -1,18 +1,19 @@
 class AuthUserModel {
-  String username;
-  String createdAt;
-  String token;
-  String tokenType;
-  String exp;
-  String provider;
+  late String username;
+  late String createdAt;
+  late String token;
+  late String tokenType;
+  late String exp;
+  late String provider;
 
-  AuthUserModel(
-      {this.username,
-      this.createdAt,
-      this.token,
-      this.tokenType,
-      this.exp,
-      this.provider});
+  AuthUserModel({
+    required this.username,
+    required this.createdAt,
+    required this.token,
+    required this.tokenType,
+    required this.exp,
+    required this.provider,
+  });
 
   AuthUserModel.fromJson(Map<String, dynamic> json) {
     username = json['username'];

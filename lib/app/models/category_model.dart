@@ -1,9 +1,13 @@
 class CategoryModel {
-  int id;
-  String name;
-  String titleizedName;
+  late int id;
+  late String name;
+  late String titleizedName;
 
-  CategoryModel({this.id, this.name, this.titleizedName});
+  CategoryModel({
+    required this.id,
+    required this.name,
+    required this.titleizedName,
+  });
 
   CategoryModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
