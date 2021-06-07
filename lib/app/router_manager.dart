@@ -48,13 +48,13 @@ class RouterManager {
         return MaterialPageRoute(builder: (_) => ForgotPassword1Page());
 
       case RouteNames.forgotPassword2:
-        ForgotPasswordPage2Arguments args = route.arguments;
+        final args = route.arguments as ForgotPasswordPage2Arguments;
         return MaterialPageRoute(
           builder: (_) => ForgotPassword2Page(args: args),
         );
 
       case RouteNames.forgotPassword3:
-        ForgotPasswordPage3Arguments args = route.arguments;
+        final args = route.arguments as ForgotPasswordPage3Arguments;
         return MaterialPageRoute(
           builder: (_) => ForgotPassword3Page(args: args),
         );
@@ -63,13 +63,13 @@ class RouterManager {
         return MaterialPageRoute(builder: (_) => ForgotPassword4Page());
 
       case RouteNames.showAccount:
-        AccountPageArguments args = route.arguments;
+        final args = route.arguments as AccountPageArguments;
         return MaterialPageRoute(
           builder: (_) => AccountPage(args: args),
         );
 
       case RouteNames.accountFollows:
-        FollowsPageArguments args = route.arguments;
+        final args = route.arguments as FollowsPageArguments;
         return MaterialPageRoute(
           builder: (_) => FollowsPage(args: args),
         );
