@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TimePicker {
-  BuildContext _context;
-  DateTime _selectedTime;
-  Function _setTime;
+  BuildContext? _context;
+  DateTime? _selectedTime;
+  Function? _setTime;
 
   TimePicker(context, selectedDate, setTime) {
     this._context = context;
@@ -17,21 +17,21 @@ class TimePicker {
 
   _selectTime() async {
     if (Platform.isIOS) {
-      return _buildCupertinoTimePicker(_context);
+      return _buildCupertinoTimePicker(_context!);
     } else {
-      return _buildMaterialTimePicker(_context);
+      return _buildMaterialTimePicker(_context!);
     }
   }
 
   _buildMaterialTimePicker(BuildContext context) async {
-    TimeOfDay _currentTime = TimeOfDay.fromDateTime(_selectedTime);
+    TimeOfDay _currentTime = TimeOfDay.fromDateTime(_selectedTime!);
     final picked =
         await showTimePicker(context: context, initialTime: _currentTime);
     if (picked != null && picked != _currentTime) {
       DateTime date = DateTime.now();
       DateTime newTime =
           DateTime(date.year, date.month, date.day, picked.hour, picked.minute);
-      _setTime(newTime);
+      _setTime!(newTime);
     }
   }
 
@@ -48,7 +48,7 @@ class TimePicker {
                 mode: CupertinoDatePickerMode.time,
                 onDateTimeChanged: (picked) {
                   if (picked != null && picked != _selectedTime)
-                    _setTime(picked);
+                    _setTime!(picked);
                 },
                 use24hFormat: true,
                 initialDateTime: _selectedTime,

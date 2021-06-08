@@ -7,27 +7,33 @@ class NavigationService {
   NavigationService(this.navigatorKey);
 
   static currentNavigator(BuildContext context) {
-    var navigatorKey = ModalRoute.of(context).navigator.widget.key;
+    var navigatorKey = ModalRoute.of(context)?.navigator?.widget.key
+        as GlobalKey<NavigatorState>;
     return NavigationService(navigatorKey);
   }
 
   Future<dynamic> pushNamed(String routeName, {dynamic arguments}) {
-    return navigatorKey.currentState.pushNamed(routeName, arguments: arguments);
+    return navigatorKey.currentState!
+        .pushNamed(routeName, arguments: arguments);
   }
 
   Future<dynamic> pushReplacementNamed(String routeName, {dynamic arguments}) {
-    return navigatorKey.currentState
+    return navigatorKey.currentState!
         .pushReplacementNamed(routeName, arguments: arguments);
   }
 
   Future<dynamic> pushNamedNoAnimation(String routeName) {
     MaterialPageRoute route =
-        RouterManager.generateRoute(RouteSettings(name: routeName));
+        RouterManager.generateRoute(RouteSettings(name: routeName))
+            as MaterialPageRoute;
 
-    return navigatorKey.currentState.push(
+    return navigatorKey.currentState!.push(
       PageRouteBuilder(
-        pageBuilder: (_, __, ___) =>
-            route.buildPage(navigatorKey.currentContext, null, null),
+        pageBuilder: (_, __, ___) => route.buildPage(
+          navigatorKey.currentContext!,
+          null as Animation<double>,
+          null as Animation<double>,
+        ),
         transitionDuration: Duration(seconds: 0),
       ),
     );
@@ -35,18 +41,21 @@ class NavigationService {
 
   Future<dynamic> pushReplacementNamedNoAnimation(String routeName) {
     MaterialPageRoute route =
-        RouterManager.generateRoute(RouteSettings(name: routeName));
+        RouterManager.generateRoute(RouteSettings(name: routeName))
+            as MaterialPageRoute;
 
-    return navigatorKey.currentState.pushReplacement(
+    return navigatorKey.currentState!.pushReplacement(
       PageRouteBuilder(
-        pageBuilder: (_, __, ___) =>
-            route.buildPage(navigatorKey.currentContext, null, null),
+        pageBuilder: (_, __, ___) => route.buildPage(
+            navigatorKey.currentContext!,
+            null as Animation<double>,
+            null as Animation<double>),
         transitionDuration: Duration(seconds: 0),
       ),
     );
   }
 
   void goBack() {
-    return navigatorKey.currentState.pop();
+    return navigatorKey.currentState!.pop();
   }
 }

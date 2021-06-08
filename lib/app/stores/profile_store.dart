@@ -13,14 +13,14 @@ class ProfileStore {
   RxString avatarUrl = ''.obs;
 
   void setMe(ProfileModel profileModel) {
-    uuid.value = profileModel.account.uuid ?? '';
-    username.value = profileModel.account.username ?? '';
-    name.value = profileModel.account.name ?? '';
+    uuid.value = profileModel.account.uuid;
+    username.value = profileModel.account.username;
+    name.value = profileModel.account.name;
     bio.value = profileModel.account.bio ?? '';
-    popularity.value = profileModel.account.popularity ?? '';
-    events.value = profileModel.account.events ?? '';
-    following.value = profileModel.account.following ?? '';
-    followers.value = profileModel.account.followers ?? '';
+    popularity.value = profileModel.account.popularity;
+    events.value = profileModel.account.events;
+    following.value = profileModel.account.following;
+    followers.value = profileModel.account.followers;
     avatarUrl.value = profileModel.account.avatarUrl ?? '';
   }
 }
