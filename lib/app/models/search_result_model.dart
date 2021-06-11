@@ -1,20 +1,20 @@
 class SearchResultModel {
-  late List<Data?> listData;
+  List<Data?>? listData;
 
-  SearchResultModel({required this.listData});
+  SearchResultModel({this.listData});
 
   SearchResultModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       listData = [];
       json['data'].forEach((v) {
-        listData.add(new Data.fromJson(v));
+        listData?.add(new Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['data'] = this.listData.map((v) => v?.toJson()).toList();
+    data['data'] = this.listData?.map((v) => v?.toJson()).toList();
     return data;
   }
 }

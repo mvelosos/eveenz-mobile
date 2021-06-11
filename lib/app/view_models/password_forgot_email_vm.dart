@@ -1,10 +1,10 @@
 class PasswordForgotEmailVM {
-  String login;
+  String? login;
 
   Map<String, dynamic> getData() {
     return {
       'password': {
-        'login': login.trim(),
+        'login': login?.trim(),
       }
     };
   }

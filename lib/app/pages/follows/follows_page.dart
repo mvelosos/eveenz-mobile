@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:party_mobile/app/controllers/accounts_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/account_model.dart';
+import 'package:party_mobile/app/models/profile_model.dart';
 import 'package:party_mobile/app/pages/follows/widgets/follows_tab_view.dart';
 
 // Page Arguments
@@ -44,7 +45,7 @@ class _FollowsPageState extends State<FollowsPage> {
     var result = await _accountsController.getFollowers(widget.args.username);
     if (result.isRight()) {
       setState(() {
-        _followersList = result.getOrElse(null);
+        _followersList = result.getOrElse(() => {} as List<AccountModel>);
       });
     }
   }
@@ -53,7 +54,7 @@ class _FollowsPageState extends State<FollowsPage> {
     var result = await _accountsController.getFollowing(widget.args.username);
     if (result.isRight()) {
       setState(() {
-        _followingList = result.getOrElse(null);
+        _followingList = result.getOrElse(() => {} as List<AccountModel>);
       });
     }
   }

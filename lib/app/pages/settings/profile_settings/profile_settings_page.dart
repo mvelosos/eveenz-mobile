@@ -22,7 +22,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   final ProfileController _profileController = locator<ProfileController>();
   final ProfileStore _profileStore = locator<ProfileStore>();
   final MeProfileVM _profile = MeProfileVM();
-  NavigationService _navigationService;
+  NavigationService? _navigationService;
 
   void _onImagePick() async {
     // File _pickedImage = await ImageCropPicker(
@@ -124,7 +124,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                 ),
                 title: Obx(() => Text(_profileStore.name.value)),
                 onTap: () {
-                  _navigationService.pushNamed(RouteNames.updateNameSettings);
+                  _navigationService!.pushNamed(RouteNames.updateNameSettings);
                 },
               ),
               ListTile(
@@ -142,7 +142,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                 ),
                 title: Obx(() => Text(_profileStore.bio.value)),
                 onTap: () {
-                  _navigationService.pushNamed(RouteNames.updateBioSettings);
+                  _navigationService!.pushNamed(RouteNames.updateBioSettings);
                 },
               ),
               Divider(),

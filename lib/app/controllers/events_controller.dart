@@ -4,11 +4,7 @@ import 'package:party_mobile/app/shared/errors/errors.dart';
 import 'package:party_mobile/app/view_models/new_event_vm.dart';
 
 class EventsController {
-  EventsRepository _eventsRepository;
-
-  EventsController() {
-    _eventsRepository = EventsRepository();
-  }
+  EventsRepository _eventsRepository = EventsRepository();
 
   Future<Either<Failure, dynamic>> createEvent(NewEventVM newEvent) async {
     var result = await _eventsRepository.createEvent(newEvent);

@@ -6,11 +6,7 @@ import 'package:party_mobile/app/shared/errors/errors.dart';
 import 'package:party_mobile/app/view_models/search_vm.dart';
 
 class SearchController {
-  SearchRepository _searchRepository;
-
-  SearchController() {
-    _searchRepository = SearchRepository();
-  }
+  SearchRepository _searchRepository = SearchRepository();
 
   Future<Either<Failure, SearchResultModel>> search(SearchVM search) async {
     var searchResult = await _searchRepository.search(search);

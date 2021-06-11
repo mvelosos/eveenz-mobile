@@ -11,14 +11,16 @@ class SearchListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: resultSearch.data != null ? resultSearch.data.length : 0,
+      itemCount:
+          resultSearch.listData != null ? resultSearch.listData?.length : 0,
       itemBuilder: (_, idx) {
-        if (resultSearch.data != null && resultSearch.data.length > 0) {
-          return resultSearch.data[idx].type == 'account'
-              ? AccountListTile(resultSearch.data[idx])
-              : EventListTile(resultSearch.data[idx]);
+        if (resultSearch.listData != null &&
+            resultSearch.listData!.length > 0) {
+          return resultSearch.listData?[idx]?.type == 'account'
+              ? AccountListTile(resultSearch.listData?[idx])
+              : EventListTile(resultSearch.listData?[idx]);
         }
-        return null;
+        return SizedBox.shrink();
       },
     );
   }

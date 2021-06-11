@@ -44,7 +44,7 @@ class _AccountPageState extends State<AccountPage> {
     var result = await _accountsController.getAccount(widget.args.username);
     if (result.isRight()) {
       setState(() {
-        _accountModel = result.getOrElse(null);
+        _accountModel = result.getOrElse(() => {} as AccountModel);
         _shouldShowFollowButton();
         _loading = false;
       });

@@ -5,11 +5,7 @@ import 'package:party_mobile/app/view_models/password_forgot_email_vm.dart';
 import 'package:party_mobile/app/view_models/password_recovery_vm.dart';
 
 class PasswordsController {
-  PasswordsRepository _passwordsRepository;
-
-  PasswordsController() {
-    _passwordsRepository = PasswordsRepository();
-  }
+  PasswordsRepository _passwordsRepository = PasswordsRepository();
 
   Future<Either<Failure, dynamic>> forgotPassword(
       PasswordForgotEmailVM passwordForgotEmail) async {

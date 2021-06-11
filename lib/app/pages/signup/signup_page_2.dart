@@ -10,7 +10,7 @@ class SignUpPage2 extends StatefulWidget {
 }
 
 class _SignUpPage2State extends State<SignUpPage2> {
-  NavigationService _navigationService;
+  NavigationService? _navigationService;
 
   // Widgets
 
@@ -19,7 +19,7 @@ class _SignUpPage2State extends State<SignUpPage2> {
 
     return RawMaterialButton(
       onPressed: () {
-        _navigationService.pushReplacementNamedNoAnimation(RouteNames.root);
+        _navigationService!.pushReplacementNamedNoAnimation(RouteNames.root);
       },
       child: Container(
         width: _size.width,

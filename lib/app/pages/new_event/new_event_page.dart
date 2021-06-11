@@ -306,7 +306,7 @@ class _NewEventPageState extends State<NewEventPage> {
     var result = await _categoriesController.getCategories();
     if (result.isRight()) {
       setState(() {
-        _categories = result.getOrElse(null);
+        _categories = result.getOrElse(() => {} as List<CategoryModel>);
       });
     }
   }
@@ -1092,7 +1092,7 @@ class _NewEventPageState extends State<NewEventPage> {
                                 alignment: Alignment.center,
                                 child: TextButton(
                                   onPressed: () {
-                                    if (_newRequestCategory.name.isNotEmpty) {
+                                    if (_newRequestCategory.name!.isNotEmpty) {
                                       _requestNewRequestCategory(context);
                                       setState(() {
                                         _newRequestCategoryController.text = '';

@@ -39,7 +39,7 @@ class _SearchPageState extends State<SearchPage> {
           child: GestureDetector(
             onTap: () {
               FocusScope.of(context).unfocus();
-              _resultSearch.data = [];
+              _resultSearch.listData = [];
               _searchInputController.clear();
             },
             child: Container(

@@ -1,5 +1,5 @@
 class FacebookLoginVM {
-  String accessToken;
+  String? accessToken;
 
   Map<String, dynamic> getData() {
     return {

@@ -1,5 +1,5 @@
 class GoogleLoginVM {
-  String accessToken;
+  String? accessToken;
 
   Map<String, dynamic> getData() {
     return {

@@ -13,7 +13,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  NavigationService _navigationService;
+  NavigationService? _navigationService;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 'Perfil',
                 FontAwesomeIcons.user,
                 FontAwesomeIcons.chevronRight,
-                _navigationService,
+                _navigationService!,
                 RouteNames.profileSettings,
               ),
               // SettingsListTile(

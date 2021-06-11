@@ -1,23 +1,19 @@
 import 'package:dartz/dartz.dart';
 import 'package:party_mobile/app/locator.dart';
+import 'package:party_mobile/app/models/profile_model.dart';
 import 'package:party_mobile/app/repositories/profile_repository.dart';
 import 'package:party_mobile/app/shared/errors/errors.dart';
 import 'package:party_mobile/app/stores/profile_store.dart';
 import 'package:party_mobile/app/view_models/me_profile_vm.dart';
 
 class ProfileController {
-  ProfileRepository _profileRepository;
-  ProfileStore _profileStore;
-
-  ProfileController() {
-    _profileRepository = ProfileRepository();
-    _profileStore = locator<ProfileStore>();
-  }
+  ProfileRepository _profileRepository = ProfileRepository();
+  ProfileStore _profileStore = locator<ProfileStore>();
 
   Future<void> getProfile() async {
     var profileResult = await _profileRepository.getMe();
     if (profileResult.isRight()) {
-      _profileStore.setMe(profileResult.getOrElse(null));
+      _profileStore.setMe(profileResult.getOrElse(() => {} as ProfileModel));
     }
   }
 
