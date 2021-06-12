@@ -31,8 +31,8 @@ class NavigationService {
       PageRouteBuilder(
         pageBuilder: (_, __, ___) => route.buildPage(
           navigatorKey.currentContext!,
-          null as Animation<double>,
-          null as Animation<double>,
+          __,
+          ___,
         ),
         transitionDuration: Duration(seconds: 0),
       ),
@@ -46,10 +46,8 @@ class NavigationService {
 
     return navigatorKey.currentState!.pushReplacement(
       PageRouteBuilder(
-        pageBuilder: (_, __, ___) => route.buildPage(
-            navigatorKey.currentContext!,
-            null as Animation<double>,
-            null as Animation<double>),
+        pageBuilder: (_, __, ___) =>
+            route.buildPage(navigatorKey.currentContext!, __, ___),
         transitionDuration: Duration(seconds: 0),
       ),
     );
