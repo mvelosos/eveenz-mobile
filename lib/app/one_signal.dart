@@ -4,16 +4,10 @@ import 'package:party_mobile/app/shared/constants/api_keys.dart';
 void setupOneSignal() async {
   OneSignal.shared.setAppId(ApiKeys.kOneSignalKey);
 
-  // OneSignal.shared.setAppId("YOUR_ONESIGNAL_APP_ID");
+  //Remove this method to stop OneSignal Debugging
+  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
-  // OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
-  //   print("Accepted permission: $accepted");
-  // });
-  // OneSignal Initialization
-// var settings = {
-//   OSiOSSettings.autoPrompt: false,
-//   OSiOSSettings.promptBeforeOpeningPushUrl: true
-// };
-// OneSignal.shared
-//         .init(ApiKeys.kOneSignalKey, iOSSettings: settings);
+  OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
+    print("Accepted permission: $accepted");
+  });
 }
