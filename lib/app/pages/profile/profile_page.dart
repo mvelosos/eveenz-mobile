@@ -23,7 +23,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final ProfileController _meController = locator<ProfileController>();
   final ProfileStore _profileStore = locator<ProfileStore>();
-  NavigationService _navigationService;
+  NavigationService? _navigationService;
 
   @override
   Widget build(BuildContext context) {

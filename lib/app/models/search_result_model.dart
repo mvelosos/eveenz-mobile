@@ -1,43 +1,42 @@
 class SearchResultModel {
-  List<Data> data;
+  List<Data?>? listData;
 
-  SearchResultModel({this.data});
+  SearchResultModel({this.listData});
 
   SearchResultModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<Data>();
+      listData = [];
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        listData?.add(new Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
-    }
+    data['data'] = this.listData?.map((v) => v?.toJson()).toList();
     return data;
   }
 }
 
 class Data {
-  String uuid;
-  String type;
-  String username;
-  String name;
-  String avatarUrl;
-  String imageUrl;
-  String distance;
+  late String uuid;
+  late String type;
+  late String name;
+  String? username;
+  String? avatarUrl;
+  String? imageUrl;
+  String? distance;
 
-  Data(
-      {this.uuid,
-      this.type,
-      this.username,
-      this.name,
-      this.avatarUrl,
-      this.imageUrl,
-      this.distance});
+  Data({
+    required this.uuid,
+    required this.type,
+    required this.name,
+    this.username,
+    this.avatarUrl,
+    this.imageUrl,
+    this.distance,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     uuid = json['uuid'] ?? null;

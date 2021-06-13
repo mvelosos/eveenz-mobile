@@ -17,7 +17,7 @@ class _UpdateNamePageState extends State<UpdateNamePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final MeProfileVM _profile = MeProfileVM();
   final TextEditingController _nameInputController = TextEditingController();
-  NavigationService _navigationService;
+  NavigationService? _navigationService;
   bool _loading = false;
 
   @override
@@ -34,7 +34,7 @@ class _UpdateNamePageState extends State<UpdateNamePage> {
   }
 
   void _requestUpdateName() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       _setLoading(true);
       var result = await _profileController.updateProfile(_profile);
       _setLoading(false);
@@ -42,7 +42,7 @@ class _UpdateNamePageState extends State<UpdateNamePage> {
         (l) => {print(l.message)},
         (r) async => {
           await _profileController.getProfile(),
-          _navigationService.goBack(),
+          _navigationService!.goBack(),
         },
       );
     }
@@ -92,7 +92,7 @@ class _UpdateNamePageState extends State<UpdateNamePage> {
                 ),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
-                  if (value.isEmpty) return 'O nome não pode ficar em branco';
+                  if (value!.isEmpty) return 'O nome não pode ficar em branco';
                   return null;
                 },
                 autocorrect: false,

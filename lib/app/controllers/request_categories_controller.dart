@@ -4,11 +4,8 @@ import 'package:party_mobile/app/shared/errors/errors.dart';
 import 'package:party_mobile/app/view_models/new_request_category_vm.dart';
 
 class RequestCategoriesController {
-  RequestCategoriesRepository _requestCategoriesRepository;
-
-  RequestCategoriesController() {
-    _requestCategoriesRepository = RequestCategoriesRepository();
-  }
+  RequestCategoriesRepository _requestCategoriesRepository =
+      RequestCategoriesRepository();
 
   Future<Either<Failure, dynamic>> newRequestCategory(
       NewRequestCategoryVM newRequestCategory) async {

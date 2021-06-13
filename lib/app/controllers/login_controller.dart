@@ -12,20 +12,16 @@ import 'package:party_mobile/app/view_models/google_login_vm.dart';
 import 'package:party_mobile/app/view_models/user_login_vm.dart';
 
 class LoginController {
-  AuthRepository _authRepository;
-  AuthUserStore _authUserStore;
-
-  LoginController() {
-    _authRepository = AuthRepository();
-    _authUserStore = locator<AuthUserStore>();
-  }
+  AuthRepository _authRepository = AuthRepository();
+  AuthUserStore _authUserStore = locator<AuthUserStore>();
 
   Future<Either<Failure, AuthUserModel>> loginWithEmail(
       UserLoginVM userLogin) async {
     var authResult = await _authRepository.authLogin(userLogin);
     if (authResult.isRight()) {
-      Commons.setAuthLocalStorage(authResult.getOrElse(null));
-      _authUserStore.setUser(authResult.getOrElse(null));
+      Commons.setAuthLocalStorage(
+          authResult.getOrElse(() => {} as AuthUserModel));
+      _authUserStore.setUser(authResult.getOrElse(() => {} as AuthUserModel));
     }
     return authResult;
   }
@@ -34,8 +30,9 @@ class LoginController {
       FacebookLoginVM fbLogin) async {
     var authResult = await _authRepository.authFacebook(fbLogin);
     if (authResult.isRight()) {
-      Commons.setAuthLocalStorage(authResult.getOrElse(null));
-      _authUserStore.setUser(authResult.getOrElse(null));
+      Commons.setAuthLocalStorage(
+          authResult.getOrElse(() => {} as AuthUserModel));
+      _authUserStore.setUser(authResult.getOrElse(() => {} as AuthUserModel));
     }
     return authResult;
   }
@@ -44,8 +41,9 @@ class LoginController {
       GoogleLoginVM googleLogin) async {
     var authResult = await _authRepository.authGoogle(googleLogin);
     if (authResult.isRight()) {
-      Commons.setAuthLocalStorage(authResult.getOrElse(null));
-      _authUserStore.setUser(authResult.getOrElse(null));
+      Commons.setAuthLocalStorage(
+          authResult.getOrElse(() => {} as AuthUserModel));
+      _authUserStore.setUser(authResult.getOrElse(() => {} as AuthUserModel));
     }
     return authResult;
   }
@@ -54,8 +52,9 @@ class LoginController {
       AppleLoginVM appleLogin) async {
     var authResult = await _authRepository.authApple(appleLogin);
     if (authResult.isRight()) {
-      Commons.setAuthLocalStorage(authResult.getOrElse(null));
-      _authUserStore.setUser(authResult.getOrElse(null));
+      Commons.setAuthLocalStorage(
+          authResult.getOrElse(() => {} as AuthUserModel));
+      _authUserStore.setUser(authResult.getOrElse(() => {} as AuthUserModel));
     }
     return authResult;
   }

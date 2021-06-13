@@ -7,7 +7,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
   final Function(int) onTabTapped;
 
   BottomNavigationBarWidget(
-      {@required this.currentIndex, @required this.onTabTapped});
+      {required this.currentIndex, required this.onTabTapped});
 
   List<BottomNavigationBarItem> _barItems() {
     return [

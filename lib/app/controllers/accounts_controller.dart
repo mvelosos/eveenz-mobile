@@ -4,11 +4,7 @@ import 'package:party_mobile/app/repositories/accounts_repository.dart';
 import 'package:party_mobile/app/shared/errors/errors.dart';
 
 class AccountsController {
-  AccountsRepository _accountsRepository;
-
-  AccountsController() {
-    _accountsRepository = AccountsRepository();
-  }
+  AccountsRepository _accountsRepository = AccountsRepository();
 
   Future<Either<Failure, AccountModel>> getAccount(String username) async {
     var accountResult = await _accountsRepository.getAccount(username);
@@ -20,7 +16,7 @@ class AccountsController {
     List<AccountModel> accountsList = [];
     var result = await _accountsRepository.getFollowers(username);
     if (result.isRight()) {
-      dynamic resultList = result.getOrElse(null);
+      dynamic resultList = result.getOrElse(() => {});
       if (resultList['accounts'] != null || resultList['accounts'] != []) {
         resultList['accounts'].forEach(
           (account) => accountsList.add(
@@ -37,7 +33,7 @@ class AccountsController {
     List<AccountModel> accountsList = [];
     var result = await _accountsRepository.getFollowing(username);
     if (result.isRight()) {
-      dynamic resultList = result.getOrElse(null);
+      dynamic resultList = result.getOrElse(() => {});
       if (resultList['accounts'] != null || resultList['accounts'] != []) {
         resultList['accounts'].forEach(
           (account) => accountsList.add(

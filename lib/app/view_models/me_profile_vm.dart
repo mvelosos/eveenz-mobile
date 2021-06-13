@@ -1,18 +1,18 @@
 class MeProfileVM {
-  String name;
-  String bio;
-  int popularity;
-  Map avatar;
-  double latitude;
-  double longitude;
-  String street;
-  String number;
-  String complement;
-  String neighborhood;
-  String zipCode;
-  String city;
-  String state;
-  String country;
+  String? name;
+  String? bio;
+  int? popularity;
+  Map? avatar;
+  double? latitude;
+  double? longitude;
+  String? street;
+  String? number;
+  String? complement;
+  String? neighborhood;
+  String? zipCode;
+  String? city;
+  String? state;
+  String? country;
 
   Map<String, dynamic> getData() {
     Map<String, dynamic> account = {};

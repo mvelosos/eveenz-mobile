@@ -1,6 +1,6 @@
 class AppleLoginVM {
-  String userId;
-  String jwt;
+  String? userId;
+  String? jwt;
 
   Map<String, dynamic> getData() {
     return {

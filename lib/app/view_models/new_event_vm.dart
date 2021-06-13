@@ -1,14 +1,14 @@
 class NewEventVM {
-  String name;
-  String description;
-  String privacy;
-  String startDate;
-  String endDate;
-  String startTime;
-  String endTime;
+  late String name;
+  late String description;
+  late String privacy;
+  late String startDate;
+  String? endDate;
+  late String startTime;
+  String? endTime;
   bool undefinedEnd = false;
-  String externalUrl;
-  int minimumAge;
+  String? externalUrl;
+  int? minimumAge;
   List<Map> images = [];
   Map<String, dynamic> addressAttributes = {
     'street': '',

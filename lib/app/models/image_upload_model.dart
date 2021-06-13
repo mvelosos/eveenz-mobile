@@ -3,24 +3,24 @@ import 'dart:io';
 import 'package:party_mobile/app/shared/utils/commons.dart';
 
 class ImageUploadModel {
-  bool isUploaded;
-  bool uploading;
-  File imageFile;
-  String imageUrl;
+  File? imageFile;
+  bool? isUploaded;
+  bool? uploading;
+  String? imageUrl;
 
   ImageUploadModel({
+    this.imageFile,
     this.isUploaded,
     this.uploading,
-    this.imageFile,
     this.imageUrl,
   });
 
   get imagePath {
-    return imageFile.path;
+    return imageFile?.path;
   }
 
   get base64Image {
-    var base64image = Commons.encodeBase64(this.imageFile);
+    var base64image = Commons.encodeBase64(this.imageFile!);
     return Commons.base64dataUri(base64image);
   }
 }

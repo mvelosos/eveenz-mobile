@@ -17,7 +17,7 @@ class _UpdateBioPageState extends State<UpdateBioPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final MeProfileVM _profile = MeProfileVM();
   final TextEditingController _bioInputController = TextEditingController();
-  NavigationService _navigationService;
+  NavigationService? _navigationService;
   bool _loading = false;
 
   @override
@@ -34,7 +34,7 @@ class _UpdateBioPageState extends State<UpdateBioPage> {
   }
 
   void _requestUpdateBio() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       _setLoading(true);
       var result = await _profileController.updateProfile(_profile);
       _setLoading(false);
@@ -42,7 +42,7 @@ class _UpdateBioPageState extends State<UpdateBioPage> {
         (l) => {},
         (r) async => {
           await _profileController.getProfile(),
-          _navigationService.goBack(),
+          _navigationService!.goBack(),
         },
       );
     }

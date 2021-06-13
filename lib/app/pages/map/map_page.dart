@@ -13,7 +13,7 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   Completer<GoogleMapController> _gmController = Completer();
-  CameraPosition _initialPosition;
+  CameraPosition? _initialPosition;
   ProfileController _meController = locator<ProfileController>();
   MeProfileVM _meProfile = MeProfileVM();
   bool _loadingPosition = true;
@@ -91,7 +91,7 @@ class _MapPageState extends State<MapPage> {
           ? null
           : GoogleMap(
               mapType: MapType.normal,
-              initialCameraPosition: _initialPosition,
+              initialCameraPosition: _initialPosition!,
               myLocationEnabled: true,
               myLocationButtonEnabled: true,
               rotateGesturesEnabled: false,

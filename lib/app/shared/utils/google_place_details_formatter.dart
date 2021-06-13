@@ -23,9 +23,9 @@ class GooglePlaceDetailsFormatter {
   }
 
   static Map<String, dynamic> formatLocalization(Map place) {
-    Map localizationComponents = place['result']['geometry']['location'];
-    double latitude;
-    double longitude;
+    Map? localizationComponents = place['result']['geometry']['location'];
+    double? latitude;
+    double? longitude;
 
     if (localizationComponents != null) {
       latitude = localizationComponents['lat'];
@@ -41,7 +41,7 @@ class GooglePlaceDetailsFormatter {
   }
 
   static String _getStreetNumber(List components) {
-    String number;
+    String number = '';
 
     components.forEach((element) {
       List types = element['types'];
@@ -54,7 +54,7 @@ class GooglePlaceDetailsFormatter {
   }
 
   static String _getStreet(List components) {
-    String street;
+    String street = '';
 
     components.forEach((element) {
       List types = element['types'];
@@ -67,7 +67,7 @@ class GooglePlaceDetailsFormatter {
   }
 
   static String _getNeighbourhood(List components) {
-    String neighbourhood;
+    String neighbourhood = '';
 
     components.forEach((element) {
       List types = element['types'];
@@ -81,7 +81,7 @@ class GooglePlaceDetailsFormatter {
   }
 
   static String _getCity(List components) {
-    String city;
+    String city = '';
 
     for (var i = 0; i < components.length; i++) {
       List types = components[i]['types'];
@@ -98,7 +98,7 @@ class GooglePlaceDetailsFormatter {
   }
 
   static String _getState(List components) {
-    String state;
+    String state = '';
 
     components.forEach((element) {
       List types = element['types'];
@@ -111,7 +111,7 @@ class GooglePlaceDetailsFormatter {
   }
 
   static String _getCountry(List components) {
-    String country;
+    String country = '';
 
     components.forEach((element) {
       List types = element['types'];
@@ -124,7 +124,7 @@ class GooglePlaceDetailsFormatter {
   }
 
   static String _getZipCode(List components) {
-    String zipCode;
+    String zipCode = '';
 
     components.forEach((element) {
       List types = element['types'];

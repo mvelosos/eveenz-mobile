@@ -1,5 +1,5 @@
 class NewRequestCategoryVM {
-  String name;
+  String? name;
 
   Map<String, dynamic> getData() {
     return {

@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:party_mobile/app/controllers/accounts_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/account_model.dart';
+import 'package:party_mobile/app/models/profile_model.dart';
 import 'package:party_mobile/app/pages/follows/widgets/follows_tab_view.dart';
 
 // Page Arguments
 class FollowsPageArguments {
   final String username;
-  final int initialIndex;
+  final int? initialIndex;
 
-  FollowsPageArguments({@required this.username, this.initialIndex});
+  FollowsPageArguments({required this.username, this.initialIndex});
 }
 
 // Page
 class FollowsPage extends StatefulWidget {
   final FollowsPageArguments args;
 
-  FollowsPage({@required this.args});
+  FollowsPage({required this.args});
 
   @override
   _FollowsPageState createState() => _FollowsPageState();
@@ -24,8 +25,8 @@ class FollowsPage extends StatefulWidget {
 
 class _FollowsPageState extends State<FollowsPage> {
   final AccountsController _accountsController = locator<AccountsController>();
-  List<AccountModel> _followersList;
-  List<AccountModel> _followingList;
+  List<AccountModel>? _followersList;
+  List<AccountModel>? _followingList;
   bool _loading = true;
 
   // Functions
@@ -44,7 +45,7 @@ class _FollowsPageState extends State<FollowsPage> {
     var result = await _accountsController.getFollowers(widget.args.username);
     if (result.isRight()) {
       setState(() {
-        _followersList = result.getOrElse(null);
+        _followersList = result.getOrElse(() => {} as List<AccountModel>);
       });
     }
   }
@@ -53,7 +54,7 @@ class _FollowsPageState extends State<FollowsPage> {
     var result = await _accountsController.getFollowing(widget.args.username);
     if (result.isRight()) {
       setState(() {
-        _followingList = result.getOrElse(null);
+        _followingList = result.getOrElse(() => {} as List<AccountModel>);
       });
     }
   }
@@ -61,7 +62,7 @@ class _FollowsPageState extends State<FollowsPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      initialIndex: widget.args.initialIndex,
+      initialIndex: widget.args.initialIndex ?? 0,
       length: 2,
       child: Scaffold(
           appBar: AppBar(
@@ -77,14 +78,14 @@ class _FollowsPageState extends State<FollowsPage> {
                 Tab(
                     icon: Text(
                   _followersList != null
-                      ? "${_followersList.length}  Seguidores"
+                      ? "${_followersList?.length}  Seguidores"
                       : 'Seguidores',
                   style: TextStyle(color: Colors.black),
                 )),
                 Tab(
                     icon: Text(
                   _followingList != null
-                      ? "${_followingList.length}  Seguindo"
+                      ? "${_followingList?.length}  Seguindo"
                       : 'Seguindo',
                   style: TextStyle(color: Colors.black),
                 )),
@@ -103,8 +104,8 @@ class _FollowsPageState extends State<FollowsPage> {
                     )
                   : FollowsTabView(
                       constraints: constraints,
-                      followersList: _followersList,
-                      followingList: _followingList,
+                      followersList: _followersList ?? [],
+                      followingList: _followingList ?? [],
                       getFollowers: _getFollowers,
                       getFollowing: _getFollowing,
                     );

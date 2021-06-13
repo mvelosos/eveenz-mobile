@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:party_mobile/app/interfaces/users_repository_interface.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/shared/constants/endpoints.dart';
@@ -8,11 +9,7 @@ import 'package:party_mobile/app/shared/errors/errors.dart';
 import 'package:party_mobile/app/models/auth_user_model.dart';
 
 class UsersRepository implements IUsersRepository {
-  DioHttp _dio;
-
-  UsersRepository() {
-    _dio = locator<DioHttp>();
-  }
+  DioHttp _dio = locator<DioHttp>();
 
   @override
   Future<Either<Failure, AuthUserModel>> createUser(
@@ -21,9 +18,9 @@ class UsersRepository implements IUsersRepository {
       var user =
           await _dio.instance.post(Endpoints.users, data: createUser.getData());
       return Right(AuthUserModel.fromJson(user.data));
-    } catch (e) {
-      if (e.response.data['errors'].length > 0) {
-        var errors = e.response.data['errors'].join(', ');
+    } on DioError catch (e) {
+      if (e.response?.data['errors'].length > 0) {
+        var errors = e.response?.data['errors'].join(', ');
         return Left(CreateUserError(message: errors));
       }
       return Left(CreateUserError(message: 'Unexpected error!'));

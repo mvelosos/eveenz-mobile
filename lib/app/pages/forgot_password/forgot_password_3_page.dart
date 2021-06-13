@@ -12,14 +12,14 @@ import 'package:party_mobile/app/view_models/password_recovery_vm.dart';
 class ForgotPasswordPage3Arguments {
   final String token;
 
-  ForgotPasswordPage3Arguments({@required this.token});
+  ForgotPasswordPage3Arguments({required this.token});
 }
 
 // Page
 class ForgotPassword3Page extends StatefulWidget {
   final ForgotPasswordPage3Arguments args;
 
-  ForgotPassword3Page({@required this.args});
+  ForgotPassword3Page({required this.args});
 
   @override
   _ForgotPassword3PageState createState() => _ForgotPassword3PageState();
@@ -28,7 +28,7 @@ class ForgotPassword3Page extends StatefulWidget {
 class _ForgotPassword3PageState extends State<ForgotPassword3Page> {
   final _passwordsController = locator<PasswordsController>();
   final _formKey = GlobalKey<FormState>();
-  NavigationService _navigationService;
+  NavigationService? _navigationService;
   PasswordRecoveryVM _passwordRecovery = PasswordRecoveryVM();
   bool _loading = false;
   bool _hidePassword = true;
@@ -56,7 +56,7 @@ class _ForgotPassword3PageState extends State<ForgotPassword3Page> {
         Scaffold.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              l.message,
+              l.message!,
               style: TextStyle(fontSize: 14),
               textAlign: TextAlign.center,
             ),
@@ -67,7 +67,7 @@ class _ForgotPassword3PageState extends State<ForgotPassword3Page> {
         )
       },
       (r) => {
-        _navigationService.pushReplacementNamed(
+        _navigationService?.pushReplacementNamed(
           RouteNames.forgotPassword4,
         )
       },
@@ -117,7 +117,7 @@ class _ForgotPassword3PageState extends State<ForgotPassword3Page> {
             ),
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
-              if (value.isEmpty) return "Campo obrigatório!";
+              if (value!.isEmpty) return "Campo obrigatório!";
               if (value.length < 6)
                 return "Senha deve ter no mínimo 6 caracteres";
               return null;
@@ -160,7 +160,7 @@ class _ForgotPassword3PageState extends State<ForgotPassword3Page> {
             ),
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
-              if (value.isEmpty) return "Campo obrigatório!";
+              if (value!.isEmpty) return "Campo obrigatório!";
               if (value != _passwordRecovery.password)
                 return "As senhas devem ser iguais";
               return null;
@@ -176,7 +176,7 @@ class _ForgotPassword3PageState extends State<ForgotPassword3Page> {
 
     return RawMaterialButton(
       onPressed: () {
-        if (_formKey.currentState.validate()) {
+        if (_formKey.currentState!.validate()) {
           _requestPasswordRecover(context);
         }
       },

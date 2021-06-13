@@ -17,10 +17,10 @@ class FollowsListView extends StatelessWidget {
       child: ListView.builder(
         itemCount: _list.length,
         itemBuilder: (_, idx) {
-          if (_list != null && _list.length > 0) {
+          if (_list.length > 0) {
             return FollowsAccountListTile(_list[idx]);
           }
-          return null;
+          return SizedBox.shrink();
         },
       ),
     );

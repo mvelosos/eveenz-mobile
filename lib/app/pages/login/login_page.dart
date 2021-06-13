@@ -17,7 +17,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   final _userLogin = UserLoginVM();
   final _loginController = locator<LoginController>();
   final _formKey = GlobalKey<FormState>();
-  NavigationService _navigationService;
+  NavigationService? _navigationService;
   bool _loading = false;
 
   // Functions
@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      l.message,
+                      l.message!,
                       style: TextStyle(fontSize: 14),
                       textAlign: TextAlign.center,
                     ),
@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                 )
               },
               (r) => {
-                _navigationService
+                _navigationService!
                     .pushReplacementNamedNoAnimation(RouteNames.appContainer)
               },
             ),
@@ -103,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
-              if (value.isEmpty) return "Campo obrigatório!";
+              if (value!.isEmpty) return "Campo obrigatório!";
               return null;
             },
             onChanged: (value) {
@@ -127,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
-              if (value.isEmpty) return "Campo obrigatório!";
+              if (value!.isEmpty) return "Campo obrigatório!";
               return null;
             },
             onChanged: (value) {
@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return RawMaterialButton(
       onPressed: () {
-        if (_formKey.currentState.validate()) {
+        if (_formKey.currentState!.validate()) {
           _requestLoginWithEmail(context);
           FocusScope.of(context).unfocus();
         }
@@ -183,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
       alignment: Alignment.centerRight,
       child: RawMaterialButton(
         onPressed: () {
-          _navigationService.pushNamed(RouteNames.forgotPassword1);
+          _navigationService!.pushNamed(RouteNames.forgotPassword1);
         },
         child: Text(
           'Esqueci minha senha',
@@ -230,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return RawMaterialButton(
       onPressed: () {
-        _navigationService.pushNamed(RouteNames.signUp1);
+        _navigationService!.pushNamed(RouteNames.signUp1);
       },
       child: RichText(
         textAlign: TextAlign.center,
@@ -305,16 +305,16 @@ class _LoginPageState extends State<LoginPage> {
                                 children: [
                                   FacebookLoginButton(
                                     _setLoading,
-                                    _navigationService,
+                                    _navigationService!,
                                   ),
                                   GoogleLoginButton(
                                     _setLoading,
-                                    _navigationService,
+                                    _navigationService!,
                                   ),
                                   Platform.isIOS
                                       ? AppleLoginButton(
                                           _setLoading,
-                                          _navigationService,
+                                          _navigationService!,
                                         )
                                       : SizedBox.shrink(),
                                 ],

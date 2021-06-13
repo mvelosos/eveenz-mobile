@@ -21,7 +21,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
   final _signUpController = locator<SignUpController>();
   final _usersController = locator<UsersController>();
   final _formKey = GlobalKey<FormState>();
-  NavigationService _navigationService;
+  NavigationService? _navigationService;
   bool _hidePassword = true;
   bool _usernameAvailable = false;
   bool _loading = false;
@@ -54,7 +54,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      l.message,
+                      l.message!,
                       style: TextStyle(fontSize: _size.height * .018),
                       textAlign: TextAlign.center,
                     ),
@@ -64,7 +64,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
                 )
               },
               (r) => {
-                _navigationService
+                _navigationService!
                     .pushReplacementNamedNoAnimation(RouteNames.signUp2)
               },
             )
@@ -107,7 +107,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
             ),
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
-              if (value.isEmpty) return "Campo obrigatório!";
+              if (value!.isEmpty) return "Campo obrigatório!";
               if (!Commons.matchUsernameRegex(value))
                 return "Campo deve conter apenas letras, números, _ e .";
               if (value.length < 3) return "Mínimo de 3 caracteres";
@@ -143,7 +143,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
             ),
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
-              if (value.isEmpty) return "Campo obrigatório!";
+              if (value!.isEmpty) return "Campo obrigatório!";
               if (!Commons.matchEmailRegex(value))
                 return "Insira um e-mail válido";
               return null;
@@ -180,7 +180,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
             ),
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
-              if (value.isEmpty) return "Campo obrigatório!";
+              if (value!.isEmpty) return "Campo obrigatório!";
               if (value.length < 6)
                 return "Senha deve ter no mínimo 6 caracteres";
               return null;
@@ -224,7 +224,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
 
     return RawMaterialButton(
       onPressed: () {
-        if (_formKey.currentState.validate()) {
+        if (_formKey.currentState!.validate()) {
           _requestCreateUser(context);
           FocusScope.of(context).unfocus();
         }
@@ -257,7 +257,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
 
     return RawMaterialButton(
       onPressed: () {
-        _navigationService.goBack();
+        _navigationService!.goBack();
       },
       child: Center(
         child: RichText(

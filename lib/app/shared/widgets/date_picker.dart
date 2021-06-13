@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DatePicker {
-  BuildContext _context;
-  DateTime _selectedDate;
-  Function _setDate;
+  BuildContext? _context;
+  DateTime? _selectedDate;
+  Function? _setDate;
 
   DatePicker(context, selectedDate, setDate) {
     this._context = context;
@@ -17,26 +17,26 @@ class DatePicker {
 
   _selectDate() {
     if (Platform.isIOS) {
-      return buildCupertinoDatePicker(_context);
+      return buildCupertinoDatePicker(_context!);
     } else {
-      return buildMaterialDatePicker(_context);
+      return buildMaterialDatePicker(_context!);
     }
   }
 
   buildMaterialDatePicker(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: _selectedDate,
+      initialDate: _selectedDate!,
       firstDate: DateTime.now(),
       lastDate: DateTime(DateTime.now().year + 2),
       builder: (context, child) {
         return Theme(
           data: ThemeData.light(),
-          child: child,
+          child: child!,
         );
       },
     );
-    if (picked != null && picked != _selectedDate) _setDate(picked);
+    if (picked != null && picked != _selectedDate) _setDate!(picked);
   }
 
   buildCupertinoDatePicker(BuildContext context) {
@@ -52,7 +52,7 @@ class DatePicker {
                 mode: CupertinoDatePickerMode.date,
                 onDateTimeChanged: (picked) {
                   if (picked != null && picked != _selectedDate)
-                    _setDate(picked);
+                    _setDate!(picked);
                 },
                 initialDateTime: _selectedDate,
                 minimumYear: DateTime.now().year,
