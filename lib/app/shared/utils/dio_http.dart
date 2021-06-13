@@ -34,11 +34,15 @@ class DioHttp {
             if (value != null) {options.headers['Authorization'] = value}
           },
         );
+    return handler.next(options);
   }
 
-  _onResponse(Response e, ResponseInterceptorHandler handler) {}
+  _onResponse(Response response, ResponseInterceptorHandler handler) {
+    return handler.next(response);
+  }
 
-  _onError(DioError e, ErrorInterceptorHandler handler) {
+  _onError(DioError error, ErrorInterceptorHandler handler) {
     print('########## Response Error');
+    return handler.next(error);
   }
 }
