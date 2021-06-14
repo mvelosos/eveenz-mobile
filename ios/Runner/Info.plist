@@ -41,8 +41,12 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FacebookAdvertiserIDCollectionEnabled</key>
+	<false/>
 	<key>FacebookAppID</key>
 	<string>659257231190297</string>
+	<key>FacebookAutoLogAppEventsEnabled</key>
+	<false/>
 	<key>FacebookDisplayName</key>
 	<string>Eveenz</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
@@ -85,9 +89,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-    <key>FacebookAutoLogAppEventsEnabled</key>
-    <false/>
-    <key>FacebookAdvertiserIDCollectionEnabled</key>
-    <false/>
 </dict>
 </plist>
