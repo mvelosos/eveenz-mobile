@@ -45,9 +45,12 @@ class _FollowButtonState extends State<FollowButton> {
         top: widget._constraints.maxHeight * .025,
       ),
       child: widget._accountModel.followedByMe
-          ? RaisedButton(
+          ? ElevatedButton(
               onPressed: _loading ? null : unfollowAccount,
-              disabledColor: Colors.grey[350],
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.redAccent),
+              ),
               child: _loading
                   ? SizedBox(
                       child: CircularProgressIndicator(
@@ -61,11 +64,13 @@ class _FollowButtonState extends State<FollowButton> {
                       'Parar de seguir',
                       style: TextStyle(color: Colors.white),
                     ),
-              color: Colors.redAccent,
             )
-          : RaisedButton(
+          : ElevatedButton(
               onPressed: _loading ? null : followAccount,
-              disabledColor: Colors.grey[350],
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              ),
+              // disabledColor: Colors.grey[350],
               child: _loading
                   ? SizedBox(
                       child: CircularProgressIndicator(
@@ -79,7 +84,6 @@ class _FollowButtonState extends State<FollowButton> {
                       'Seguir',
                       style: TextStyle(color: Colors.white),
                     ),
-              color: Colors.blue,
             ),
     );
   }

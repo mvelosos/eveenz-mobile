@@ -3,7 +3,7 @@ class Endpoints {
   static const String accountShow = '/accounts/:username';
   static const String accountFollowers = '/accounts/:username/followers';
   static const String accountFollowing = '/accounts/:username/following';
-  static const String accountFollow = '/me/follows/accounts';
+  static const String accountFollow = '/profile/follows/accounts';
 
   // Auth Endpoints
   static const String authLogin = '/auth/login';

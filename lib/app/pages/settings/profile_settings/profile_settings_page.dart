@@ -25,15 +25,16 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   NavigationService? _navigationService;
 
   void _onImagePick() async {
-    // File _pickedImage = await ImageCropPicker(
-    //   enableCrop: true,
-    //   pickerType: 'gallery',
-    //   cropStyle: CropStyle.circle,
-    // ).initPicker();
-    // _requestUpdateAvatar(_pickedImage);
+    File? _pickedImage = await ImageCropPicker(
+      enableCrop: true,
+      pickerType: 'gallery',
+      cropStyle: CropStyle.circle,
+    ).initPicker();
+
+    _requestUpdateAvatar(_pickedImage);
   }
 
-  void _requestUpdateAvatar(File file) async {
+  void _requestUpdateAvatar(File? file) async {
     if (file == null) return;
 
     var base64image = await Commons.encodeBase64(file);

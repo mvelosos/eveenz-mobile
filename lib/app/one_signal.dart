@@ -5,9 +5,9 @@ void setupOneSignal() async {
   OneSignal.shared.setAppId(ApiKeys.kOneSignalKey);
 
   //Remove this method to stop OneSignal Debugging
-  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+  // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
   OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
-    print("Accepted permission: $accepted");
+    // print("Accepted permission: $accepted");
   });
 }

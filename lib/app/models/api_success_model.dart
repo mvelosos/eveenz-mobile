@@ -1,8 +1,8 @@
 class ApiSuccessModel {
-  late int id;
+  int? id;
 
   ApiSuccessModel({
-    required this.id,
+    this.id,
   });
 
   ApiSuccessModel.fromJson(Map<String, dynamic> json) {
