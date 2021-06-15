@@ -51,8 +51,7 @@ class DatePicker {
               CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.date,
                 onDateTimeChanged: (picked) {
-                  if (picked != null && picked != _selectedDate)
-                    _setDate!(picked);
+                  if (picked != _selectedDate) _setDate!(picked);
                 },
                 initialDateTime: _selectedDate,
                 minimumYear: DateTime.now().year,

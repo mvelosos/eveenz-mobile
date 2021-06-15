@@ -32,7 +32,7 @@ class GoogleLoginButton extends StatelessWidget {
                 (value) => {
                   value.fold(
                     (l) => {
-                      Scaffold.of(context).showSnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
                             l.message!,

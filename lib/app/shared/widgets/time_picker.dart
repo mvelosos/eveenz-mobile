@@ -47,8 +47,7 @@ class TimePicker {
               CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.time,
                 onDateTimeChanged: (picked) {
-                  if (picked != null && picked != _selectedTime)
-                    _setTime!(picked);
+                  if (picked != _selectedTime) _setTime!(picked);
                 },
                 use24hFormat: true,
                 initialDateTime: _selectedTime,

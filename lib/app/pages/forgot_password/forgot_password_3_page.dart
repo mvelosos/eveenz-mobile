@@ -53,7 +53,7 @@ class _ForgotPassword3PageState extends State<ForgotPassword3Page> {
     var result = await _passwordsController.recoverPassword(_passwordRecovery);
     result.fold(
       (l) => {
-        Scaffold.of(context).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
               l.message!,

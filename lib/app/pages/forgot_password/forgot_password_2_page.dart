@@ -45,7 +45,7 @@ class _ForgotPassword2PageState extends State<ForgotPassword2Page> {
     var result = await _passwordsController.verifyCode(_passwordRecovery);
     result.fold(
         (l) => {
-              Scaffold.of(context).showSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
                     l.message!,

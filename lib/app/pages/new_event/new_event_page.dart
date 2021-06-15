@@ -103,7 +103,7 @@ class _NewEventPageState extends State<NewEventPage> {
           (value) => {
             value.fold(
               (l) => {
-                Scaffold.of(context).showSnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
                       l.message!,
@@ -274,7 +274,7 @@ class _NewEventPageState extends State<NewEventPage> {
         .newRequestCategory(_newRequestCategory);
     result.fold(
       (l) => {
-        _scaffoldKey.currentState!.showSnackBar(
+        ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(
           SnackBar(
             content: Text(
               'Ops, tente novamente mais tarde!',
@@ -287,7 +287,7 @@ class _NewEventPageState extends State<NewEventPage> {
         )
       },
       (r) => {
-        _scaffoldKey.currentState!.showSnackBar(
+        ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(
           SnackBar(
             content: Text(
               'Recebemos sua sugestão! Entraremos em contato caso sua sugestão for aceita',
@@ -312,14 +312,14 @@ class _NewEventPageState extends State<NewEventPage> {
   }
 
   Future _onAddImageClick(int index) async {
-    // var _pickedImage = await ImageCropPicker(
-    //   enableCrop: true,
-    //   pickerType: 'gallery',
-    // ).initPicker();
-    // getFileImage(_pickedImage, index);
+    File? _pickedImage = await ImageCropPicker(
+      enableCrop: true,
+      pickerType: 'gallery',
+    ).initPicker();
+    getFileImage(_pickedImage, index);
   }
 
-  void getFileImage(File imageFile, int index) async {
+  void getFileImage(File? imageFile, int index) async {
     if (imageFile == null) return;
 
     setState(() {

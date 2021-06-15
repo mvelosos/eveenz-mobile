@@ -51,7 +51,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
           (value) => {
             value.fold(
               (l) => {
-                Scaffold.of(context).showSnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
                       l.message!,

@@ -39,7 +39,7 @@ class _ForgotPassword1PageState extends State<ForgotPassword1Page> {
               value.fold(
                 (l) => {
                   print(l),
-                  Scaffold.of(context).showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
                         l.message!,

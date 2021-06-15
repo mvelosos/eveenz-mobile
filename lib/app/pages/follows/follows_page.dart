@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:party_mobile/app/controllers/accounts_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/account_model.dart';
-import 'package:party_mobile/app/models/profile_model.dart';
 import 'package:party_mobile/app/pages/follows/widgets/follows_tab_view.dart';
 
 // Page Arguments

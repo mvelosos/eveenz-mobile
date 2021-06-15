@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/pages/new_event/new_event_page.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
-import 'package:party_mobile/app/shared/constants/route_names.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
