@@ -13,7 +13,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="Eveenz"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:requestLegacyExternalStorage="true">
 
         <meta-data android:name="com.google.android.geo.API_KEY"
