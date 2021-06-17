@@ -6,8 +6,10 @@ class BottomNavigationBarWidget extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTabTapped;
 
-  BottomNavigationBarWidget(
-      {required this.currentIndex, required this.onTabTapped});
+  BottomNavigationBarWidget({
+    required this.currentIndex,
+    required this.onTabTapped,
+  });
 
   List<BottomNavigationBarItem> _barItems() {
     return [
@@ -52,12 +54,13 @@ class BottomNavigationBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (idx) => onTabTapped(idx),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        items: _barItems(),
-        selectedItemColor: AppColors.darkPurple);
+      currentIndex: currentIndex,
+      onTap: (idx) => onTabTapped(idx),
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      type: BottomNavigationBarType.fixed,
+      items: _barItems(),
+      selectedItemColor: AppColors.darkPurple,
+    );
   }
 }
