@@ -14,8 +14,6 @@ import 'package:party_mobile/app/stores/auth_user_store.dart';
 class SignOutListTile extends StatelessWidget {
   final AuthUserStore _authUserStore = locator<AuthUserStore>();
   final LocalStorageService _storage = locator<LocalStorageService>();
-  final NavigationService _navigationService =
-      NavigationService(locator<RootNavigatorKey>().navigatorKey);
 
   SignOutListTile();
 
@@ -37,7 +35,8 @@ class SignOutListTile extends StatelessWidget {
         _storage.delete(Storage.username),
         _authUserStore.clear(),
         OneSignal.shared.removeExternalUserId(),
-        _navigationService.pushReplacementNamedNoAnimation(RouteNames.login)
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(RouteNames.root, (_) => false)
       },
     );
   }
