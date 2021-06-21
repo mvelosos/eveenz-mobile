@@ -10,8 +10,11 @@ class ImageCropPicker {
   CropStyle? cropStyle;
   bool? enableCrop;
 
-  ImageCropPicker(
-      {bool? enableCrop, String? pickerType, CropStyle? cropStyle}) {
+  ImageCropPicker({
+    bool? enableCrop,
+    String? pickerType,
+    CropStyle? cropStyle,
+  }) {
     this.enableCrop = enableCrop ?? true;
     this.pickerType = pickerType ?? 'gallery';
     this.cropStyle = cropStyle ?? CropStyle.rectangle;
