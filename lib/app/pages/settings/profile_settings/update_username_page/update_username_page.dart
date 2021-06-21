@@ -19,7 +19,8 @@ class _UpdateUsernamePageState extends State<UpdateUsernamePage> {
   final ProfileStore _profileStore = locator<ProfileStore>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final MeProfileVM _profile = MeProfileVM();
-  final TextEditingController _nameInputController = TextEditingController();
+  final TextEditingController _usernameInputController =
+      TextEditingController();
   NavigationService? _navigationService;
   bool _usernameAvailable = false;
   bool _loading = false;
@@ -28,7 +29,7 @@ class _UpdateUsernamePageState extends State<UpdateUsernamePage> {
   void initState() {
     super.initState();
     _profile.username = _profileStore.username.value;
-    _nameInputController.text = _profileStore.username.value;
+    _usernameInputController.text = _profileStore.username.value;
   }
 
   void _setLoading(bool value) {
@@ -93,7 +94,7 @@ class _UpdateUsernamePageState extends State<UpdateUsernamePage> {
             children: [
               TextFormField(
                 autofocus: true,
-                controller: _nameInputController,
+                controller: _usernameInputController,
                 decoration: InputDecoration(
                   labelText: 'Nome de usuário',
                   labelStyle: TextStyle(color: AppColors.darkPurple),
