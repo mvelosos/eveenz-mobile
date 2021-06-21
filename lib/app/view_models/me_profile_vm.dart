@@ -1,4 +1,6 @@
 class MeProfileVM {
+  String? username;
+  String? email;
   String? name;
   String? bio;
   int? popularity;
@@ -16,6 +18,10 @@ class MeProfileVM {
 
   Map<String, dynamic> getData() {
     Map<String, dynamic> account = {};
+    if (username != null || email != null) {
+      account.putIfAbsent('userAttributes', () => {});
+    }
+
     if (latitude != null || longitude != null) {
       account.putIfAbsent('localizationAttributes', () => {});
     }
@@ -31,6 +37,8 @@ class MeProfileVM {
       account.putIfAbsent('addressAttributes', () => {});
     }
 
+    if (username != null) account['userAttributes']['username'] = username;
+    if (email != null) account['userAttributes']['email'] = email;
     if (name != null) account['name'] = name;
     if (bio != null) account['bio'] = bio;
     if (popularity != null) account['popularity'] = popularity;

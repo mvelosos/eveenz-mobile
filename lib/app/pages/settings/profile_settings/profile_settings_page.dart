@@ -134,7 +134,10 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   child: Text('Nome de usuário'),
                 ),
                 title: Obx(() => Text(_profileStore.username.value)),
-                onTap: () {},
+                onTap: () {
+                  _navigationService!
+                      .pushNamed(RouteNames.updateUsernameSettings);
+                },
               ),
               ListTile(
                 leading: Container(
