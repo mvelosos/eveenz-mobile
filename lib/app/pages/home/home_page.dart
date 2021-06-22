@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/pages/new_event/new_event_page.dart';
-import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,12 +12,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  NavigationService? _navigationService;
-
   @override
   Widget build(BuildContext context) {
-    _navigationService = NavigationService.currentNavigator(context);
-
     return DefaultTabController(
       length: 2,
       child: Scaffold(

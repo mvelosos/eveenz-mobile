@@ -4,10 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/accounts_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/account_model.dart';
+import 'package:party_mobile/app/pages/account/widgets/follow_button.dart';
+import 'package:party_mobile/app/shared/widgets/profile_bio.dart';
 import 'package:party_mobile/app/shared/widgets/profile_popularity_badge.dart';
-import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/widgets/profile_avatar.dart';
+import 'package:party_mobile/app/shared/widgets/profile_social_row.dart';
 import 'package:party_mobile/app/stores/profile_store.dart';
 
 // Page Arguments
@@ -63,8 +65,6 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
 
-    final _navigationService = NavigationService.currentNavigator(context);
-
     return LayoutBuilder(
       builder: (context, constraints) {
         return DefaultTabController(
@@ -74,12 +74,16 @@ class _AccountPageState extends State<AccountPage> {
             appBar: AppBar(
               title: Text(
                 _loading ? '' : _accountModel!.username,
-                style: TextStyle(color: Colors.blue),
+                style: GoogleFonts.poppins(
+                  color: AppColors.darkPurple,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
               brightness: Brightness.light,
-              iconTheme: IconThemeData(color: Colors.blue),
+              iconTheme: IconThemeData(color: AppColors.orange),
             ),
             body: RefreshIndicator(
               color: AppColors.orange,
@@ -118,8 +122,23 @@ class _AccountPageState extends State<AccountPage> {
                             SizedBox(height: _size.height * .02),
                             ProfilePopularityBadge(_accountModel?.popularity),
                             SizedBox(height: _size.height * .02),
-                            // ProfileBio(),
-                            // ProfileSocialRow(_navigationService)
+                            ProfileBio(_accountModel?.bio),
+                            ProfileSocialRow(
+                              context: context,
+                              username: _accountModel?.username ?? '',
+                              eventsCount: _accountModel?.events ?? 0,
+                              followersCount: _accountModel?.followers ?? 0,
+                              followingCount: _accountModel?.following ?? 0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _showFollowButton
+                                    ? FollowButton(constraints, _accountModel!,
+                                        _getAccount)
+                                    : SizedBox.shrink(),
+                              ],
+                            )
                           ],
                         ),
                       ),

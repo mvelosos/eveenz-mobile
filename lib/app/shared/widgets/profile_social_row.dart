@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/follows/follows_page.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
-import 'package:party_mobile/app/stores/profile_store.dart';
 
 class ProfileSocialRow extends StatelessWidget {
-  final _navigationService;
-  final ProfileStore _profileStore = locator<ProfileStore>();
+  final BuildContext context;
+  final String username;
+  final int eventsCount;
+  final int followersCount;
+  final int followingCount;
 
-  ProfileSocialRow(this._navigationService);
+  ProfileSocialRow({
+    required this.context,
+    required this.username,
+    required this.eventsCount,
+    required this.followersCount,
+    required this.followingCount,
+  });
 
   String _formattedSocialValue(int value) {
     var strValue = value.toString();
@@ -49,13 +55,11 @@ class ProfileSocialRow extends StatelessWidget {
             onTap: () {},
             child: Column(
               children: [
-                Obx(
-                  () => Text(
-                    _profileStore.events.value.toString(),
-                    style: TextStyle(
-                      fontSize: 19,
-                      fontWeight: FontWeight.bold,
-                    ),
+                Text(
+                  eventsCount.toString(),
+                  style: TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text('Eveenz'),
@@ -72,23 +76,21 @@ class ProfileSocialRow extends StatelessWidget {
           SizedBox(width: 10),
           GestureDetector(
             onTap: () {
-              _navigationService.pushNamed(
+              Navigator.of(context).pushNamed(
                 RouteNames.accountFollows,
                 arguments: FollowsPageArguments(
-                  username: _profileStore.username.value,
+                  username: username,
                   initialIndex: 0,
                 ),
               );
             },
             child: Column(
               children: [
-                Obx(
-                  () => Text(
-                    _formattedSocialValue(_profileStore.followers.value),
-                    style: TextStyle(
-                      fontSize: 19,
-                      fontWeight: FontWeight.bold,
-                    ),
+                Text(
+                  _formattedSocialValue(followersCount),
+                  style: TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text('Seguidores'),
@@ -105,23 +107,21 @@ class ProfileSocialRow extends StatelessWidget {
           SizedBox(width: 10),
           GestureDetector(
             onTap: () {
-              _navigationService.pushNamed(
+              Navigator.of(context).pushNamed(
                 RouteNames.accountFollows,
                 arguments: FollowsPageArguments(
-                  username: _profileStore.username.value,
+                  username: username,
                   initialIndex: 1,
                 ),
               );
             },
             child: Column(
               children: [
-                Obx(
-                  () => Text(
-                    _formattedSocialValue(_profileStore.following.value),
-                    style: TextStyle(
-                      fontSize: 19,
-                      fontWeight: FontWeight.bold,
-                    ),
+                Text(
+                  _formattedSocialValue(followingCount),
+                  style: TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text('Seguindo'),

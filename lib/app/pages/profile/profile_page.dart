@@ -7,10 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/profile_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/shared/widgets/profile_popularity_badge.dart';
-import 'package:party_mobile/app/pages/profile/widgets/profile_bio.dart';
+import 'package:party_mobile/app/shared/widgets/profile_bio.dart';
 import 'package:party_mobile/app/pages/profile/widgets/profile_tab_view.dart';
-import 'package:party_mobile/app/pages/profile/widgets/profile_social_row.dart';
-import 'package:party_mobile/app/services/navigation_service.dart';
+import 'package:party_mobile/app/shared/widgets/profile_social_row.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/widgets/profile_avatar.dart';
 import 'package:party_mobile/app/stores/profile_store.dart';
@@ -23,12 +22,10 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final ProfileController _meController = locator<ProfileController>();
   final ProfileStore _profileStore = locator<ProfileStore>();
-  NavigationService? _navigationService;
 
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
-    _navigationService = NavigationService.currentNavigator(context);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -111,8 +108,18 @@ class _ProfilePageState extends State<ProfilePage> {
                                   _profileStore.popularity.value),
                             ),
                             SizedBox(height: _size.height * .02),
-                            ProfileBio(),
-                            ProfileSocialRow(_navigationService)
+                            Obx(
+                              () => ProfileBio(_profileStore.bio.value),
+                            ),
+                            Obx(
+                              () => ProfileSocialRow(
+                                context: context,
+                                username: _profileStore.username.value,
+                                eventsCount: _profileStore.events.value,
+                                followersCount: _profileStore.followers.value,
+                                followingCount: _profileStore.following.value,
+                              ),
+                            ),
                           ],
                         ),
                       ),
