@@ -1,11 +1,12 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/accounts_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/account_model.dart';
-import 'package:party_mobile/app/pages/account/widgets/follow_button.dart';
-import 'package:party_mobile/app/pages/follows/follows_page.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
-import 'package:party_mobile/app/shared/constants/route_names.dart';
+import 'package:party_mobile/app/shared/constants/app_colors.dart';
+import 'package:party_mobile/app/shared/widgets/profile_avatar.dart';
 import 'package:party_mobile/app/stores/profile_store.dart';
 
 // Page Arguments
@@ -59,123 +60,78 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size _size = MediaQuery.of(context).size;
+
     final _navigationService = NavigationService.currentNavigator(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          _loading ? '' : _accountModel!.username,
-          style: TextStyle(color: Colors.blue),
-        ),
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        brightness: Brightness.light,
-        iconTheme: IconThemeData(color: Colors.blue),
-      ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return _loading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : RefreshIndicator(
-                  color: Colors.blue,
-                  displacement: 0,
-                  onRefresh: () async {
-                    await _getAccount();
-                  },
-                  child: SingleChildScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    child: Container(
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      height: constraints.maxHeight,
-                      width: constraints.maxWidth,
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    _accountModel!.events.toString(),
-                                    style: TextStyle(fontSize: 19),
-                                  ),
-                                  Text('Festas'),
-                                ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              title: Text(
+                _loading ? '' : _accountModel!.username,
+                style: TextStyle(color: Colors.blue),
+              ),
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              brightness: Brightness.light,
+              iconTheme: IconThemeData(color: Colors.blue),
+            ),
+            body: RefreshIndicator(
+              color: AppColors.orange,
+              displacement: 0,
+              onRefresh: () async {
+                await _getAccount();
+              },
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                child: Container(
+                  color: Colors.white,
+                  height: constraints.maxHeight,
+                  width: constraints.maxWidth,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(
+                          left: _size.width * .06,
+                          right: _size.width * .06,
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(height: _size.height * .03),
+                            ProfileAvatar(_accountModel?.avatarUrl),
+                            SizedBox(height: _size.height * .03),
+                            AutoSizeText(
+                              _accountModel == null ? '' : _accountModel!.name,
+                              minFontSize: 17,
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.inter(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  _navigationService.pushNamed(
-                                    RouteNames.accountFollows,
-                                    arguments: FollowsPageArguments(
-                                      username: _accountModel!.username,
-                                      initialIndex: 0,
-                                    ),
-                                  );
-                                },
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      _accountModel!.followers.toString(),
-                                      style: TextStyle(fontSize: 19),
-                                    ),
-                                    Text('Seguidores'),
-                                  ],
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  _navigationService.pushNamed(
-                                    RouteNames.accountFollows,
-                                    arguments: FollowsPageArguments(
-                                      username: _accountModel!.username,
-                                      initialIndex: 1,
-                                    ),
-                                  );
-                                },
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      _accountModel!.following.toString(),
-                                      style: TextStyle(fontSize: 19),
-                                    ),
-                                    Text('Seguindo'),
-                                  ],
-                                ),
-                              ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: _accountModel?.avatarUrl != ''
-                                    ? Image.network(
-                                        _accountModel?.avatarUrl ?? '',
-                                        height: 85,
-                                        width: 85,
-                                      )
-                                    : CircleAvatar(
-                                        radius: 45,
-                                        backgroundColor: Color(0xffd3d5db),
-                                      ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              _showFollowButton
-                                  ? FollowButton(
-                                      constraints, _accountModel!, _getAccount)
-                                  : SizedBox.shrink(),
-                            ],
-                          )
-                        ],
+                            ),
+                            SizedBox(height: _size.height * .02),
+                            // ProfilePopularityBadge(),
+                            SizedBox(height: _size.height * .02),
+                            // ProfileBio(),
+                            // ProfileSocialRow(_navigationService)
+                          ],
+                        ),
                       ),
-                    ),
+                      SizedBox(height: _size.height * .03),
+                      // ProfileTabView()
+                    ],
                   ),
-                );
-        },
-      ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

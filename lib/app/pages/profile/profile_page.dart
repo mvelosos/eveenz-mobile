@@ -7,12 +7,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/profile_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/pages/profile/widgets/profile_popularity_badge.dart';
-import 'package:party_mobile/app/pages/profile/widgets/profile_avatar.dart';
 import 'package:party_mobile/app/pages/profile/widgets/profile_bio.dart';
 import 'package:party_mobile/app/pages/profile/widgets/profile_tab_view.dart';
 import 'package:party_mobile/app/pages/profile/widgets/profile_social_row.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
+import 'package:party_mobile/app/shared/widgets/profile_avatar.dart';
 import 'package:party_mobile/app/stores/profile_store.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -89,7 +89,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Column(
                           children: [
                             SizedBox(height: _size.height * .03),
-                            ProfileAvatar(),
+                            Obx(
+                              () =>
+                                  ProfileAvatar(_profileStore.avatarUrl.value),
+                            ),
                             SizedBox(height: _size.height * .03),
                             Obx(
                               () => AutoSizeText(
