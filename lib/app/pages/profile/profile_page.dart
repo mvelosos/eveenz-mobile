@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/profile_controller.dart';
 import 'package:party_mobile/app/locator.dart';
-import 'package:party_mobile/app/pages/profile/widgets/profile_popularity_badge.dart';
+import 'package:party_mobile/app/shared/widgets/profile_popularity_badge.dart';
 import 'package:party_mobile/app/pages/profile/widgets/profile_bio.dart';
 import 'package:party_mobile/app/pages/profile/widgets/profile_tab_view.dart';
 import 'package:party_mobile/app/pages/profile/widgets/profile_social_row.dart';
@@ -106,7 +106,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             SizedBox(height: _size.height * .02),
-                            ProfilePopularityBadge(),
+                            Obx(
+                              () => ProfilePopularityBadge(
+                                  _profileStore.popularity.value),
+                            ),
                             SizedBox(height: _size.height * .02),
                             ProfileBio(),
                             ProfileSocialRow(_navigationService)

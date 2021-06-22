@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/accounts_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/account_model.dart';
+import 'package:party_mobile/app/shared/widgets/profile_popularity_badge.dart';
 import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/widgets/profile_avatar.dart';
@@ -115,7 +116,7 @@ class _AccountPageState extends State<AccountPage> {
                               ),
                             ),
                             SizedBox(height: _size.height * .02),
-                            // ProfilePopularityBadge(),
+                            ProfilePopularityBadge(_accountModel?.popularity),
                             SizedBox(height: _size.height * .02),
                             // ProfileBio(),
                             // ProfileSocialRow(_navigationService)
