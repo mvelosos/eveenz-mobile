@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:party_mobile/app/controllers/categories_controller.dart';
 import 'package:party_mobile/app/controllers/events_controller.dart';
 import 'package:party_mobile/app/controllers/login_controller.dart';
+import 'package:party_mobile/app/controllers/notifications_controller.dart';
 import 'package:party_mobile/app/controllers/profile_controller.dart';
 import 'package:party_mobile/app/controllers/passwords_controller.dart';
 import 'package:party_mobile/app/controllers/request_categories_controller.dart';
@@ -24,6 +25,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => CategoriesController());
   locator.registerLazySingleton(() => EventsController());
   locator.registerLazySingleton(() => LoginController());
+  locator.registerLazySingleton(() => NotificationsController());
   locator.registerLazySingleton(() => PasswordsController());
   locator.registerLazySingleton(() => ProfileController());
   locator.registerLazySingleton(() => RequestCategoriesController());
