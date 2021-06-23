@@ -20,7 +20,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final ProfileController _meController = locator<ProfileController>();
+  final ProfileController _profileController = locator<ProfileController>();
   final ProfileStore _profileStore = locator<ProfileStore>();
 
   @override
@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
               color: AppColors.orange,
               displacement: 0,
               onRefresh: () async {
-                await _meController.getProfile();
+                await _profileController.getProfile();
               },
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
