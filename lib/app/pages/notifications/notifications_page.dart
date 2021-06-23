@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
+import 'package:party_mobile/app/stores/notifications_store.dart';
+import 'package:party_mobile/app/websocket.dart';
 
 class NotificationsPage extends StatefulWidget {
   @override
@@ -8,6 +11,42 @@ class NotificationsPage extends StatefulWidget {
 }
 
 class _NotificationsPageState extends State<NotificationsPage> {
+  final NotificationsStore _notificationsStore = locator<NotificationsStore>();
+
+  @override
+  void initState() {
+    super.initState();
+    Websocket.initConnection();
+  }
+
+  _subscribeChannel() {
+    var cable = Websocket.instance;
+
+    cable.subscribe(
+      "Notification", // either "Chat" and "ChatChannel" is fine
+      channelParams: {'room': 'private'},
+      onSubscribed: () {
+        print('deu bom');
+      }, // `confirm_subscription` received
+      onDisconnected: () {
+        print('disconected');
+      }, // `disconnect` received
+      onMessage: (Map message) {
+        print(message);
+        _notificationsStore.setShowNotificationBadge(true);
+      }, // any other message received
+    );
+  }
+
+  _unsubscribeChannel() {
+    // var cable = Websocket.instance;
+    // cable.unsubscribe(
+    //   "Notification", // either "Chat" and "ChatChannel" is fine
+    //   channelParams: {"room": "private"},
+    // );
+    _notificationsStore.setShowNotificationBadge(false);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -39,7 +78,16 @@ class _NotificationsPageState extends State<NotificationsPage> {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [],
+          children: [
+            TextButton(
+              onPressed: _subscribeChannel,
+              child: Text('Conectar Channel'),
+            ),
+            TextButton(
+              onPressed: _unsubscribeChannel,
+              child: Text('Desconectar Channel'),
+            )
+          ],
         ),
       ),
     );
