@@ -9,7 +9,7 @@ class DioHttp {
   LocalStorageService _localStorageService = locator<LocalStorageService>();
 
   DioHttp() {
-    _dio.options.baseUrl = Urls().apiUrl;
+    _dio.options.baseUrl = Urls.apiUrl;
     _dio.interceptors
         .add(InterceptorsWrapper(onError: _onError, onResponse: _onResponse));
   }
