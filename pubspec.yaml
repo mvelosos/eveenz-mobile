@@ -47,6 +47,7 @@ dependencies:
   # chips_choice: ^2.0.1 # no null safety
   image_picker: ^0.8.0+3
   image_cropper: ^1.4.0
+  action_cable: ^1.2.0
 
 dev_dependencies:
   flutter_test:
