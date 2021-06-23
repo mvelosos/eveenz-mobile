@@ -8,6 +8,7 @@ import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/shared/constants/storage.dart';
 import 'package:party_mobile/app/stores/auth_user_store.dart';
+import 'package:party_mobile/app/websocket.dart';
 
 class SignOutListTile extends StatelessWidget {
   final AuthUserStore _authUserStore = locator<AuthUserStore>();
@@ -33,6 +34,7 @@ class SignOutListTile extends StatelessWidget {
         _storage.delete(Storage.username),
         _authUserStore.clear(),
         OneSignal.shared.removeExternalUserId(),
+        Websocket.finishConection(),
         Navigator.of(context)
             .pushNamedAndRemoveUntil(RouteNames.root, (_) => false)
       },
