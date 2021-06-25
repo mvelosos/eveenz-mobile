@@ -15,7 +15,7 @@ class FollowButton extends StatefulWidget {
 }
 
 class _FollowButtonState extends State<FollowButton> {
-  ProfileController _meController = locator<ProfileController>();
+  ProfileController _profileController = locator<ProfileController>();
   bool _loading = false;
 
   void _setLoading(bool value) {
@@ -26,14 +26,14 @@ class _FollowButtonState extends State<FollowButton> {
 
   void followAccount() async {
     _setLoading(true);
-    await _meController.followAccount(widget._accountModel.uuid);
+    await _profileController.followAccount(widget._accountModel.uuid);
     await widget._getAccount();
     _setLoading(false);
   }
 
   void unfollowAccount() async {
     _setLoading(true);
-    await _meController.unfollowAccount(widget._accountModel.uuid);
+    await _profileController.unfollowAccount(widget._accountModel.uuid);
     await widget._getAccount();
     _setLoading(false);
   }

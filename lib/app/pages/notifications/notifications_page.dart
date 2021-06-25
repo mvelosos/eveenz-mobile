@@ -114,13 +114,21 @@ class _NotificationsPageState extends State<NotificationsPage> {
                             if (_notificationsList?[index].notificationType ==
                                 'follow') {
                               return AccountFollowListTile(
-                                  _notificationsList![index]);
+                                _notificationsList![index],
+                                _getNotifications,
+                              );
                             }
                             return SizedBox.shrink();
                           },
                         )
-                      : Center(
-                          child: Text('Você não tem nenhuma notificação'),
+                      : ListView(
+                          children: [
+                            SizedBox(height: 10),
+                            Text(
+                              'Você não tem nenhuma notificação',
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
                 ),
                 // TextButton(

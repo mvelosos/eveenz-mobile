@@ -33,6 +33,7 @@ class NotificationModel {
 }
 
 class Follower {
+  String? uuid;
   String? name;
   String? username;
   String? avatarUrl;
@@ -40,6 +41,7 @@ class Follower {
   Follower({this.name, this.username});
 
   Follower.fromJson(Map<String, dynamic> json) {
+    uuid = json['uuid'];
     name = json['name'];
     username = json['username'];
     avatarUrl = json['avatarUrl'];
@@ -47,6 +49,7 @@ class Follower {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['uuid'] = this.uuid;
     data['name'] = this.name;
     data['username'] = this.username;
     data['avatarUrl'] = this.avatarUrl;
