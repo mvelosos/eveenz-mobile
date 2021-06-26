@@ -37,6 +37,7 @@ class RouteNames {
   static const String updateUsernameSettings =
       '/settings/profile/update_username';
   static const String updateBioSettings = '/settings/profile/update_bio';
+  static const String privacySettings = '/settings/privacy';
 
   // Events
   static const String newEvent = '/events/new';

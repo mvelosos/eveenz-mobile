@@ -14,6 +14,7 @@ import 'package:party_mobile/app/pages/notifications/notifications_page.dart';
 import 'package:party_mobile/app/pages/profile/profile_page.dart';
 import 'package:party_mobile/app/pages/root/root_page.dart';
 import 'package:party_mobile/app/pages/search/search_page.dart';
+import 'package:party_mobile/app/pages/settings/privacy_settings/privacy_settings_page.dart';
 import 'package:party_mobile/app/pages/settings/profile_settings/profile_settings_page.dart';
 import 'package:party_mobile/app/pages/settings/profile_settings/update_bio_page/update_bio_page.dart';
 import 'package:party_mobile/app/pages/settings/profile_settings/update_name_page/update_name_page.dart';
@@ -125,6 +126,9 @@ class RouterManager {
 
       case RouteNames.updateBioSettings:
         return MaterialPageRoute(builder: (_) => UpdateBioPage());
+
+      case RouteNames.privacySettings:
+        return MaterialPageRoute(builder: (_) => PrivacySettingsPage());
 
       // Events
       case RouteNames.newEvent:

@@ -53,8 +53,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 'Perfil',
                 FontAwesomeIcons.user,
                 FontAwesomeIcons.chevronRight,
-                _navigationService!,
                 RouteNames.profileSettings,
+              ),
+              SettingsListTile(
+                'Privacidade',
+                FontAwesomeIcons.lock,
+                FontAwesomeIcons.chevronRight,
+                RouteNames.privacySettings,
               ),
               // SettingsListTile(
               //   'Senha',
