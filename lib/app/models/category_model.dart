@@ -2,6 +2,7 @@ class CategoryModel {
   late int id;
   late String name;
   late String titleizedName;
+  bool selected = false;
 
   CategoryModel({
     required this.id,
