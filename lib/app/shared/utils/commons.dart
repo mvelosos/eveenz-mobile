@@ -23,7 +23,7 @@ class Commons {
     localStorage.put(Storage.username, authUser.username);
   }
 
-  static encodeBase64(File file) async {
+  static encodeBase64(File file) {
     List<int> imageBytes = file.readAsBytesSync();
     String base64 = base64Encode(imageBytes);
     return base64;
