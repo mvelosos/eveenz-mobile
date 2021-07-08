@@ -15,6 +15,8 @@ class RouteNames {
   static const String showAccount = '/accounts/:username';
   static const String accountFollows = '/accounts/follows';
 
+  static const String showEvent = '/events/:uuid';
+
   // Home
   static const String home = '/home';
 
