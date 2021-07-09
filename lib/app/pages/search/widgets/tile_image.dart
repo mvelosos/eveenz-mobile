@@ -16,11 +16,12 @@ class TileImage extends StatelessWidget {
               _url,
               height: 50,
               width: 50,
+              fit: BoxFit.cover,
             ),
           )
         : CircleAvatar(
             radius: 25,
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.grey,
           );
   }
 }
