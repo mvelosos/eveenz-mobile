@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/auth_user_model.dart';
 import 'package:party_mobile/app/services/local_storage_service.dart';
@@ -31,5 +32,15 @@ class Commons {
 
   static base64dataUri(String base64) {
     return 'data:image/png;base64,$base64';
+  }
+
+  static formatDate(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    return DateFormat('dd/MM/y').format(dateTime);
+  }
+
+  static formatTime(String time) {
+    DateTime dateTime = DateTime.parse(time);
+    return DateFormat('H:m').format(dateTime);
   }
 }

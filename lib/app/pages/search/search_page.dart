@@ -34,6 +34,13 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        toolbarOpacity: 1,
+        brightness: Brightness.light,
+        automaticallyImplyLeading: false,
+      ),
       body: LayoutBuilder(builder: (context, constraints) {
         return SafeArea(
           child: GestureDetector(

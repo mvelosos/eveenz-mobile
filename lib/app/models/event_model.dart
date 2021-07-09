@@ -2,7 +2,7 @@ class EventModel {
   String? uuid;
   String? name;
   String? description;
-  List<String>? images;
+  List<String?> images = [];
   String? distance;
   String? privacy;
   String? startDate;
@@ -21,7 +21,6 @@ class EventModel {
     this.uuid,
     this.name,
     this.description,
-    this.images,
     this.distance,
     this.privacy,
     this.startDate,
