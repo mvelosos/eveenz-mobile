@@ -1,6 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:party_mobile/app/pages/home/widgets/events_tab_view.dart';
 import 'package:party_mobile/app/pages/new_event/new_event_page.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 
@@ -84,7 +86,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: TabBarView(
           children: [
-            Icon(Icons.directions_car),
+            EventsTabView(),
             Icon(Icons.directions_transit),
           ],
         ),
