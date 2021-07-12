@@ -48,6 +48,7 @@ dependencies:
   image_cropper: ^1.4.0
   action_cable: ^1.2.0
   carousel_slider: ^4.0.0
+  shimmer: ^2.0.0
 
 
 dev_dependencies:
