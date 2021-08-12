@@ -40,7 +40,7 @@ class _EventsTabViewState extends State<EventsTabView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'EVENTOS EM ALTA',
+                            '#EM ALTA',
                             style: GoogleFonts.inter(
                               fontSize: 13,
                               color: AppColors.darkPurple,
