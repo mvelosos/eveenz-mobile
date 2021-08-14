@@ -74,7 +74,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
           title: Text(
             'Notificações',
             style: GoogleFonts.inter(
-              fontSize: size.height * .025,
+              fontSize: size.height * .026,
               color: AppColors.darkPurple,
               fontWeight: FontWeight.w800,
             ),
@@ -121,14 +121,24 @@ class _NotificationsPageState extends State<NotificationsPage> {
                             return SizedBox.shrink();
                           },
                         )
-                      : ListView(
-                          children: [
-                            SizedBox(height: 10),
-                            Text(
-                              'Você não tem nenhuma notificação',
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+                      : Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image(
+                                image: AssetImage(
+                                  'assets/images/no_notifications.png',
+                                ),
+                                height: constraints.maxHeight * .2,
+                              ),
+                              SizedBox(height: 25),
+                              Text(
+                                'Opa, parece que você não tem nenhuma notificação',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ],
+                          ),
                         ),
                 ),
                 // TextButton(
