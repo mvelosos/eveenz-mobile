@@ -24,7 +24,7 @@ class PrivacySettingsPage extends StatelessWidget {
           ListTile(
             title: Text('Conta privada'),
             subtitle: Text(
-                'Apenas usuários que você aprovar podem te seguir e ter acesso ao seu conteúdo'),
+                'Apenas usuários que você aprovar podem te seguir e visualizar seu conteúdo'),
             trailing: CupertinoSwitch(
               value: false,
               onChanged: (value) {},
