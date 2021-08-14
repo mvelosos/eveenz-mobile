@@ -11,6 +11,7 @@ class ProfileStore {
   RxInt following = 0.obs;
   RxInt followers = 0.obs;
   RxString avatarUrl = ''.obs;
+  RxMap accountSetting = {}.obs;
 
   void setMe(ProfileModel profileModel) {
     uuid.value = profileModel.account.uuid;
@@ -22,5 +23,6 @@ class ProfileStore {
     following.value = profileModel.account.following;
     followers.value = profileModel.account.followers;
     avatarUrl.value = profileModel.account.avatarUrl ?? '';
+    accountSetting.value = profileModel.account.accountSetting.toJson();
   }
 }

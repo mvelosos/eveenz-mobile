@@ -15,11 +15,16 @@ class MeProfileVM {
   String? city;
   String? state;
   String? country;
+  bool? private;
 
   Map<String, dynamic> getData() {
     Map<String, dynamic> account = {};
     if (username != null || email != null) {
       account.putIfAbsent('userAttributes', () => {});
+    }
+
+    if (private != null) {
+      account.putIfAbsent('accountSettingAttributes', () => {});
     }
 
     if (latitude != null || longitude != null) {
@@ -57,6 +62,8 @@ class MeProfileVM {
     if (city != null) account['addressAttributes']['city'] = city;
     if (state != null) account['addressAttributes']['state'] = state;
     if (country != null) account['addressAttributes']['country'] = country;
+    if (private != null)
+      account['accountSettingAttributes']['private'] = private;
 
     return {
       'account': account,

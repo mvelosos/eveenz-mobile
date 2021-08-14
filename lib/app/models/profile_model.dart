@@ -15,6 +15,7 @@ class ProfileModel {
 }
 
 class Account {
+  late AccountSetting accountSetting;
   late String uuid;
   late String username;
   late String name;
@@ -25,18 +26,21 @@ class Account {
   String? bio;
   String? avatarUrl;
 
-  Account(
-      {required this.uuid,
-      required this.username,
-      required this.name,
-      required this.popularity,
-      required this.events,
-      required this.following,
-      required this.followers,
-      this.bio,
-      this.avatarUrl});
+  Account({
+    required this.accountSetting,
+    required this.uuid,
+    required this.username,
+    required this.name,
+    required this.popularity,
+    required this.events,
+    required this.following,
+    required this.followers,
+    this.bio,
+    this.avatarUrl,
+  });
 
   Account.fromJson(Map<String, dynamic> json) {
+    accountSetting = AccountSetting.fromJson(json['accountSetting']);
     uuid = json['uuid'];
     username = json['username'];
     name = json['name'];
@@ -50,6 +54,7 @@ class Account {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['accountSetting'] = this.accountSetting;
     data['uuid'] = this.uuid;
     data['username'] = this.username;
     data['name'] = this.name;
@@ -59,6 +64,32 @@ class Account {
     data['following'] = this.following;
     data['followers'] = this.followers;
     data['avatarUrl'] = this.avatarUrl;
+    return data;
+  }
+}
+
+class AccountSetting {
+  late double distanceRadius;
+  late String unit;
+  late bool private;
+
+  AccountSetting({
+    required this.distanceRadius,
+    required this.unit,
+    required this.private,
+  });
+
+  AccountSetting.fromJson(Map<String, dynamic> json) {
+    distanceRadius = json['distanceRadius'];
+    unit = json['unit'];
+    private = json['private'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['distanceRadius'] = this.distanceRadius;
+    data['unit'] = this.unit;
+    data['private'] = this.private;
     return data;
   }
 }
