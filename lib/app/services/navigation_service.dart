@@ -53,6 +53,11 @@ class NavigationService {
     );
   }
 
+  Future<dynamic> pushNamedAndRemoveUntil(String routeName) {
+    return navigatorKey.currentState!
+        .pushNamedAndRemoveUntil(routeName, (route) => false);
+  }
+
   void goBack() {
     return navigatorKey.currentState!.pop();
   }

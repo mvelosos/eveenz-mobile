@@ -13,6 +13,7 @@ import 'package:party_mobile/app/controllers/users_controller.dart';
 import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
 import 'package:party_mobile/app/services/local_storage_service.dart';
 import 'package:party_mobile/app/shared/utils/dio_http.dart';
+import 'package:party_mobile/app/stores/app_store.dart';
 import 'package:party_mobile/app/stores/auth_user_store.dart';
 import 'package:party_mobile/app/stores/notifications_store.dart';
 import 'package:party_mobile/app/stores/profile_store.dart';
@@ -42,6 +43,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => ProfileNavigatorKey());
 
   //Stores
+  locator.registerLazySingleton(() => AppStore());
   locator.registerLazySingleton(() => AuthUserStore());
   locator.registerLazySingleton(() => NotificationsStore());
   locator.registerLazySingleton(() => ProfileStore());

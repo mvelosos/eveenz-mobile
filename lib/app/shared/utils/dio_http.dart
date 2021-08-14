@@ -1,12 +1,18 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/services/local_storage_service.dart';
+import 'package:party_mobile/app/services/sign_out_service.dart';
 import 'package:party_mobile/app/shared/constants/storage.dart';
 import 'package:party_mobile/app/shared/constants/urls.dart';
+import 'package:party_mobile/app/stores/app_store.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 
 class DioHttp {
   Dio _dio = Dio();
   LocalStorageService _localStorageService = locator<LocalStorageService>();
+  AppStore _appStore = locator<AppStore>();
 
   DioHttp() {
     _dio.options.baseUrl = Urls.apiUrl;
@@ -43,6 +49,12 @@ class DioHttp {
 
   _onError(DioError error, ErrorInterceptorHandler handler) {
     print('########## Response Error');
+    print(error.response?.statusCode);
+    print(_appStore.userAuthenticated.value);
+    if (error.response?.statusCode == 401 &&
+        _appStore.userAuthenticated.value == true) {
+      SignOutService.signOutUser();
+    }
     return handler.next(error);
   }
 }
