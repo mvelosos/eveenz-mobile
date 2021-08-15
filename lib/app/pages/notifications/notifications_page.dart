@@ -91,7 +91,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
         ),
         body: RefreshIndicator(
           color: AppColors.orange,
-          displacement: 0,
+          displacement: 15,
           onRefresh: () async {
             await _getNotifications();
           },
@@ -121,9 +121,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
                             return SizedBox.shrink();
                           },
                         )
-                      : Center(
+                      : SingleChildScrollView(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          padding: EdgeInsets.only(top: size.width / 2),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Image(
                                 image: AssetImage(

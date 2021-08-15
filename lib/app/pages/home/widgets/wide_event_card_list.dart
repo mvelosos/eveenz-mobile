@@ -27,7 +27,7 @@ class WideEventCardList extends StatelessWidget {
                   style: GoogleFonts.inter(
                     fontSize: 13,
                     color: AppColors.darkPurple,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 Text(
