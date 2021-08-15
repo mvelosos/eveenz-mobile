@@ -1,13 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:get/utils.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/services/local_storage_service.dart';
 import 'package:party_mobile/app/services/sign_out_service.dart';
 import 'package:party_mobile/app/shared/constants/storage.dart';
 import 'package:party_mobile/app/shared/constants/urls.dart';
 import 'package:party_mobile/app/stores/app_store.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 
 class DioHttp {
   Dio _dio = Dio();

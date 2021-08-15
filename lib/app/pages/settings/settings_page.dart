@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/pages/settings/widgets/settings_list_tile.dart';
 import 'package:party_mobile/app/pages/settings/widgets/sign_out_list_tile.dart';
-import 'package:party_mobile/app/services/navigation_service.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/shared/constants/route_names.dart';
 
@@ -13,12 +12,9 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  NavigationService? _navigationService;
-
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
-    _navigationService = NavigationService.currentNavigator(context);
 
     return Scaffold(
       backgroundColor: Colors.white,

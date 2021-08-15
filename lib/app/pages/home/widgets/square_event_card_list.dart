@@ -4,7 +4,7 @@ import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SquareEventCardList extends StatelessWidget {
-  String label;
+  final String label;
 
   SquareEventCardList({required this.label});
 

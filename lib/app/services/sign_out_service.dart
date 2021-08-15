@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/navigators/keys/navigator_keys.dart';
