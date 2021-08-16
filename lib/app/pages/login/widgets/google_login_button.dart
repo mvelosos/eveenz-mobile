@@ -23,6 +23,11 @@ class GoogleLoginButton extends StatelessWidget {
     _logOutCurrentSession();
     try {
       var result = await _googleSignIn.signIn();
+
+      if (result == null) {
+        _setLoading(false);
+      }
+
       result?.authentication.then(
         (value) => {
           _googleLogin.accessToken = value.accessToken!,
