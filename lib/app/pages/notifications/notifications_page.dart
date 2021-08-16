@@ -4,6 +4,7 @@ import 'package:party_mobile/app/controllers/notifications_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/notification_model.dart';
 import 'package:party_mobile/app/pages/notifications/widgets/account_follow_list_tile.dart';
+import 'package:party_mobile/app/pages/notifications/widgets/account_request_follow_list_tile.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/stores/notifications_store.dart';
 import 'package:party_mobile/app/websocket.dart';
@@ -114,6 +115,13 @@ class _NotificationsPageState extends State<NotificationsPage> {
                             if (_notificationsList?[index].notificationType ==
                                 'follow') {
                               return AccountFollowListTile(
+                                _notificationsList![index],
+                                _getNotifications,
+                              );
+                            }
+                            if (_notificationsList?[index].notificationType ==
+                                'request_follow') {
+                              return AccountRequestFollowListTile(
                                 _notificationsList![index],
                                 _getNotifications,
                               );
