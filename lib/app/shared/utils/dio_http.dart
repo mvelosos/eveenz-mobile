@@ -46,7 +46,6 @@ class DioHttp {
 
   _onError(DioError error, ErrorInterceptorHandler handler) {
     print('########## Response Error');
-    print(_appStore.userAuthenticated.value);
     if (error.response?.statusCode == 401 &&
         _appStore.userAuthenticated.value == true) {
       SignOutService.signOutUser();
