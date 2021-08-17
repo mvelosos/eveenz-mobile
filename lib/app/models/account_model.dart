@@ -7,6 +7,7 @@ class AccountModel {
   late int following;
   late int followers;
   late bool followedByMe;
+  Map? requestedByMe;
   String? bio;
   String? avatarUrl;
 
@@ -19,6 +20,7 @@ class AccountModel {
     required this.following,
     required this.followers,
     required this.followedByMe,
+    this.requestedByMe,
     this.bio,
     this.avatarUrl,
   });
@@ -34,6 +36,9 @@ class AccountModel {
     followers = json['followers'];
     avatarUrl = json['avatarUrl'];
     followedByMe = json['followedByMe'];
+    if (json['requestedByMe'] != null) {
+      requestedByMe = json['requestedByMe'];
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -48,6 +53,9 @@ class AccountModel {
     data['followers'] = this.followers;
     data['avatarUrl'] = this.avatarUrl;
     data['followedByMe'] = this.followedByMe;
+    if (data['requestedByMe'] != null) {
+      data['requestedByMe'] = this.requestedByMe;
+    }
     return data;
   }
 }

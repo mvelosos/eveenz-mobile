@@ -34,4 +34,15 @@ class ProfileController {
     var result = await _profileRepository.unfollowAccount(uuid);
     return result;
   }
+
+  Future<Either<Failure, Object>> updateRequestFollows(
+      String uuid, bool accepted) async {
+    var result = await _profileRepository.updateRequestFollows(uuid, accepted);
+    return result;
+  }
+
+  Future<Either<Failure, Object>> deleteRequestFollows(String uuid) async {
+    var result = await _profileRepository.deleteRequestFollows(uuid);
+    return result;
+  }
 }

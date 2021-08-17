@@ -19,6 +19,9 @@ class Endpoints {
   // Profile Endpoints
   static const String profile = '/profile';
 
+  // Request Follows
+  static const String requestFollows = '/profile/request_follows';
+
   // Search Endpoints
   static const String search = '/search';
 

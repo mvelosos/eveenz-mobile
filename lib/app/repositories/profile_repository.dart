@@ -56,4 +56,31 @@ class ProfileRepository implements IProfileRepository {
       return Left(RequestError(message: e.response?.data['errors']));
     }
   }
+
+  @override
+  Future<Either<Failure, Object>> updateRequestFollows(
+      String uuid, bool accepted) async {
+    try {
+      var data = {
+        'requestFollow': {'accepted': accepted}
+      };
+      var result = await _dio
+          .withAuth()
+          .put("${Endpoints.requestFollows}/$uuid", data: data);
+      return Right(result);
+    } on DioError catch (e) {
+      return Left(RequestError(message: e.response?.data['errors']));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Object>> deleteRequestFollows(String uuid) async {
+    try {
+      var result =
+          await _dio.withAuth().delete("${Endpoints.requestFollows}/$uuid");
+      return Right(result);
+    } on DioError catch (e) {
+      return Left(RequestError(message: e.response?.data['errors']));
+    }
+  }
 }

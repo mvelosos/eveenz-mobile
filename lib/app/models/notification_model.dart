@@ -1,5 +1,6 @@
 class NotificationModel {
   String? notificationType;
+  String? requestFollowUuid;
   Follower? follower;
   RequestedBy? requestedBy;
   String? createdAt;
@@ -7,6 +8,7 @@ class NotificationModel {
 
   NotificationModel({
     this.notificationType,
+    this.requestFollowUuid,
     this.follower,
     this.createdAt,
     this.followedByMe,
@@ -14,6 +16,9 @@ class NotificationModel {
 
   NotificationModel.fromJson(Map<String, dynamic> json) {
     notificationType = json['notificationType'];
+    if (json['requestFollowUuid'] != null) {
+      requestFollowUuid = json['requestFollowUuid'];
+    }
     follower = json['follower'] != null
         ? new Follower.fromJson(json['follower'])
         : null;
@@ -27,6 +32,9 @@ class NotificationModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['notificationType'] = this.notificationType;
+    if (this.requestFollowUuid != null) {
+      data['requestFollowUuid'] = this.requestFollowUuid;
+    }
     if (this.follower != null) {
       data['follower'] = this.follower!.toJson();
     }

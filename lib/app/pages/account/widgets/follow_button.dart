@@ -38,53 +38,86 @@ class _FollowButtonState extends State<FollowButton> {
     _setLoading(false);
   }
 
+  void deleteFollowRequest() async {
+    _setLoading(true);
+    await _profileController.deleteRequestFollows(
+        widget._accountModel.requestedByMe?['requestFollowUuid']);
+    await widget._getAccount();
+    _setLoading(false);
+  }
+
+  Widget _followButtons() {
+    if (widget._accountModel.requestedByMe?['isRequestedByMe'] == true) {
+      return ElevatedButton(
+        onPressed: _loading ? null : deleteFollowRequest,
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+        ),
+        child: _loading
+            ? SizedBox(
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+                height: 13,
+                width: 13,
+              )
+            : Text(
+                'Cancelar solicitação',
+                style: TextStyle(color: Colors.white),
+              ),
+      );
+    }
+
+    return widget._accountModel.followedByMe
+        ? ElevatedButton(
+            onPressed: _loading ? null : unfollowAccount,
+            style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Colors.redAccent),
+            ),
+            child: _loading
+                ? SizedBox(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                    height: 13,
+                    width: 13,
+                  )
+                : Text(
+                    'Parar de seguir',
+                    style: TextStyle(color: Colors.white),
+                  ),
+          )
+        : ElevatedButton(
+            onPressed: _loading ? null : followAccount,
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+            ),
+            // disabledColor: Colors.grey[350],
+            child: _loading
+                ? SizedBox(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                    height: 13,
+                    width: 13,
+                  )
+                : Text(
+                    'Seguir',
+                    style: TextStyle(color: Colors.white),
+                  ),
+          );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
-        top: widget._constraints.maxHeight * .025,
-      ),
-      child: widget._accountModel.followedByMe
-          ? ElevatedButton(
-              onPressed: _loading ? null : unfollowAccount,
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.redAccent),
-              ),
-              child: _loading
-                  ? SizedBox(
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      ),
-                      height: 13,
-                      width: 13,
-                    )
-                  : Text(
-                      'Parar de seguir',
-                      style: TextStyle(color: Colors.white),
-                    ),
-            )
-          : ElevatedButton(
-              onPressed: _loading ? null : followAccount,
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              ),
-              // disabledColor: Colors.grey[350],
-              child: _loading
-                  ? SizedBox(
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      ),
-                      height: 13,
-                      width: 13,
-                    )
-                  : Text(
-                      'Seguir',
-                      style: TextStyle(color: Colors.white),
-                    ),
-            ),
-    );
+        margin: EdgeInsets.only(
+          top: widget._constraints.maxHeight * .025,
+        ),
+        child: _followButtons());
   }
 }

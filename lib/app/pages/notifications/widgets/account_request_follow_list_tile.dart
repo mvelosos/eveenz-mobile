@@ -38,18 +38,10 @@ class _AccountRequestFollowListTileState
     });
   }
 
-  void _followAccount() async {
+  void _updateRequestFollow(bool accepted) async {
     _setLoading(true);
-    await _profileController
-        .followAccount(widget.notificationModel.requestedBy!.uuid!);
-    await widget.getNotifications();
-    _setLoading(false);
-  }
-
-  void _unfollowAccount() async {
-    _setLoading(true);
-    await _profileController
-        .unfollowAccount(widget.notificationModel.requestedBy!.uuid!);
+    await _profileController.updateRequestFollows(
+        widget.notificationModel.requestFollowUuid!, accepted);
     await widget.getNotifications();
     _setLoading(false);
   }
@@ -128,7 +120,7 @@ class _AccountRequestFollowListTileState
         ),
       ),
       subtitle: Text(
-        'solicitou seguir você',
+        'deseja seguir você',
         style: TextStyle(fontSize: 13),
       ),
       trailing: Wrap(
@@ -137,7 +129,7 @@ class _AccountRequestFollowListTileState
             width: 78,
             height: 30,
             child: ElevatedButton(
-              onPressed: () => _loading ? null : _followAccount(),
+              onPressed: () => _loading ? null : _updateRequestFollow(true),
               child: Text(
                 'Aprovar',
                 overflow: TextOverflow.ellipsis,
@@ -155,7 +147,7 @@ class _AccountRequestFollowListTileState
             width: 77,
             height: 30,
             child: ElevatedButton(
-              onPressed: () => _loading ? null : _followAccount(),
+              onPressed: () => _loading ? null : _updateRequestFollow(false),
               child: Text(
                 'Rejeitar',
                 overflow: TextOverflow.ellipsis,

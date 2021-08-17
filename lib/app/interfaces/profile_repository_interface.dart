@@ -12,4 +12,9 @@ abstract class IProfileRepository {
   Future<Either<Failure, Object>> followAccount(String uuid);
 
   Future<Either<Failure, Object>> unfollowAccount(String uuid);
+
+  Future<Either<Failure, Object>> updateRequestFollows(
+      String uuid, bool accepted);
+
+  Future<Either<Failure, Object>> deleteRequestFollows(String accountUuid);
 }
