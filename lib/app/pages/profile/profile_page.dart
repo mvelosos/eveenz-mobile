@@ -23,6 +23,39 @@ class _ProfilePageState extends State<ProfilePage> {
   final ProfileController _profileController = locator<ProfileController>();
   final ProfileStore _profileStore = locator<ProfileStore>();
 
+  Widget appBarUsernameTitle() {
+    if (_profileStore.accountSetting['private'] != null &&
+        _profileStore.accountSetting['private']) {
+      return Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          Text(
+            _profileStore.username.value + ' ',
+            style: GoogleFonts.poppins(
+              color: AppColors.darkPurple,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Icon(
+            Icons.lock,
+            color: Colors.black,
+            size: 17,
+          )
+        ],
+      );
+    }
+
+    return Text(
+      _profileStore.username.value,
+      style: GoogleFonts.poppins(
+        color: AppColors.darkPurple,
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -34,16 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              title: Obx(
-                () => Text(
-                  _profileStore.username.value,
-                  style: GoogleFonts.poppins(
-                    color: AppColors.darkPurple,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
+              title: Obx(() => appBarUsernameTitle()),
               centerTitle: true,
               backgroundColor: Colors.white,
               shadowColor: Colors.transparent,
@@ -85,7 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         child: Column(
                           children: [
-                            SizedBox(height: _size.height * .03),
+                            SizedBox(height: _size.height * .015),
                             Obx(
                               () =>
                                   ProfileAvatar(_profileStore.avatarUrl.value),
@@ -105,7 +129,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             SizedBox(height: _size.height * .02),
                             Obx(
                               () => ProfilePopularityBadge(
-                                  _profileStore.popularity.value),
+                                _profileStore.popularity.value,
+                              ),
                             ),
                             SizedBox(height: _size.height * .02),
                             Obx(

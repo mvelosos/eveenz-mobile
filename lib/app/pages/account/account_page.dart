@@ -5,6 +5,7 @@ import 'package:party_mobile/app/controllers/accounts_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/account_model.dart';
 import 'package:party_mobile/app/pages/account/widgets/follow_button.dart';
+import 'package:party_mobile/app/pages/profile/widgets/profile_tab_view.dart';
 import 'package:party_mobile/app/shared/widgets/profile_bio.dart';
 import 'package:party_mobile/app/shared/widgets/profile_popularity_badge.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
@@ -107,7 +108,7 @@ class _AccountPageState extends State<AccountPage> {
                         ),
                         child: Column(
                           children: [
-                            SizedBox(height: _size.height * .03),
+                            SizedBox(height: _size.height * .015),
                             ProfileAvatar(_accountModel?.avatarUrl),
                             SizedBox(height: _size.height * .03),
                             AutoSizeText(
@@ -143,7 +144,7 @@ class _AccountPageState extends State<AccountPage> {
                         ),
                       ),
                       SizedBox(height: _size.height * .03),
-                      // ProfileTabView()
+                      ProfileTabView()
                     ],
                   ),
                 ),
