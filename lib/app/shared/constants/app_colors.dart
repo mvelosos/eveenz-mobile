@@ -7,6 +7,7 @@ class AppColors {
   static Color green = Color(0xFF68D273);
   static Color gray1 = Color(0xFF171717).withOpacity(.7);
   static Color gray3 = Color(0xFF8F92A1);
+  static Color gray4 = Color(0xFFACB1BF);
   static Color grayLight = Color(0xFF8F92A1).withOpacity(.2);
   static Color red = Color(0xFFEC4825);
   static Color yellowGold = Color(0xFFF3CD49);

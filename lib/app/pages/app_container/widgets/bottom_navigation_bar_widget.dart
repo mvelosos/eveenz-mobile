@@ -71,7 +71,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
       _bottomNavigationBarItem(
         'Map',
         FaIcon(
-          FontAwesomeIcons.map,
+          FontAwesomeIcons.globeAmericas,
           size: 20,
         ),
       ),

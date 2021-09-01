@@ -6,6 +6,7 @@ import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/account_model.dart';
 import 'package:party_mobile/app/pages/account/widgets/follow_button.dart';
 import 'package:party_mobile/app/pages/profile/widgets/profile_tab_view.dart';
+import 'package:party_mobile/app/shared/widgets/account_private_tab_view.dart';
 import 'package:party_mobile/app/shared/widgets/profile_bio.dart';
 import 'package:party_mobile/app/shared/widgets/profile_popularity_badge.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
@@ -62,6 +63,22 @@ class _AccountPageState extends State<AccountPage> {
     }
   }
 
+  Widget _accountProfileTabView() {
+    if (_accountModel != null) {
+      if (_accountModel!.privateAccount) {
+        if (_accountModel!.followedByMe) {
+          return ProfileTabView();
+        } else {
+          return AccountPrivateTabView();
+        }
+      } else {
+        return ProfileTabView();
+      }
+    }
+
+    return SizedBox.shrink();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -97,7 +114,7 @@ class _AccountPageState extends State<AccountPage> {
                 scrollDirection: Axis.vertical,
                 child: Container(
                   color: Colors.white,
-                  height: constraints.maxHeight,
+                  height: constraints.maxHeight - 100,
                   width: constraints.maxWidth,
                   child: Column(
                     children: [
@@ -143,8 +160,8 @@ class _AccountPageState extends State<AccountPage> {
                           ],
                         ),
                       ),
-                      SizedBox(height: _size.height * .03),
-                      ProfileTabView()
+                      SizedBox(height: _size.height * .025),
+                      _accountProfileTabView(),
                     ],
                   ),
                 ),
