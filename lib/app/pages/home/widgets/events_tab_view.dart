@@ -17,10 +17,7 @@ class _EventsTabViewState extends State<EventsTabView> {
     return RefreshIndicator(
       onRefresh: () async {},
       child: Container(
-        padding: EdgeInsets.only(
-          left: _size.width * .06,
-          right: _size.width * .06,
-        ),
+        padding: EdgeInsets.only(left: 10, right: 10),
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           scrollDirection: Axis.vertical,

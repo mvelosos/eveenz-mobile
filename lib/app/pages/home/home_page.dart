@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
             fit: BoxFit.cover,
             height: 27,
           ),
-          titleSpacing: 25,
+          titleSpacing: 15,
           centerTitle: false,
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(50),
             child: Container(
-              margin: EdgeInsets.only(left: 10, right: 10),
+              // margin: EdgeInsets.only(left: 10, right: 10),
               color: Colors.white,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,17 +64,20 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  Container(
-                    child: MaterialButton(
-                      padding: EdgeInsets.all(0),
-                      minWidth: 0,
-                      onPressed: () {
-                        Get.to(() => NewEventPage());
-                      },
-                      child: Icon(
-                        Icons.add_circle,
-                        size: 35,
-                        color: AppColors.purple,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Container(
+                      child: MaterialButton(
+                        padding: EdgeInsets.only(),
+                        minWidth: 0,
+                        onPressed: () {
+                          Get.to(() => NewEventPage());
+                        },
+                        child: Icon(
+                          Icons.add_circle,
+                          size: 35,
+                          color: AppColors.purple,
+                        ),
                       ),
                     ),
                   )
