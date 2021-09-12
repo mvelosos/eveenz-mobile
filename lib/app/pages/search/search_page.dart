@@ -15,11 +15,11 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  var _searchController = locator<SearchController>();
-  var _searchInputController = TextEditingController();
-  var _search = SearchVM();
-  var _resultSearch = SearchResultModel();
-  var _focusNode = FocusNode();
+  SearchController _searchController = locator<SearchController>();
+  TextEditingController _searchInputController = TextEditingController();
+  SearchVM _search = SearchVM();
+  SearchResultModel _resultSearch = SearchResultModel();
+  FocusNode _focusNode = FocusNode();
 
   List _categoryItems = [
     {'name': 'Sertanejo', 'color': Color(0xFF440AE9)},
@@ -32,17 +32,23 @@ class _SearchPageState extends State<SearchPage> {
     {'name': 'Balada', 'color': Color(0xFF9BF7F2)},
   ];
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   // Functions
 
   void _requestSearch() async {
     var result = await _searchController.search(_search);
     result.fold(
-        (l) => null,
-        (r) => {
-              setState(() {
-                _resultSearch = r;
-              })
-            });
+      (l) => null,
+      (r) => {
+        setState(() {
+          _resultSearch = r;
+        })
+      },
+    );
   }
 
   @override
@@ -66,14 +72,9 @@ class _SearchPageState extends State<SearchPage> {
         brightness: Brightness.light,
         automaticallyImplyLeading: false,
       ),
-      body: LayoutBuilder(builder: (context, constraints) {
-        return SafeArea(
-          child: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-              _resultSearch.listData = [];
-              _searchInputController.clear();
-            },
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
             child: Container(
               color: Colors.transparent,
               padding: EdgeInsets.only(left: 10, right: 10),
@@ -82,100 +83,108 @@ class _SearchPageState extends State<SearchPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    // margin: EdgeInsets.only(top: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: Container(
-                            child: TextField(
-                              controller: _searchInputController,
-                              textInputAction: TextInputAction.search,
-                              focusNode: _focusNode,
-                              onChanged: (value) {
-                                _search.query = value;
-                                _requestSearch();
-                              },
-                              autocorrect: false,
-                              enableSuggestions: false,
-                              cursorColor: AppColors.gray3,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: AppColors.grayLight,
-                                contentPadding: EdgeInsets.only(
-                                  bottom: 10,
-                                  top: 10,
-                                  left: 10,
-                                ),
-                                labelText: 'Buscar por eventos ou pessoas',
-                                suffixIcon:
-                                    _searchInputController.text.length > 0 ||
-                                            _focusNode.hasFocus
-                                        ? IconButton(
-                                            onPressed: () => {
-                                              _searchInputController.clear(),
-                                              _focusNode.unfocus()
-                                            },
-                                            icon: FaIcon(
-                                              FontAwesomeIcons.solidTimesCircle,
-                                              color: AppColors.gray3,
-                                              size: 18,
-                                            ),
-                                          )
-                                        : Icon(null),
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.never,
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Row(
+                          children: [
+                            AnimatedContainer(
+                              width: _focusNode.hasFocus
+                                  ? size.width - 100
+                                  : constraints.maxWidth,
+                              duration: Duration(milliseconds: 220),
+                              child: TextField(
+                                controller: _searchInputController,
+                                textInputAction: TextInputAction.search,
+                                focusNode: _focusNode,
+                                onChanged: (value) {
+                                  _search.query = value;
+                                  _requestSearch();
+                                },
+                                autocorrect: false,
+                                enableSuggestions: false,
+                                cursorColor: AppColors.gray3,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: AppColors.grayLight,
+                                  contentPadding: EdgeInsets.only(
+                                    bottom: 10,
+                                    top: 10,
+                                    left: 10,
                                   ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
+                                  labelText: 'Eventos ou pessoas',
+                                  suffixIcon: Visibility(
+                                    visible:
+                                        _searchInputController.text.length > 0
+                                            ? true
+                                            : false,
+                                    child: IconButton(
+                                      onPressed: () => {
+                                        _searchInputController.clear(),
+                                        setState(() {
+                                          _resultSearch.listData = [];
+                                        })
+                                      },
+                                      icon: FaIcon(
+                                        FontAwesomeIcons.solidTimesCircle,
+                                        color: AppColors.gray3,
+                                        size: 18,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
                                   ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 15),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.orange,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
+                            Visibility(
+                              visible: _focusNode.hasFocus,
+                              child: Expanded(
+                                child: TextButton(
+                                  onPressed: () => {
+                                    _focusNode.unfocus(),
+                                    _searchInputController.text = '',
+                                    setState(() {
+                                      _resultSearch.listData = [];
+                                    })
+                                  },
+                                  child: Text(
+                                    'Cancelar',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(color: AppColors.orange),
+                                  ),
+                                ),
                               ),
                             ),
-                            child: IconButton(
-                              onPressed: () => {},
-                              icon: FaIcon(
-                                FontAwesomeIcons.slidersH,
-                                color: Colors.white,
-                                // size: 20,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
+                          ],
+                        );
+                      },
                     ),
                   ),
                   _focusNode.hasFocus
                       ? Expanded(
                           child: Container(
+                            height: double.infinity,
                             margin: EdgeInsets.only(top: 10),
-                            child: _resultSearch.listData!.isNotEmpty
+                            child: _resultSearch.listData != null &&
+                                    _resultSearch.listData!.isNotEmpty
                                 ? SearchListView(_resultSearch)
-                                : Container(
-                                    height: double.infinity,
-                                    color: Colors.blue),
+                                : Container(color: Colors.blue),
                           ),
                         )
                       : Column(
@@ -234,9 +243,9 @@ class _SearchPageState extends State<SearchPage> {
                 ],
               ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }
