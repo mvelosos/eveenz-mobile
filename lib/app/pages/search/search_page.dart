@@ -112,6 +112,10 @@ class _SearchPageState extends State<SearchPage> {
                                     left: 10,
                                   ),
                                   labelText: 'Eventos ou pessoas',
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                    color: AppColors.gray3,
+                                  ),
                                   suffixIcon: Visibility(
                                     visible:
                                         _searchInputController.text.length > 0
