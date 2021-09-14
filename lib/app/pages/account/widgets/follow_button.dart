@@ -4,11 +4,10 @@ import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/account_model.dart';
 
 class FollowButton extends StatefulWidget {
-  final BoxConstraints _constraints;
   final AccountModel _accountModel;
   final Function _getAccount;
 
-  FollowButton(this._constraints, this._accountModel, this._getAccount);
+  FollowButton(this._accountModel, this._getAccount);
 
   @override
   _FollowButtonState createState() => _FollowButtonState();
@@ -115,9 +114,8 @@ class _FollowButtonState extends State<FollowButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(
-          top: widget._constraints.maxHeight * .025,
-        ),
-        child: _followButtons());
+      margin: EdgeInsets.only(top: 15),
+      child: _followButtons(),
+    );
   }
 }
