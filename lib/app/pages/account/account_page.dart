@@ -83,78 +83,93 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
 
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text(
-            _loading ? '' : _accountModel!.username,
-            style: GoogleFonts.poppins(
-              color: AppColors.darkPurple,
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              title: Text(
+                _loading ? '' : _accountModel!.username,
+                style: GoogleFonts.poppins(
+                  color: AppColors.darkPurple,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              brightness: Brightness.light,
+              iconTheme: IconThemeData(color: AppColors.orange),
             ),
-          ),
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          brightness: Brightness.light,
-          iconTheme: IconThemeData(color: AppColors.orange),
-        ),
-        body: RefreshIndicator(
-          color: AppColors.orange,
-          displacement: 0,
-          onRefresh: () async {
-            await _getAccount();
-          },
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Container(
-              color: Colors.white,
-              height: _size.height - 190,
-              width: _size.width,
-              child: Column(
-                children: [
-                  SizedBox(height: _size.height * .015),
-                  ProfileAvatar(_accountModel?.avatarUrl),
-                  SizedBox(height: _size.height * .03),
-                  AutoSizeText(
-                    _accountModel == null ? '' : _accountModel!.name,
-                    minFontSize: 17,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22,
-                    ),
-                  ),
-                  SizedBox(height: _size.height * .02),
-                  ProfilePopularityBadge(_accountModel?.popularity),
-                  SizedBox(height: _size.height * .02),
-                  ProfileBio(_accountModel?.bio),
-                  ProfileSocialRow(
-                    context: context,
-                    username: _accountModel?.username ?? '',
-                    eventsCount: _accountModel?.events ?? 0,
-                    followersCount: _accountModel?.followers ?? 0,
-                    followingCount: _accountModel?.following ?? 0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+            body: RefreshIndicator(
+              color: AppColors.orange,
+              displacement: 0,
+              onRefresh: () async {
+                await _getAccount();
+              },
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                child: Container(
+                  color: Colors.white,
+                  height: constraints.maxHeight - 100,
+                  width: constraints.maxWidth,
+                  child: Column(
                     children: [
-                      _showFollowButton
-                          ? FollowButton(_accountModel!, _getAccount)
-                          : SizedBox.shrink(),
+                      Container(
+                        padding: EdgeInsets.only(
+                          left: _size.width * .06,
+                          right: _size.width * .06,
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(height: _size.height * .015),
+                            ProfileAvatar(_accountModel?.avatarUrl),
+                            SizedBox(height: _size.height * .03),
+                            AutoSizeText(
+                              _accountModel == null ? '' : _accountModel!.name,
+                              minFontSize: 17,
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.inter(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            ),
+                            SizedBox(height: _size.height * .02),
+                            ProfilePopularityBadge(_accountModel?.popularity),
+                            SizedBox(height: _size.height * .02),
+                            ProfileBio(_accountModel?.bio),
+                            ProfileSocialRow(
+                              context: context,
+                              username: _accountModel?.username ?? '',
+                              eventsCount: _accountModel?.events ?? 0,
+                              followersCount: _accountModel?.followers ?? 0,
+                              followingCount: _accountModel?.following ?? 0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _showFollowButton
+                                    ? FollowButton(constraints, _accountModel!,
+                                        _getAccount)
+                                    : SizedBox.shrink(),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: _size.height * .025),
+                      _accountProfileTabView(),
                     ],
                   ),
-                  SizedBox(height: _size.height * .025),
-                  _accountProfileTabView(),
-                ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
