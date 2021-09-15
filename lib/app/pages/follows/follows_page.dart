@@ -3,6 +3,7 @@ import 'package:party_mobile/app/controllers/accounts_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/account_model.dart';
 import 'package:party_mobile/app/pages/follows/widgets/follows_tab_view.dart';
+import 'package:party_mobile/app/shared/constants/app_colors.dart';
 
 // Page Arguments
 class FollowsPageArguments {
@@ -64,52 +65,59 @@ class _FollowsPageState extends State<FollowsPage> {
       initialIndex: widget.args.initialIndex ?? 0,
       length: 2,
       child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              widget.args.username,
-              style: TextStyle(
-                color: Colors.blue,
-                fontSize: 17,
-              ),
+        appBar: AppBar(
+          title: Text(
+            widget.args.username,
+            style: TextStyle(
+              color: AppColors.darkPurple,
+              fontSize: 17,
             ),
-            bottom: TabBar(
-              tabs: [
-                Tab(
-                    icon: Text(
+          ),
+          bottom: TabBar(
+            indicatorColor: AppColors.darkPurple,
+            onTap: (idx) {
+              FocusScope.of(context).unfocus();
+            },
+            tabs: [
+              Tab(
+                icon: Text(
                   _followersList != null
                       ? "${_followersList?.length}  Seguidores"
                       : 'Seguidores',
                   style: TextStyle(color: Colors.black),
-                )),
-                Tab(
-                    icon: Text(
+                ),
+              ),
+              Tab(
+                icon: Text(
                   _followingList != null
                       ? "${_followingList?.length}  Seguindo"
                       : 'Seguindo',
                   style: TextStyle(color: Colors.black),
-                )),
-              ],
-            ),
-            backgroundColor: Colors.transparent,
-            shadowColor: Colors.transparent,
-            brightness: Brightness.light,
-            iconTheme: IconThemeData(color: Colors.blue),
+                ),
+              ),
+            ],
           ),
-          body: LayoutBuilder(
-            builder: (context, constraints) {
-              return _loading
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : FollowsTabView(
-                      constraints: constraints,
-                      followersList: _followersList ?? [],
-                      followingList: _followingList ?? [],
-                      getFollowers: _getFollowers,
-                      getFollowing: _getFollowing,
-                    );
-            },
-          )),
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          brightness: Brightness.light,
+          iconTheme: IconThemeData(color: AppColors.orange),
+        ),
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            return _loading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : FollowsTabView(
+                    constraints: constraints,
+                    followersList: _followersList ?? [],
+                    followingList: _followingList ?? [],
+                    getFollowers: _getFollowers,
+                    getFollowing: _getFollowing,
+                  );
+          },
+        ),
+      ),
     );
   }
 }
