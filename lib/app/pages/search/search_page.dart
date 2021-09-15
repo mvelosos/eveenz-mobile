@@ -97,7 +97,10 @@ class _SearchPageState extends State<SearchPage> {
                                 textInputAction: TextInputAction.search,
                                 focusNode: _focusNode,
                                 onChanged: (value) {
-                                  _search.query = value;
+                                  setState(() {
+                                    _search.query = value;
+                                  });
+
                                   _requestSearch();
                                 },
                                 autocorrect: false,
@@ -117,13 +120,11 @@ class _SearchPageState extends State<SearchPage> {
                                     color: AppColors.gray3,
                                   ),
                                   suffixIcon: Visibility(
-                                    visible:
-                                        _searchInputController.text.length > 0
-                                            ? true
-                                            : false,
+                                    visible: _search.query.length > 0,
                                     child: IconButton(
                                       onPressed: () => {
                                         _searchInputController.clear(),
+                                        _search.query = '',
                                         setState(() {
                                           _resultSearch.listData = [];
                                         })
@@ -163,6 +164,7 @@ class _SearchPageState extends State<SearchPage> {
                                   onPressed: () => {
                                     _focusNode.unfocus(),
                                     _searchInputController.text = '',
+                                    _search.query = '',
                                     setState(() {
                                       _resultSearch.listData = [];
                                     })
