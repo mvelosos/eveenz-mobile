@@ -53,17 +53,20 @@ class ProfileSocialRow extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {},
-            child: Column(
-              children: [
-                Text(
-                  eventsCount.toString(),
-                  style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
+            child: Container(
+              color: Colors.transparent,
+              child: Column(
+                children: [
+                  Text(
+                    eventsCount.toString(),
+                    style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text('Eveenz'),
-              ],
+                  Text('Eveenz'),
+                ],
+              ),
             ),
           ),
           SizedBox(width: 10),
@@ -84,17 +87,20 @@ class ProfileSocialRow extends StatelessWidget {
                 ),
               );
             },
-            child: Column(
-              children: [
-                Text(
-                  _formattedSocialValue(followersCount),
-                  style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
+            child: Container(
+              color: Colors.transparent,
+              child: Column(
+                children: [
+                  Text(
+                    _formattedSocialValue(followersCount),
+                    style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text('Seguidores'),
-              ],
+                  Text('Seguidores'),
+                ],
+              ),
             ),
           ),
           SizedBox(width: 10),
@@ -115,17 +121,20 @@ class ProfileSocialRow extends StatelessWidget {
                 ),
               );
             },
-            child: Column(
-              children: [
-                Text(
-                  _formattedSocialValue(followingCount),
-                  style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
+            child: Container(
+              color: Colors.transparent,
+              child: Column(
+                children: [
+                  Text(
+                    _formattedSocialValue(followingCount),
+                    style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text('Seguindo'),
-              ],
+                  Text('Seguindo'),
+                ],
+              ),
             ),
           ),
         ],
