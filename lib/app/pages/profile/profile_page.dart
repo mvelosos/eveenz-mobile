@@ -23,7 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final ProfileController _profileController = locator<ProfileController>();
   final ProfileStore _profileStore = locator<ProfileStore>();
 
-  Widget appBarUsernameTitle() {
+  Widget _appBarUsernameTitle() {
     if (_profileStore.accountSetting['private'] != null &&
         _profileStore.accountSetting['private']) {
       return Wrap(
@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              title: Obx(() => appBarUsernameTitle()),
+              title: Obx(() => _appBarUsernameTitle()),
               centerTitle: true,
               backgroundColor: Colors.white,
               shadowColor: Colors.transparent,
@@ -111,8 +111,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             SizedBox(height: _size.height * .015),
                             Obx(
-                              () =>
-                                  ProfileAvatar(_profileStore.avatarUrl.value),
+                              () => ProfileAvatar(
+                                _profileStore.avatarUrl.value,
+                              ),
                             ),
                             SizedBox(height: _size.height * .03),
                             Obx(
