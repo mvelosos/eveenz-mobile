@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:party_mobile/app/controllers/accounts_controller.dart';
 import 'package:party_mobile/app/locator.dart';
-import 'package:party_mobile/app/models/account_model.dart';
+import 'package:party_mobile/app/models/account_follow_model.dart';
 import 'package:party_mobile/app/pages/follows/widgets/follows_tab_view.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
+import 'package:party_mobile/app/view_models/search_vm.dart';
 
 // Page Arguments
 class FollowsPageArguments {
   final String username;
   final int? initialIndex;
+  final int followersCount;
+  final int followingCount;
 
-  FollowsPageArguments({required this.username, this.initialIndex});
+  FollowsPageArguments({
+    this.initialIndex,
+    required this.username,
+    required this.followersCount,
+    required this.followingCount,
+  });
 }
 
 // Page
@@ -25,8 +33,8 @@ class FollowsPage extends StatefulWidget {
 
 class _FollowsPageState extends State<FollowsPage> {
   final AccountsController _accountsController = locator<AccountsController>();
-  List<AccountModel>? _followersList;
-  List<AccountModel>? _followingList;
+  List<AccountFollowModel>? _followersList;
+  List<AccountFollowModel>? _followingList;
   bool _loading = true;
 
   // Functions
@@ -41,20 +49,22 @@ class _FollowsPageState extends State<FollowsPage> {
     await _getFollowing();
   }
 
-  Future<void> _getFollowers() async {
-    var result = await _accountsController.getFollowers(widget.args.username);
+  Future<void> _getFollowers([SearchVM? search]) async {
+    var result =
+        await _accountsController.getFollowers(widget.args.username, search);
     if (result.isRight()) {
       setState(() {
-        _followersList = result.getOrElse(() => {} as List<AccountModel>);
+        _followersList = result.getOrElse(() => {} as List<AccountFollowModel>);
       });
     }
   }
 
-  Future<void> _getFollowing() async {
-    var result = await _accountsController.getFollowing(widget.args.username);
+  Future<void> _getFollowing([SearchVM? search]) async {
+    var result =
+        await _accountsController.getFollowing(widget.args.username, search);
     if (result.isRight()) {
       setState(() {
-        _followingList = result.getOrElse(() => {} as List<AccountModel>);
+        _followingList = result.getOrElse(() => {} as List<AccountFollowModel>);
       });
     }
   }
@@ -81,17 +91,13 @@ class _FollowsPageState extends State<FollowsPage> {
             tabs: [
               Tab(
                 icon: Text(
-                  _followersList != null
-                      ? "${_followersList?.length}  Seguidores"
-                      : 'Seguidores',
+                  "${widget.args.followersCount}  Seguidores",
                   style: TextStyle(color: Colors.black),
                 ),
               ),
               Tab(
                 icon: Text(
-                  _followingList != null
-                      ? "${_followingList?.length}  Seguindo"
-                      : 'Seguindo',
+                  "${widget.args.followingCount}  Seguindo",
                   style: TextStyle(color: Colors.black),
                 ),
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:party_mobile/app/models/account_follow_model.dart';
 import 'package:party_mobile/app/models/account_model.dart';
 import 'package:party_mobile/app/pages/follows/widgets/follows_account_list_tile.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
@@ -7,7 +8,7 @@ import 'package:party_mobile/app/view_models/search_vm.dart';
 
 class FollowsListView extends StatefulWidget {
   final Function _reloadFollows;
-  final List<AccountModel> _list;
+  final List<AccountFollowModel> _list;
 
   FollowsListView(this._list, this._reloadFollows);
 
@@ -33,6 +34,7 @@ class _FollowsListViewState extends State<FollowsListView> {
             setState(() {
               _search.query = value;
             });
+            widget._reloadFollows(_search);
           },
           autocorrect: false,
           enableSuggestions: false,
@@ -52,6 +54,7 @@ class _FollowsListViewState extends State<FollowsListView> {
                 onPressed: () => {
                   _searchInputController.clear(),
                   _search.query = '',
+                  widget._reloadFollows()
                 },
                 icon: FaIcon(
                   FontAwesomeIcons.solidTimesCircle,
@@ -123,12 +126,14 @@ class _FollowsListViewState extends State<FollowsListView> {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: ListView.builder(
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          itemCount: _getListItems(context).length,
-          itemBuilder: (_, idx) {
-            return _getListItems(_)[idx];
-          },
+        child: Scrollbar(
+          child: ListView.builder(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            itemCount: _getListItems(context).length,
+            itemBuilder: (_, idx) {
+              return _getListItems(_)[idx];
+            },
+          ),
         ),
       ),
     );

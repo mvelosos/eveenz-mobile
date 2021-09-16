@@ -82,8 +82,10 @@ class ProfileSocialRow extends StatelessWidget {
               Navigator.of(context).pushNamed(
                 RouteNames.accountFollows,
                 arguments: FollowsPageArguments(
-                  username: username,
                   initialIndex: 0,
+                  username: username,
+                  followersCount: followersCount,
+                  followingCount: followingCount,
                 ),
               );
             },
@@ -116,8 +118,10 @@ class ProfileSocialRow extends StatelessWidget {
               Navigator.of(context).pushNamed(
                 RouteNames.accountFollows,
                 arguments: FollowsPageArguments(
-                  username: username,
                   initialIndex: 1,
+                  username: username,
+                  followersCount: followersCount,
+                  followingCount: followingCount,
                 ),
               );
             },

@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
+import 'package:party_mobile/app/models/account_follow_model.dart';
 import 'package:party_mobile/app/models/account_model.dart';
 import 'package:party_mobile/app/repositories/accounts_repository.dart';
 import 'package:party_mobile/app/shared/errors/errors.dart';
+import 'package:party_mobile/app/view_models/search_vm.dart';
 
 class AccountsController {
   AccountsRepository _accountsRepository = AccountsRepository();
@@ -11,16 +13,17 @@ class AccountsController {
     return accountResult;
   }
 
-  Future<Either<Failure, List<AccountModel>>> getFollowers(
-      String username) async {
-    List<AccountModel> accountsList = [];
-    var result = await _accountsRepository.getFollowers(username);
+  Future<Either<Failure, List<AccountFollowModel>>> getFollowers(
+      String username,
+      [SearchVM? search]) async {
+    List<AccountFollowModel> accountsList = [];
+    var result = await _accountsRepository.getFollowers(username, search);
     if (result.isRight()) {
       dynamic resultList = result.getOrElse(() => {});
       if (resultList['accounts'] != null || resultList['accounts'] != []) {
         resultList['accounts'].forEach(
           (account) => accountsList.add(
-            AccountModel.fromJson(account),
+            AccountFollowModel.fromJson(account),
           ),
         );
       }
@@ -28,16 +31,16 @@ class AccountsController {
     return Right(accountsList);
   }
 
-  Future<Either<Failure, List<AccountModel>>> getFollowing(
-      String username) async {
-    List<AccountModel> accountsList = [];
-    var result = await _accountsRepository.getFollowing(username);
+  Future<Either<Failure, List<AccountFollowModel>>> getFollowing(
+      String username, SearchVM? search) async {
+    List<AccountFollowModel> accountsList = [];
+    var result = await _accountsRepository.getFollowing(username, search);
     if (result.isRight()) {
       dynamic resultList = result.getOrElse(() => {});
       if (resultList['accounts'] != null || resultList['accounts'] != []) {
         resultList['accounts'].forEach(
           (account) => accountsList.add(
-            AccountModel.fromJson(account),
+            AccountFollowModel.fromJson(account),
           ),
         );
       }
