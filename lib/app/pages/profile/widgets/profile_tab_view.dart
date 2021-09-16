@@ -7,52 +7,54 @@ import 'package:party_mobile/app/shared/constants/app_colors.dart';
 class ProfileTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 50,
-            child: AppBar(
-              backgroundColor: AppColors.profileTabViewContainer,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  topRight: Radius.circular(25),
+    return Column(
+      children: [
+        SizedBox(
+          height: 50,
+          child: AppBar(
+            backgroundColor: AppColors.profileTabViewContainer,
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+              ),
+            ),
+            bottom: TabBar(
+              indicatorWeight: 4,
+              indicatorColor: AppColors.purple,
+              tabs: [
+                Tab(
+                  icon: FaIcon(
+                    FontAwesomeIcons.calendarAlt,
+                    size: 20,
+                    color: AppColors.purple,
+                  ),
                 ),
-              ),
-              bottom: TabBar(
-                indicatorWeight: 4,
-                indicatorColor: AppColors.purple,
-                tabs: [
-                  Tab(
-                    icon: FaIcon(
-                      FontAwesomeIcons.calendarAlt,
-                      size: 20,
-                      color: AppColors.purple,
-                    ),
+                Tab(
+                  icon: FaIcon(
+                    FontAwesomeIcons.commentAlt,
+                    size: 20,
+                    color: AppColors.purple,
                   ),
-                  Tab(
-                    icon: FaIcon(
-                      FontAwesomeIcons.commentAlt,
-                      size: 20,
-                      color: AppColors.purple,
-                    ),
-                  ),
-                ],
-              ),
-              elevation: 0,
+                ),
+              ],
             ),
           ),
-          Expanded(
+        ),
+        LayoutBuilder(builder: (context, constraints) {
+          print(constraints.maxHeight);
+          return Container(
+            height: 310,
             child: TabBarView(
               children: [
                 ProfileEventsTab(),
                 ProfileSocialTab(),
               ],
             ),
-          )
-        ],
-      ),
+          );
+        })
+      ],
     );
   }
 }

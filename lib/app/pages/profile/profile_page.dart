@@ -60,105 +60,89 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            backgroundColor: Colors.white,
-            appBar: AppBar(
-              title: Obx(() => _appBarUsernameTitle()),
-              centerTitle: true,
-              backgroundColor: Colors.white,
-              shadowColor: Colors.transparent,
-              brightness: Brightness.light,
-              automaticallyImplyLeading: false,
-              actions: [
-                IconButton(
-                  icon: FaIcon(
-                    FontAwesomeIcons.cog,
-                    size: 20,
-                  ),
-                  color: Colors.grey,
-                  tooltip: 'Show Snackbar',
-                  onPressed: () {
-                    Get.toNamed('/settings');
-                  },
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Obx(() => _appBarUsernameTitle()),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          shadowColor: Colors.transparent,
+          brightness: Brightness.light,
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              icon: FaIcon(
+                FontAwesomeIcons.cog,
+                size: 20,
+              ),
+              color: Colors.grey,
+              tooltip: 'Show Snackbar',
+              onPressed: () {
+                Get.toNamed('/settings');
+              },
+            ),
+          ],
+        ),
+        body: RefreshIndicator(
+          color: AppColors.orange,
+          displacement: 0,
+          onRefresh: () async {
+            await _profileController.getProfile();
+          },
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [
+                SizedBox(height: _size.height * .015),
+                Obx(
+                  () => ProfileAvatar(_profileStore.avatarUrl.value),
                 ),
+                SizedBox(height: _size.height * .03),
+                Padding(
+                  padding: const EdgeInsets.only(left: 24, right: 24),
+                  child: Obx(
+                    () => AutoSizeText(
+                      _profileStore.name.value,
+                      minFontSize: 17,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: _size.height * .02),
+                Obx(
+                  () => ProfilePopularityBadge(
+                    _profileStore.popularity.value,
+                  ),
+                ),
+                SizedBox(height: _size.height * .02),
+                Padding(
+                  padding: const EdgeInsets.only(left: 24, right: 24),
+                  child: Obx(
+                    () => ProfileBio(_profileStore.bio.value),
+                  ),
+                ),
+                Obx(
+                  () => ProfileSocialRow(
+                    context: context,
+                    username: _profileStore.username.value,
+                    eventsCount: _profileStore.events.value,
+                    followersCount: _profileStore.followers.value,
+                    followingCount: _profileStore.following.value,
+                  ),
+                ),
+                SizedBox(height: _size.height * .03),
+                ProfileTabView(),
               ],
             ),
-            body: RefreshIndicator(
-              color: AppColors.orange,
-              displacement: 0,
-              onRefresh: () async {
-                await _profileController.getProfile();
-              },
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                child: Container(
-                  color: Colors.white,
-                  height: constraints.maxHeight,
-                  width: constraints.maxWidth,
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(
-                          left: _size.width * .06,
-                          right: _size.width * .06,
-                        ),
-                        child: Column(
-                          children: [
-                            SizedBox(height: _size.height * .015),
-                            Obx(
-                              () => ProfileAvatar(
-                                _profileStore.avatarUrl.value,
-                              ),
-                            ),
-                            SizedBox(height: _size.height * .03),
-                            Obx(
-                              () => AutoSizeText(
-                                _profileStore.name.value,
-                                minFontSize: 17,
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: _size.height * .02),
-                            Obx(
-                              () => ProfilePopularityBadge(
-                                _profileStore.popularity.value,
-                              ),
-                            ),
-                            SizedBox(height: _size.height * .02),
-                            Obx(
-                              () => ProfileBio(_profileStore.bio.value),
-                            ),
-                            Obx(
-                              () => ProfileSocialRow(
-                                context: context,
-                                username: _profileStore.username.value,
-                                eventsCount: _profileStore.events.value,
-                                followersCount: _profileStore.followers.value,
-                                followingCount: _profileStore.following.value,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: _size.height * .03),
-                      ProfileTabView()
-                    ],
-                  ),
-                ),
-              ),
-            ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
