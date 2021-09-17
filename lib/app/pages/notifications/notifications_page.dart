@@ -92,71 +92,77 @@ class _NotificationsPageState extends State<NotificationsPage> {
         ),
         body: RefreshIndicator(
           color: AppColors.orange,
+          triggerMode: RefreshIndicatorTriggerMode.anywhere,
           displacement: 15,
           onRefresh: () async {
             await _getNotifications();
           },
-          child: Container(
-            height: constraints.maxHeight,
-            width: constraints.maxWidth,
-            padding: EdgeInsets.only(
-              left: size.width * .05,
-              right: size.width * .05,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: _notificationsList != null &&
-                          _notificationsList!.length > 0
-                      ? ListView.builder(
-                          itemCount: _notificationsList?.length,
-                          itemBuilder: (_, index) {
-                            if (_notificationsList?[index].notificationType ==
-                                'follow') {
-                              return AccountFollowListTile(
-                                _notificationsList![index],
-                                _getNotifications,
-                              );
-                            }
-                            if (_notificationsList?[index].notificationType ==
-                                'request_follow') {
-                              return AccountRequestFollowListTile(
-                                _notificationsList![index],
-                                _getNotifications,
-                              );
-                            }
-                            return SizedBox.shrink();
-                          },
-                        )
-                      : SingleChildScrollView(
-                          physics: AlwaysScrollableScrollPhysics(),
-                          padding: EdgeInsets.only(top: size.width / 2),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image(
-                                image: AssetImage(
-                                  'assets/images/no_notifications.png',
+          child: Scrollbar(
+            child: Container(
+              height: constraints.maxHeight,
+              width: constraints.maxWidth,
+              padding: EdgeInsets.only(
+                left: 10,
+                right: 10,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: _notificationsList != null &&
+                            _notificationsList!.length > 0
+                        ? ListView.builder(
+                            itemCount: _notificationsList?.length,
+                            itemBuilder: (_, index) {
+                              if (_notificationsList?[index].notificationType ==
+                                  'follow') {
+                                return AccountFollowListTile(
+                                  _notificationsList![index],
+                                  _getNotifications,
+                                );
+                              }
+                              if (_notificationsList?[index].notificationType ==
+                                  'request_follow') {
+                                return AccountRequestFollowListTile(
+                                  _notificationsList![index],
+                                  _getNotifications,
+                                );
+                              }
+                              return SizedBox.shrink();
+                            },
+                          )
+                        : SingleChildScrollView(
+                            physics: AlwaysScrollableScrollPhysics(),
+                            padding: EdgeInsets.only(top: size.width / 2),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image(
+                                  image: AssetImage(
+                                    'assets/images/no_notifications.png',
+                                  ),
+                                  height: constraints.maxHeight * .2,
                                 ),
-                                height: constraints.maxHeight * .2,
-                              ),
-                              SizedBox(height: 25),
-                              Text(
-                                'Opa, parece que você não tem nenhuma notificação',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ],
+                                SizedBox(height: 25),
+                                Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Text(
+                                    'Opa, parece que você não tem nenhuma notificação',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                ),
-                // TextButton(
-                //   onPressed: _unsubscribeChannel,
-                //   child: Text('Desconectar Channel'),
-                // )
-              ],
+                  ),
+                  // TextButton(
+                  //   onPressed: _unsubscribeChannel,
+                  //   child: Text('Desconectar Channel'),
+                  // )
+                ],
+              ),
             ),
           ),
         ),

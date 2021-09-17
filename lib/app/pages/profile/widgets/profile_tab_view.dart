@@ -7,44 +7,50 @@ import 'package:party_mobile/app/shared/constants/app_colors.dart';
 class ProfileTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 50,
-          child: AppBar(
-            backgroundColor: AppColors.profileTabViewContainer,
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(25),
-                topRight: Radius.circular(25),
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.profileTabViewContainer,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25),
+        ),
+      ),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 50,
+            child: AppBar(
+              backgroundColor: AppColors.profileTabViewContainer,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(25),
+                ),
+              ),
+              bottom: TabBar(
+                indicatorWeight: 4,
+                indicatorColor: AppColors.purple,
+                tabs: [
+                  Tab(
+                    icon: FaIcon(
+                      FontAwesomeIcons.calendarAlt,
+                      size: 20,
+                      color: AppColors.purple,
+                    ),
+                  ),
+                  Tab(
+                    icon: FaIcon(
+                      FontAwesomeIcons.commentAlt,
+                      size: 20,
+                      color: AppColors.purple,
+                    ),
+                  ),
+                ],
               ),
             ),
-            bottom: TabBar(
-              indicatorWeight: 4,
-              indicatorColor: AppColors.purple,
-              tabs: [
-                Tab(
-                  icon: FaIcon(
-                    FontAwesomeIcons.calendarAlt,
-                    size: 20,
-                    color: AppColors.purple,
-                  ),
-                ),
-                Tab(
-                  icon: FaIcon(
-                    FontAwesomeIcons.commentAlt,
-                    size: 20,
-                    color: AppColors.purple,
-                  ),
-                ),
-              ],
-            ),
           ),
-        ),
-        LayoutBuilder(builder: (context, constraints) {
-          print(constraints.maxHeight);
-          return Container(
+          Container(
             height: 310,
             child: TabBarView(
               children: [
@@ -52,9 +58,9 @@ class ProfileTabView extends StatelessWidget {
                 ProfileSocialTab(),
               ],
             ),
-          );
-        })
-      ],
+          ),
+        ],
+      ),
     );
   }
 }

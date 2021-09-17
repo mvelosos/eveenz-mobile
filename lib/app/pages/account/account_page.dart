@@ -87,7 +87,7 @@ class _AccountPageState extends State<AccountPage> {
       length: 2,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.profileTabViewContainer,
         appBar: AppBar(
           title: Text(
             _loading ? '' : _accountModel!.username,
@@ -97,41 +97,46 @@ class _AccountPageState extends State<AccountPage> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
           brightness: Brightness.light,
           iconTheme: IconThemeData(color: AppColors.orange),
         ),
         body: RefreshIndicator(
           color: AppColors.orange,
+          triggerMode: RefreshIndicatorTriggerMode.anywhere,
           displacement: 0,
           onRefresh: () async {
             await _getAccount();
           },
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Container(
-              color: Colors.white,
-              height: _size.height - 190,
-              width: _size.width,
+          child: Container(
+            color: Colors.white,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
               child: Column(
                 children: [
                   SizedBox(height: _size.height * .015),
                   ProfileAvatar(_accountModel?.avatarUrl),
                   SizedBox(height: _size.height * .03),
-                  AutoSizeText(
-                    _accountModel == null ? '' : _accountModel!.name,
-                    minFontSize: 17,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 24, right: 24),
+                    child: AutoSizeText(
+                      _accountModel == null ? '' : _accountModel!.name,
+                      minFontSize: 17,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
+                      ),
                     ),
                   ),
                   SizedBox(height: _size.height * .02),
                   ProfilePopularityBadge(_accountModel?.popularity),
                   SizedBox(height: _size.height * .02),
-                  ProfileBio(_accountModel?.bio),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 24, right: 24),
+                    child: ProfileBio(_accountModel?.bio),
+                  ),
                   ProfileSocialRow(
                     context: context,
                     username: _accountModel?.username ?? '',
