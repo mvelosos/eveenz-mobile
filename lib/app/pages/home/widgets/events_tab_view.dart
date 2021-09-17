@@ -12,8 +12,6 @@ class EventsTabView extends StatefulWidget {
 class _EventsTabViewState extends State<EventsTabView> {
   @override
   Widget build(BuildContext context) {
-    Size _size = MediaQuery.of(context).size;
-
     return RefreshIndicator(
       onRefresh: () async {},
       child: Container(

@@ -97,6 +97,7 @@ class _AccountPageState extends State<AccountPage> {
               fontWeight: FontWeight.w600,
             ),
           ),
+          centerTitle: true,
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
           brightness: Brightness.light,

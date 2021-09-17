@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:party_mobile/app/models/account_follow_model.dart';
-import 'package:party_mobile/app/models/account_model.dart';
 import 'package:party_mobile/app/pages/follows/widgets/follows_account_list_tile.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/view_models/search_vm.dart';

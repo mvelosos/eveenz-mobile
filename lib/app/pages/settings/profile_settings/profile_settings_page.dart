@@ -64,6 +64,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
           'Alterar Perfil',
           style: TextStyle(color: AppColors.darkPurple, fontSize: 17),
         ),
+        centerTitle: true,
         backgroundColor: Colors.white,
         shadowColor: Colors.transparent,
         brightness: Brightness.light,

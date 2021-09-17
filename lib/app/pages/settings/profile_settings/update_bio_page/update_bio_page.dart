@@ -60,6 +60,7 @@ class _UpdateBioPageState extends State<UpdateBioPage> {
           'Bio',
           style: TextStyle(color: AppColors.darkPurple, fontSize: 17),
         ),
+        centerTitle: true,
         backgroundColor: Colors.white,
         shadowColor: Colors.transparent,
         brightness: Brightness.light,

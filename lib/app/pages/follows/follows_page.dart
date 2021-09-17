@@ -103,6 +103,7 @@ class _FollowsPageState extends State<FollowsPage> {
               ),
             ],
           ),
+          centerTitle: true,
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           brightness: Brightness.light,

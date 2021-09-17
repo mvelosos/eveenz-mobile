@@ -60,6 +60,7 @@ class _UpdateNamePageState extends State<UpdateNamePage> {
           'Nome',
           style: TextStyle(color: AppColors.darkPurple, fontSize: 17),
         ),
+        centerTitle: true,
         backgroundColor: Colors.white,
         shadowColor: Colors.transparent,
         brightness: Brightness.light,
