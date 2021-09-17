@@ -25,4 +25,17 @@ class ProfileStore {
     avatarUrl.value = profileModel.account.avatarUrl ?? '';
     accountSetting.value = profileModel.account.accountSetting.toJson();
   }
+
+  void clear() {
+    uuid.value = '';
+    username.value = '';
+    name.value = '';
+    bio.value = '';
+    popularity.value = 0;
+    events.value = 0;
+    following.value = 0;
+    followers.value = 0;
+    avatarUrl.value = '';
+    accountSetting.value = {};
+  }
 }
