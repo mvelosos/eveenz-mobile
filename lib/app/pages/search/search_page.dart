@@ -71,6 +71,15 @@ class _SearchPageState extends State<SearchPage> {
         toolbarOpacity: 1,
         brightness: Brightness.light,
         automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.filter_list,
+              color: AppColors.darkPurple,
+            ),
+          )
+        ],
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
