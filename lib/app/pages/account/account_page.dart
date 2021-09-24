@@ -65,6 +65,10 @@ class _AccountPageState extends State<AccountPage> {
 
   Widget _accountProfileTabView() {
     if (_accountModel != null) {
+      if (_accountModel!.uuid == _profileStore.uuid.value) {
+        return ProfileTabView();
+      }
+
       if (_accountModel!.privateAccount) {
         if (_accountModel!.followedByMe) {
           return ProfileTabView();
