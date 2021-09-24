@@ -41,6 +41,6 @@ class Commons {
 
   static formatTime(String time) {
     DateTime dateTime = DateTime.parse(time);
-    return DateFormat('H:m').format(dateTime);
+    return DateFormat('H:mm').format(dateTime);
   }
 }
