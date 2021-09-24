@@ -4,11 +4,13 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:party_mobile/app/stores/notifications_store.dart';
+import 'package:party_mobile/app/stores/profile_store.dart';
 
 class BottomNavigationBarWidget extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTabTapped;
   final NotificationsStore _notificationsStore = locator<NotificationsStore>();
+  final ProfileStore _profileStore = locator<ProfileStore>();
 
   BottomNavigationBarWidget({
     required this.currentIndex,
@@ -52,6 +54,36 @@ class BottomNavigationBarWidget extends StatelessWidget {
     );
   }
 
+  BottomNavigationBarItem _profileBottomNavigationBarItem() {
+    return BottomNavigationBarItem(
+      label: 'Profile',
+      icon: Obx(
+        () => Container(
+          width: 25,
+          height: 25,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: Image.network(
+                _profileStore.avatarUrl.value,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Color(0xffd3d5db),
+                  );
+                },
+              ).image,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   List<BottomNavigationBarItem> _barItems() {
     return [
       _bottomNavigationBarItem(
@@ -79,13 +111,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
         'Notifications',
         Icon(Icons.notifications),
       ),
-      _bottomNavigationBarItem(
-        'Profile',
-        FaIcon(
-          FontAwesomeIcons.solidUser,
-          size: 20,
-        ),
-      ),
+      _profileBottomNavigationBarItem(),
     ];
   }
 
@@ -98,7 +124,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
       showUnselectedLabels: false,
       type: BottomNavigationBarType.fixed,
       items: _barItems(),
-      selectedItemColor: AppColors.darkPurple,
+      selectedItemColor: AppColors.orange,
     );
   }
 }
