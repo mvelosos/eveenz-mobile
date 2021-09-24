@@ -41,8 +41,8 @@ class BottomNavigationBarWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       constraints: BoxConstraints(
-                        minWidth: 12,
-                        minHeight: 12,
+                        minWidth: 10,
+                        minHeight: 10,
                       ),
                     ),
                   )
@@ -58,28 +58,24 @@ class BottomNavigationBarWidget extends StatelessWidget {
     return BottomNavigationBarItem(
       label: 'Profile',
       icon: Obx(
-        () => Container(
-          width: 25,
-          height: 25,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: Image.network(
-                _profileStore.avatarUrl.value,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child;
-                  }
-                  return CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Color(0xffd3d5db),
-                  );
-                },
-              ).image,
-            ),
-          ),
-        ),
+        () => _profileStore.avatarUrl.value.isNotEmpty
+            ? Container(
+                width: 25,
+                height: 25,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: Image.network(
+                      _profileStore.avatarUrl.value,
+                    ).image,
+                  ),
+                ),
+              )
+            : CircleAvatar(
+                radius: 12,
+                backgroundColor: Color(0xffd3d5db),
+              ),
       ),
     );
   }
@@ -124,7 +120,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
       showUnselectedLabels: false,
       type: BottomNavigationBarType.fixed,
       items: _barItems(),
-      selectedItemColor: AppColors.orange,
+      selectedItemColor: AppColors.purple,
     );
   }
 }
