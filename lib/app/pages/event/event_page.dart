@@ -43,6 +43,16 @@ class _EventPageState extends State<EventPage> {
     }
   }
 
+  List<Widget> _eventCategories() {
+    List<Widget> _categoryChips = [];
+
+    _event.categories?.forEach((category) {
+      _categoryChips.add(Chip(label: Text(category.titleizedName)));
+    });
+
+    return _categoryChips;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -50,7 +60,7 @@ class _EventPageState extends State<EventPage> {
     return AnnotatedRegion(
       value: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
       child: Scaffold(
-        // backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         body: RefreshIndicator(
           onRefresh: () async {
             await _getEvent();
@@ -239,7 +249,144 @@ class _EventPageState extends State<EventPage> {
                           fontSize: 15,
                           color: AppColors.gray1,
                         ),
-                      )
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        child: Wrap(
+                          spacing: 5,
+                          children: _eventCategories(),
+                        ),
+                      ),
+                      SizedBox(height: 25),
+                      Text(
+                        'O anfitrião',
+                        style: GoogleFonts.inter(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.darkPurple,
+                        ),
+                      ),
+                      SizedBox(height: 12),
+                      Row(
+                        children: [
+                          _event.hostAvatar != null &&
+                                  _event.hostAvatar!.isNotEmpty
+                              ? CircleAvatar(
+                                  radius: 30,
+                                  foregroundImage:
+                                      NetworkImage(_event.hostAvatar!),
+                                )
+                              : CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Color(0xffd3d5db),
+                                ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  _event.hostName ?? '',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.darkPurple,
+                                  ),
+                                ),
+                                Text(
+                                  _event.hostUsername != null &&
+                                          _event.hostUsername!.isNotEmpty
+                                      ? '@${_event.hostUsername}'
+                                      : '',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w300,
+                                    color: AppColors.darkPurple,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12),
+                      Divider(),
+                      SizedBox(height: 15),
+                      Text(
+                        'Local',
+                        style: GoogleFonts.inter(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.darkPurple,
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Text(
+                        '250m de distância',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.darkPurple,
+                        ),
+                      ),
+                      SizedBox(height: 2),
+                      Text(
+                        _event.address != null
+                            ? '${_event.address!.street!}, ${_event.address!.number!}${_event.address!.complement != null ? ', ${_event.address!.complement}' : ''}'
+                            : '',
+                        overflow: TextOverflow.clip,
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.darkPurple,
+                        ),
+                      ),
+                      SizedBox(height: 2),
+                      Text(
+                        _event.address != null
+                            ? '${_event.address!.city!} - ${_event.address!.state!}'
+                            : '',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.darkPurple,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20, bottom: 20),
+                        child: RawMaterialButton(
+                          onPressed: () {},
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: EdgeInsets.symmetric(
+                                vertical: _size.height * .007),
+                            padding: EdgeInsets.symmetric(
+                                vertical: _size.height * .024),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                  color: Colors.grey.shade200,
+                                  offset: Offset(2, 4),
+                                  blurRadius: 5,
+                                  spreadRadius: 2,
+                                ),
+                              ],
+                              color: AppColors.orange,
+                            ),
+                            child: Text(
+                              'CONFIRMAR PRESENÇA',
+                              style: GoogleFonts.roboto(
+                                fontSize: _size.height * .015,
+                                color: Colors.white,
+                                letterSpacing: 4,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 )

@@ -1,3 +1,5 @@
+import 'package:party_mobile/app/models/category_model.dart';
+
 class EventModel {
   String? uuid;
   String? name;
@@ -14,8 +16,10 @@ class EventModel {
   int? minimumAge;
   String? hostAvatar;
   String? hostName;
+  String? hostUsername;
   Address? address;
   Localization? localization;
+  List<CategoryModel>? categories;
 
   EventModel({
     this.uuid,
@@ -34,6 +38,7 @@ class EventModel {
     this.hostName,
     this.address,
     this.localization,
+    this.categories,
   });
 
   EventModel.fromJson(Map<String, dynamic> json) {
@@ -52,11 +57,20 @@ class EventModel {
     minimumAge = json['minimumAge'];
     hostAvatar = json['hostAvatar'];
     hostName = json['hostName'];
+    hostUsername = json['hostUsername'];
     address =
         json['address'] != null ? new Address.fromJson(json['address']) : null;
     localization = json['localization'] != null
         ? new Localization.fromJson(json['localization'])
         : null;
+    categories = [];
+    if (json['categories'] != null || json['categories'] != []) {
+      json['categories'].forEach(
+        (category) => categories?.add(
+          CategoryModel.fromJson(category),
+        ),
+      );
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -76,11 +90,19 @@ class EventModel {
     data['minimumAge'] = this.minimumAge;
     data['hostAvatar'] = this.hostAvatar;
     data['hostName'] = this.hostName;
+    data['hostUsername'] = this.hostUsername;
     if (this.address != null) {
       data['address'] = this.address?.toJson();
     }
     if (this.localization != null) {
       data['localization'] = this.localization?.toJson();
+    }
+    if (this.categories != null) {
+      List<Map> categoriesData = [];
+      this.categories?.forEach((element) {
+        categoriesData.add(element.toJson());
+      });
+      data['categories'] = categoriesData;
     }
     return data;
   }
