@@ -96,6 +96,7 @@ class _ProfilePageState extends State<ProfilePage> {
             color: Colors.white,
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
+              physics: AlwaysScrollableScrollPhysics(),
               child: Column(
                 children: [
                   SizedBox(height: _size.height * .015),
