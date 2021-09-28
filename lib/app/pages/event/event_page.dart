@@ -1,13 +1,18 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:party_mobile/app/controllers/events_controller.dart';
 import 'package:party_mobile/app/locator.dart';
 import 'package:party_mobile/app/models/event_model.dart';
+import 'package:party_mobile/app/pages/account/account_page.dart';
 import 'package:party_mobile/app/shared/constants/app_colors.dart';
+import 'package:party_mobile/app/shared/constants/route_names.dart';
 import 'package:party_mobile/app/shared/utils/commons.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class EventPageArguments {
   final String uuid;
@@ -27,6 +32,8 @@ class EventPage extends StatefulWidget {
 class _EventPageState extends State<EventPage> {
   EventsController _eventsController = locator<EventsController>();
   EventModel _event = EventModel();
+  CameraPosition? _eventCameraPosition;
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
   @override
   void initState() {
@@ -40,6 +47,9 @@ class _EventPageState extends State<EventPage> {
       setState(() {
         _event = result.getOrElse(() => {} as EventModel);
       });
+      _setEventCameraPosition();
+      _setEventMapMarker();
+      // _pageScrollController.
     }
   }
 
@@ -51,6 +61,30 @@ class _EventPageState extends State<EventPage> {
     });
 
     return _categoryChips;
+  }
+
+  void _setEventCameraPosition() {
+    _eventCameraPosition = CameraPosition(
+      target: LatLng(
+          _event.localization!.latitude!, _event.localization!.longitude!),
+      zoom: 17,
+    );
+  }
+
+  void _setEventMapMarker() {
+    final MarkerId markerId = MarkerId(_event.uuid!);
+
+    Marker _eventMarker = Marker(
+      markerId: markerId,
+      position: LatLng(
+        _event.localization!.latitude!,
+        _event.localization!.longitude!,
+      ),
+    );
+
+    setState(() {
+      markers[markerId] = _eventMarker;
+    });
   }
 
   @override
@@ -66,7 +100,7 @@ class _EventPageState extends State<EventPage> {
             await _getEvent();
           },
           child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
+            primary: false,
             scrollDirection: Axis.vertical,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -267,47 +301,56 @@ class _EventPageState extends State<EventPage> {
                         ),
                       ),
                       SizedBox(height: 12),
-                      Row(
-                        children: [
-                          _event.hostAvatar != null &&
-                                  _event.hostAvatar!.isNotEmpty
-                              ? CircleAvatar(
-                                  radius: 30,
-                                  foregroundImage:
-                                      NetworkImage(_event.hostAvatar!),
-                                )
-                              : CircleAvatar(
-                                  radius: 30,
-                                  backgroundColor: Color(0xffd3d5db),
-                                ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  _event.hostName ?? '',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.darkPurple,
+                      RawMaterialButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(
+                            RouteNames.showAccount,
+                            arguments: AccountPageArguments(
+                                username: _event.hostUsername!),
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            _event.hostAvatar != null &&
+                                    _event.hostAvatar!.isNotEmpty
+                                ? CircleAvatar(
+                                    radius: 30,
+                                    foregroundImage:
+                                        NetworkImage(_event.hostAvatar!),
+                                  )
+                                : CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: Color(0xffd3d5db),
                                   ),
-                                ),
-                                Text(
-                                  _event.hostUsername != null &&
-                                          _event.hostUsername!.isNotEmpty
-                                      ? '@${_event.hostUsername}'
-                                      : '',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w300,
-                                    color: AppColors.darkPurple,
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    _event.hostName ?? '',
+                                    style: GoogleFonts.inter(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.darkPurple,
+                                    ),
                                   ),
-                                )
-                              ],
+                                  Text(
+                                    _event.hostUsername != null &&
+                                            _event.hostUsername!.isNotEmpty
+                                        ? '@${_event.hostUsername}'
+                                        : '',
+                                    style: GoogleFonts.inter(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w300,
+                                      color: AppColors.darkPurple,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       SizedBox(height: 12),
                       Divider(),
@@ -352,6 +395,27 @@ class _EventPageState extends State<EventPage> {
                           color: AppColors.darkPurple,
                         ),
                       ),
+                      _eventCameraPosition != null
+                          ? Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 5),
+                              child: Container(
+                                height: 230,
+                                child: GoogleMap(
+                                  initialCameraPosition: _eventCameraPosition!,
+                                  mapType: MapType.normal,
+                                  myLocationButtonEnabled: false,
+                                  markers: Set<Marker>.of(markers.values),
+                                  gestureRecognizers: Set()
+                                    ..add(
+                                      Factory<PanGestureRecognizer>(
+                                        () => PanGestureRecognizer(),
+                                      ),
+                                    ),
+                                ),
+                              ),
+                            )
+                          : SizedBox.shrink(),
                       Padding(
                         padding: const EdgeInsets.only(top: 20, bottom: 20),
                         child: RawMaterialButton(
