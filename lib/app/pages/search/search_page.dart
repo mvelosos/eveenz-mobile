@@ -194,16 +194,7 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                   ),
                   _focusNode.hasFocus
-                      ?
-                      // Container(
-                      //     height: size.height,
-                      //     margin: EdgeInsets.only(top: 10),
-                      //     child: _resultSearch.listData != null &&
-                      //             _resultSearch.listData!.isNotEmpty
-                      //         ? SearchListView(_resultSearch)
-                      //         : Container(color: Colors.white),
-                      //   )
-                      Container(
+                      ? Container(
                           height: size.height - 100,
                           margin: EdgeInsets.only(top: 10),
                           child: SearchListView(_resultSearch),
@@ -285,7 +276,7 @@ class _SearchPageState extends State<SearchPage> {
                                         child: Container(
                                           height: 110,
                                           decoration: BoxDecoration(
-                                            color: Colors.blue,
+                                            color: Color(0xffd3d5db),
                                             borderRadius: BorderRadius.all(
                                               Radius.circular(10),
                                             ),
@@ -324,7 +315,7 @@ class _SearchPageState extends State<SearchPage> {
                                         child: Container(
                                           height: 110,
                                           decoration: BoxDecoration(
-                                            color: Colors.blue,
+                                            color: Color(0xffd3d5db),
                                             borderRadius: BorderRadius.all(
                                               Radius.circular(10),
                                             ),
@@ -369,7 +360,7 @@ class _SearchPageState extends State<SearchPage> {
                                         child: Container(
                                           height: 110,
                                           decoration: BoxDecoration(
-                                            color: Colors.blue,
+                                            color: Color(0xffd3d5db),
                                             borderRadius: BorderRadius.all(
                                               Radius.circular(10),
                                             ),
@@ -408,7 +399,7 @@ class _SearchPageState extends State<SearchPage> {
                                         child: Container(
                                           height: 110,
                                           decoration: BoxDecoration(
-                                            color: Colors.blue,
+                                            color: Color(0xffd3d5db),
                                             borderRadius: BorderRadius.all(
                                               Radius.circular(10),
                                             ),
@@ -453,7 +444,7 @@ class _SearchPageState extends State<SearchPage> {
                                         child: Container(
                                           height: 110,
                                           decoration: BoxDecoration(
-                                            color: Colors.blue,
+                                            color: Color(0xffd3d5db),
                                             borderRadius: BorderRadius.all(
                                               Radius.circular(10),
                                             ),
@@ -492,7 +483,7 @@ class _SearchPageState extends State<SearchPage> {
                                         child: Container(
                                           height: 110,
                                           decoration: BoxDecoration(
-                                            color: Colors.blue,
+                                            color: Color(0xffd3d5db),
                                             borderRadius: BorderRadius.all(
                                               Radius.circular(10),
                                             ),
@@ -537,7 +528,7 @@ class _SearchPageState extends State<SearchPage> {
                                         child: Container(
                                           height: 110,
                                           decoration: BoxDecoration(
-                                            color: Colors.blue,
+                                            color: Color(0xffd3d5db),
                                             borderRadius: BorderRadius.all(
                                               Radius.circular(10),
                                             ),
@@ -576,7 +567,7 @@ class _SearchPageState extends State<SearchPage> {
                                         child: Container(
                                           height: 110,
                                           decoration: BoxDecoration(
-                                            color: Colors.blue,
+                                            color: Color(0xffd3d5db),
                                             borderRadius: BorderRadius.all(
                                               Radius.circular(10),
                                             ),
