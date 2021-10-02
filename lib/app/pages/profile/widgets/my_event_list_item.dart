@@ -79,12 +79,14 @@ class MyEventListItem extends StatelessWidget {
                       ),
                       SizedBox(width: 4),
                       Expanded(
-                        child: Text(event['date'],
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.poppins(
-                              fontSize: 11,
-                              color: AppColors.darkPurple,
-                            )),
+                        child: Text(
+                          event['date'],
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.poppins(
+                            fontSize: 11,
+                            color: AppColors.darkPurple,
+                          ),
+                        ),
                       ),
                     ],
                   )
