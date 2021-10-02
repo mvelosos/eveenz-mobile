@@ -84,14 +84,16 @@ class _SearchPageState extends State<SearchPage> {
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
+            physics: _focusNode.hasFocus
+                ? NeverScrollableScrollPhysics()
+                : AlwaysScrollableScrollPhysics(),
             child: Container(
               color: Colors.transparent,
-              padding: EdgeInsets.only(left: 10, right: 10),
-              // height: constraints.maxHeight,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+                    padding: EdgeInsets.only(left: 10, right: 10),
                     child: LayoutBuilder(
                       builder: (context, constraints) {
                         return Row(
@@ -192,416 +194,425 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                   ),
                   _focusNode.hasFocus
-                      ? Container(
-                          height: size.height,
+                      ?
+                      // Container(
+                      //     height: size.height,
+                      //     margin: EdgeInsets.only(top: 10),
+                      //     child: _resultSearch.listData != null &&
+                      //             _resultSearch.listData!.isNotEmpty
+                      //         ? SearchListView(_resultSearch)
+                      //         : Container(color: Colors.white),
+                      //   )
+                      Container(
+                          height: size.height - 100,
                           margin: EdgeInsets.only(top: 10),
-                          child: _resultSearch.listData != null &&
-                                  _resultSearch.listData!.isNotEmpty
-                              ? SearchListView(_resultSearch)
-                              : Container(color: Colors.white),
+                          child: SearchListView(_resultSearch),
                         )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 25, bottom: 15),
-                              child: Text(
-                                'Estilos',
-                                style: GoogleFonts.inter(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 90,
-                              child: ListView.separated(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: _categoryItems.length,
-                                separatorBuilder: (_, __) =>
-                                    SizedBox(width: 15),
-                                itemBuilder: (context, idx) => TextButton(
-                                  style: ButtonStyle(
-                                    padding: MaterialStateProperty.all(
-                                      EdgeInsets.zero,
-                                    ),
-                                  ),
-                                  onPressed: () => {
-                                    print(_categoryItems[idx]['name']),
-                                  },
-                                  child: Container(
-                                    width: 90,
-                                    decoration: BoxDecoration(
-                                      color: _categoryItems[idx]['color'],
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(12),
-                                      ),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        _categoryItems[idx]['name'],
-                                        overflow: TextOverflow.clip,
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.inter(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
+                      : Container(
+                          padding: EdgeInsets.only(left: 10, right: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 25, bottom: 15),
+                                child: Text(
+                                  'Estilos',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 30, bottom: 15),
-                              child: Text(
-                                'Categorias',
-                                style: GoogleFonts.inter(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
+                              Container(
+                                height: 90,
+                                child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: _categoryItems.length,
+                                  separatorBuilder: (_, __) =>
+                                      SizedBox(width: 15),
+                                  itemBuilder: (context, idx) => TextButton(
+                                    style: ButtonStyle(
+                                      padding: MaterialStateProperty.all(
+                                        EdgeInsets.zero,
+                                      ),
+                                    ),
+                                    onPressed: () => {
+                                      print(_categoryItems[idx]['name']),
+                                    },
+                                    child: Container(
+                                      width: 90,
+                                      decoration: BoxDecoration(
+                                        color: _categoryItems[idx]['color'],
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(12),
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          _categoryItems[idx]['name'],
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.inter(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 25),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        height: 110,
-                                        decoration: BoxDecoration(
-                                          color: Colors.blue,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(10),
-                                          ),
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            colorFilter: ColorFilter.mode(
-                                              Colors.black.withAlpha(100),
-                                              BlendMode.darken,
-                                            ),
-                                            image: AssetImage(
-                                              'assets/images/search_shows.png',
-                                            ),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 15,
-                                            left: 10,
-                                          ),
-                                          child: Text(
-                                            'Shows',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 30, bottom: 15),
+                                child: Text(
+                                  'Categorias',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  SizedBox(width: 20),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        height: 110,
-                                        decoration: BoxDecoration(
-                                          color: Colors.blue,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(10),
-                                          ),
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            colorFilter: ColorFilter.mode(
-                                              Colors.black.withAlpha(100),
-                                              BlendMode.darken,
-                                            ),
-                                            image: AssetImage(
-                                              'assets/images/search_shows.png',
-                                            ),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 15,
-                                            left: 10,
-                                          ),
-                                          child: Text(
-                                            'Festivais',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 25),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        height: 110,
-                                        decoration: BoxDecoration(
-                                          color: Colors.blue,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(10),
-                                          ),
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            colorFilter: ColorFilter.mode(
-                                              Colors.black.withAlpha(100),
-                                              BlendMode.darken,
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 25),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          height: 110,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10),
                                             ),
-                                            image: AssetImage(
-                                              'assets/images/search_shows.png',
-                                            ),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 15,
-                                            left: 10,
-                                          ),
-                                          child: Text(
-                                            'Shows',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              colorFilter: ColorFilter.mode(
+                                                Colors.black.withAlpha(100),
+                                                BlendMode.darken,
+                                              ),
+                                              image: AssetImage(
+                                                'assets/images/search_shows.png',
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 20),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        height: 110,
-                                        decoration: BoxDecoration(
-                                          color: Colors.blue,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(10),
-                                          ),
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            colorFilter: ColorFilter.mode(
-                                              Colors.black.withAlpha(100),
-                                              BlendMode.darken,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 15,
+                                              left: 10,
                                             ),
-                                            image: AssetImage(
-                                              'assets/images/search_shows.png',
-                                            ),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 15,
-                                            left: 10,
-                                          ),
-                                          child: Text(
-                                            'Festivais',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
+                                            child: Text(
+                                              'Shows',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(width: 20),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          height: 110,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10),
+                                            ),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              colorFilter: ColorFilter.mode(
+                                                Colors.black.withAlpha(100),
+                                                BlendMode.darken,
+                                              ),
+                                              image: AssetImage(
+                                                'assets/images/search_shows.png',
+                                              ),
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 15,
+                                              left: 10,
+                                            ),
+                                            child: Text(
+                                              'Festivais',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 25),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        height: 110,
-                                        decoration: BoxDecoration(
-                                          color: Colors.blue,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(10),
-                                          ),
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            colorFilter: ColorFilter.mode(
-                                              Colors.black.withAlpha(100),
-                                              BlendMode.darken,
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 25),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          height: 110,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10),
                                             ),
-                                            image: AssetImage(
-                                              'assets/images/search_shows.png',
-                                            ),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 15,
-                                            left: 10,
-                                          ),
-                                          child: Text(
-                                            'Shows',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              colorFilter: ColorFilter.mode(
+                                                Colors.black.withAlpha(100),
+                                                BlendMode.darken,
+                                              ),
+                                              image: AssetImage(
+                                                'assets/images/search_shows.png',
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 20),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        height: 110,
-                                        decoration: BoxDecoration(
-                                          color: Colors.blue,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(10),
-                                          ),
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            colorFilter: ColorFilter.mode(
-                                              Colors.black.withAlpha(100),
-                                              BlendMode.darken,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 15,
+                                              left: 10,
                                             ),
-                                            image: AssetImage(
-                                              'assets/images/search_shows.png',
-                                            ),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 15,
-                                            left: 10,
-                                          ),
-                                          child: Text(
-                                            'Festivais',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
+                                            child: Text(
+                                              'Shows',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(width: 20),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          height: 110,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10),
+                                            ),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              colorFilter: ColorFilter.mode(
+                                                Colors.black.withAlpha(100),
+                                                BlendMode.darken,
+                                              ),
+                                              image: AssetImage(
+                                                'assets/images/search_shows.png',
+                                              ),
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 15,
+                                              left: 10,
+                                            ),
+                                            child: Text(
+                                              'Festivais',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 25),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        height: 110,
-                                        decoration: BoxDecoration(
-                                          color: Colors.blue,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(10),
-                                          ),
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            colorFilter: ColorFilter.mode(
-                                              Colors.black.withAlpha(100),
-                                              BlendMode.darken,
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 25),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          height: 110,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10),
                                             ),
-                                            image: AssetImage(
-                                              'assets/images/search_shows.png',
-                                            ),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 15,
-                                            left: 10,
-                                          ),
-                                          child: Text(
-                                            'Shows',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              colorFilter: ColorFilter.mode(
+                                                Colors.black.withAlpha(100),
+                                                BlendMode.darken,
+                                              ),
+                                              image: AssetImage(
+                                                'assets/images/search_shows.png',
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 20),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {},
-                                      child: Container(
-                                        height: 110,
-                                        decoration: BoxDecoration(
-                                          color: Colors.blue,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(10),
-                                          ),
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            colorFilter: ColorFilter.mode(
-                                              Colors.black.withAlpha(100),
-                                              BlendMode.darken,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 15,
+                                              left: 10,
                                             ),
-                                            image: AssetImage(
-                                              'assets/images/search_shows.png',
-                                            ),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 15,
-                                            left: 10,
-                                          ),
-                                          child: Text(
-                                            'Festivais',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
+                                            child: Text(
+                                              'Shows',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(width: 20),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          height: 110,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10),
+                                            ),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              colorFilter: ColorFilter.mode(
+                                                Colors.black.withAlpha(100),
+                                                BlendMode.darken,
+                                              ),
+                                              image: AssetImage(
+                                                'assets/images/search_shows.png',
+                                              ),
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 15,
+                                              left: 10,
+                                            ),
+                                            child: Text(
+                                              'Festivais',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 25),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          height: 110,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10),
+                                            ),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              colorFilter: ColorFilter.mode(
+                                                Colors.black.withAlpha(100),
+                                                BlendMode.darken,
+                                              ),
+                                              image: AssetImage(
+                                                'assets/images/search_shows.png',
+                                              ),
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 15,
+                                              left: 10,
+                                            ),
+                                            child: Text(
+                                              'Shows',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 20),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          height: 110,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10),
+                                            ),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              colorFilter: ColorFilter.mode(
+                                                Colors.black.withAlpha(100),
+                                                BlendMode.darken,
+                                              ),
+                                              image: AssetImage(
+                                                'assets/images/search_shows.png',
+                                              ),
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 15,
+                                              left: 10,
+                                            ),
+                                            child: Text(
+                                              'Festivais',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                 ],
               ),

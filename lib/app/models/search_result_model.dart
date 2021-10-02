@@ -3,6 +3,26 @@ class SearchResultModel {
 
   SearchResultModel({this.listData});
 
+  List<Data?>? get all {
+    return this.listData;
+  }
+
+  List<Data?>? get events {
+    if (this.listData == null) {
+      return this.listData;
+    }
+
+    this.listData!.where((data) => data!.type == 'event');
+  }
+
+  List<Data?>? get accounts {
+    if (this.listData == null) {
+      return this.listData;
+    }
+
+    this.listData!.where((data) => data!.type == 'account');
+  }
+
   SearchResultModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       listData = [];
