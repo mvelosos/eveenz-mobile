@@ -8,30 +8,17 @@ class ProfileAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return (avatarUrl != null && avatarUrl != '')
-        ? Container(
-            width: 110,
-            height: 110,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: Image.network(
-                  avatarUrl!,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
-                    return CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Color(0xffd3d5db),
-                    );
-                  },
-                ).image,
-              ),
+        ? CircleAvatar(
+            backgroundColor: Color(0xffd3d5db),
+            radius: 55,
+            child: CircleAvatar(
+              radius: 55,
+              backgroundColor: Colors.transparent,
+              backgroundImage: NetworkImage(avatarUrl!),
             ),
           )
         : CircleAvatar(
-            radius: 50,
+            radius: 55,
             backgroundColor: Color(0xffd3d5db),
           );
   }

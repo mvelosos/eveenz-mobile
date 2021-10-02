@@ -59,16 +59,14 @@ class BottomNavigationBarWidget extends StatelessWidget {
       label: 'Profile',
       icon: Obx(
         () => _profileStore.avatarUrl.value.isNotEmpty
-            ? Container(
-                width: 25,
-                height: 25,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: Image.network(
-                      _profileStore.avatarUrl.value,
-                    ).image,
+            ? CircleAvatar(
+                backgroundColor: Color(0xffd3d5db),
+                radius: 12,
+                child: CircleAvatar(
+                  radius: 12,
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: NetworkImage(
+                    _profileStore.avatarUrl.value,
                   ),
                 ),
               )
