@@ -84,20 +84,101 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
+  Widget eventStatus(String text) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.blue,
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget eventDescription(IconData iconName, String information) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        children: [
+          Icon(iconName, size: 16),
+          Container(width: 5),
+          Text(
+            information,
+            style: TextStyle(fontSize: 10),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _loadingPosition
           ? null
-          : GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: _initialPosition!,
-              myLocationEnabled: true,
-              myLocationButtonEnabled: true,
-              rotateGesturesEnabled: false,
-              onMapCreated: (GoogleMapController controller) {
-                _gmController.complete(controller);
-              },
+          : Stack(
+              children: [
+                GoogleMap(
+                  mapType: MapType.normal,
+                  initialCameraPosition: _initialPosition!,
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: true,
+                  rotateGesturesEnabled: false,
+                  onMapCreated: (GoogleMapController controller) {
+                    _gmController.complete(controller);
+                  },
+                ),
+                Positioned(
+                    left: 30.0,
+                    bottom: 10,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(8),
+                              bottomLeft: Radius.circular(8),
+                            ),
+                            child: Image.network(
+                              'https://pix10.agoda.net/hotelImages/301716/-1/fe9724d8fb4da3dd4590353bd771a276.jpg?s=1024x768',
+                              width: 90,
+                              // height: double.infinity,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 15, bottom: 5),
+                                  child: eventStatus('10m Distância'),
+                                ),
+                                Text(
+                                  "FESTA NA PRAIA",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                eventDescription(Icons.map, "Sport Mar"),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    )),
+              ],
             ),
     );
   }
