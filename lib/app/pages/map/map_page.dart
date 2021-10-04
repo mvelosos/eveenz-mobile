@@ -159,6 +159,7 @@ class _MapPageState extends State<MapPage> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
                                   padding: EdgeInsets.only(top: 15, bottom: 5),
