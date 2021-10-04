@@ -112,7 +112,7 @@ class _MapPageState extends State<MapPage> {
           Container(width: 5),
           Text(
             information,
-            style: TextStyle(fontSize: 10),
+            style: TextStyle(fontSize: 12),
           ),
         ],
       ),
@@ -137,7 +137,7 @@ class _MapPageState extends State<MapPage> {
                   },
                 ),
                 Positioned(
-                    left: 30.0,
+                    left: 10,
                     bottom: 10,
                     child: Container(
                       decoration: BoxDecoration(
@@ -152,8 +152,7 @@ class _MapPageState extends State<MapPage> {
                             ),
                             child: Image.network(
                               'https://pix10.agoda.net/hotelImages/301716/-1/fe9724d8fb4da3dd4590353bd771a276.jpg?s=1024x768',
-                              width: 90,
-                              // height: double.infinity,
+                              height: 100,
                             ),
                           ),
                           Padding(
@@ -173,6 +172,29 @@ class _MapPageState extends State<MapPage> {
                                   ),
                                 ),
                                 eventDescription(Icons.map, "Sport Mar"),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 4),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        child: Image.network(
+                                          'https://pix10.agoda.net/hotelImages/301716/-1/fe9724d8fb4da3dd4590353bd771a276.jpg?s=1024x768',
+                                          width: 18,
+                                          height: 18,
+                                          // height: double.infinity,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      "Por Arthur Novais",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           )
