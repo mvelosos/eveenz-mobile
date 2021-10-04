@@ -172,6 +172,7 @@ class _MapPageState extends State<MapPage> {
                                   ),
                                 ),
                                 eventDescription(Icons.map, "Sport Mar"),
+                                eventDescription(Icons.timer, "Qua, 4 maio 10"),
                                 Row(
                                   children: [
                                     Padding(
