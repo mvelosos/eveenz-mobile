@@ -34,6 +34,7 @@ class _EventPageState extends State<EventPage> {
   EventModel _event = EventModel();
   CameraPosition? _eventCameraPosition;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  int _imageScrollIndex = 0;
 
   @override
   void initState() {
@@ -87,6 +88,14 @@ class _EventPageState extends State<EventPage> {
     });
   }
 
+  List<T> map<T>(List list, Function handler) {
+    List<T> result = [];
+    for (var i = 0; i < list.length; i++) {
+      result.add(handler(i, list[i]));
+    }
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -106,30 +115,39 @@ class _EventPageState extends State<EventPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Stack(
+                  alignment: Alignment.center,
                   children: [
-                    CarouselSlider(
-                      options: CarouselOptions(
-                        height: 262,
-                        enableInfiniteScroll: false,
-                        viewportFraction: 1,
-                      ),
-                      items: _event.images.map((image) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: image != null
-                                  ? Image.network(
-                                      image,
-                                      fit: BoxFit.cover,
-                                      color: Colors.black.withOpacity(.1),
-                                      colorBlendMode: BlendMode.hardLight,
-                                    )
-                                  : SizedBox.shrink(),
-                            );
+                    Container(
+                      color: Colors.grey[400],
+                      child: CarouselSlider(
+                        options: CarouselOptions(
+                          height: 300,
+                          enableInfiniteScroll: false,
+                          viewportFraction: 1,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              _imageScrollIndex = index;
+                            });
                           },
-                        );
-                      }).toList(),
+                        ),
+                        items: _event.images.map((image) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return Container(
+                                width: MediaQuery.of(context).size.width,
+                                child: image != null
+                                    ? Image.network(
+                                        image,
+                                        fit: BoxFit.cover,
+                                        color: Colors.black.withOpacity(.1),
+                                        colorBlendMode: BlendMode.hardLight,
+                                      )
+                                    : SizedBox.shrink(),
+                              );
+                            },
+                          );
+                        }).toList(),
+                      ),
                     ),
                     Positioned(
                       left: 10,
@@ -143,6 +161,29 @@ class _EventPageState extends State<EventPage> {
                           color: Colors.white,
                           size: 30,
                         ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: map<Widget>(_event.images, (index, url) {
+                          return Container(
+                            width: 10.0,
+                            height: 10.0,
+                            margin: EdgeInsets.symmetric(
+                              vertical: 10.0,
+                              horizontal: 2.0,
+                            ),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.white),
+                              color: _imageScrollIndex == index
+                                  ? Colors.white
+                                  : Colors.transparent,
+                            ),
+                          );
+                        }),
                       ),
                     ),
                   ],
