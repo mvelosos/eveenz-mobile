@@ -150,9 +150,15 @@ class _MapPageState extends State<MapPage> {
                               topLeft: Radius.circular(8),
                               bottomLeft: Radius.circular(8),
                             ),
-                            child: Image.network(
-                              'https://pix10.agoda.net/hotelImages/301716/-1/fe9724d8fb4da3dd4590353bd771a276.jpg?s=1024x768',
-                              height: 100,
+                            child: Container(
+                              height: MediaQuery.of(context).size.height,
+                              constraints: BoxConstraints(
+                                maxHeight: 130.0,
+                              ),
+                              child: Image.network(
+                                'https://pix10.agoda.net/hotelImages/301716/-1/fe9724d8fb4da3dd4590353bd771a276.jpg?s=1024x768',
+                                height: 100,
+                              ),
                             ),
                           ),
                           Padding(
