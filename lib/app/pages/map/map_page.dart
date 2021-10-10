@@ -22,6 +22,9 @@ class _MapPageState extends State<MapPage> {
   List<dynamic> events = [
     {
       'eventAdmin': 'Vinicius',
+      'eventDistance': '10m de Distância',
+      'adminImage':
+          'https://uploads.metropoles.com/wp-content/uploads/2019/12/29110853/os-cantores-sertanejos-matheus-e-kauan-respectivamente-1577615861427_v2_1920x1230.jpg',
       'name': 'Matheus e Kauan Forrock',
       'place': 'Sport Marina',
       'date': 'Qua, 2 abril - 19:00',
@@ -30,6 +33,9 @@ class _MapPageState extends State<MapPage> {
     },
     {
       'eventAdmin': 'Matheus',
+      'eventDistance': '50m de Distância',
+      'adminImage':
+          'https://i2.wp.com/cadernopop.com.br/wp-content/uploads/2020/03/Jorge-Mateus.jpg?fit=900%2C900&ssl=1',
       'name': 'Jorge e Mateus',
       'place': 'Sport Marina Clube',
       'date': 'Sex, 17 abril - 21:00H',
@@ -38,6 +44,9 @@ class _MapPageState extends State<MapPage> {
     },
     {
       'eventAdmin': 'Moises',
+      'eventDistance': '30m de Distância',
+      'adminImage':
+          'https://uploads.metropoles.com/wp-content/uploads/2019/12/29110853/os-cantores-sertanejos-matheus-e-kauan-respectivamente-1577615861427_v2_1920x1230.jpg',
       'name': 'Matheus e Kauan Forrock',
       'place': 'Sport Marina',
       'date': 'Qua, 2 abril - 19:00H',
@@ -170,46 +179,48 @@ class _MapPageState extends State<MapPage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 15, bottom: 5),
-                  child: eventStatus('10m Distância'),
-                ),
-                Text(
-                  event['name'],
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+            padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 15, bottom: 5),
+                    child: eventStatus(event['eventDistance']),
                   ),
-                ),
-                eventDescription(Icons.map, event['place']),
-                eventDescription(Icons.timer, event['date']),
-                Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 4),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image.network(
-                          'https://pix10.agoda.net/hotelImages/301716/-1/fe9724d8fb4da3dd4590353bd771a276.jpg?s=1024x768',
-                          width: 18,
-                          height: 18,
-                          // height: double.infinity,
+                  Text(
+                    event['name'],
+                    style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  eventDescription(Icons.map, event['place']),
+                  eventDescription(Icons.timer, event['date']),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 4),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.network(
+                            event['adminImage'],
+                            width: 18,
+                            height: 18,
+                            // height: double.infinity,
+                          ),
                         ),
                       ),
-                    ),
-                    Text(
-                      event['eventAdmin'],
-                      style: GoogleFonts.poppins(
-                        fontSize: 10,
+                      Text(
+                        event['eventAdmin'],
+                        style: GoogleFonts.poppins(
+                          fontSize: 10,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           )
         ],
@@ -234,22 +245,22 @@ class _MapPageState extends State<MapPage> {
                     _gmController.complete(controller);
                   },
                 ),
-                Positioned(
-                  bottom: 10,
-                  child: Container(
-                    constraints: BoxConstraints(
-                      maxHeight: 130,
-                    ),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: events.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 8),
-                          child: card(events[index]),
-                        );
-                      },
-                    ),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.75,
+                  ),
+                  constraints: BoxConstraints(
+                    maxHeight: 130,
+                  ),
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: events.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.symmetric(horizontal: 8),
+                        child: card(events[index]),
+                      );
+                    },
                   ),
                 ),
               ],
