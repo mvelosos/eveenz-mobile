@@ -20,39 +20,39 @@ class _MapPageState extends State<MapPage> {
   bool _loadingPosition = true;
 
   List<dynamic> events = [
-    {
-      'eventAdmin': 'Vinicius',
-      'eventDistance': '10m de Distância',
-      'adminImage':
-          'https://uploads.metropoles.com/wp-content/uploads/2019/12/29110853/os-cantores-sertanejos-matheus-e-kauan-respectivamente-1577615861427_v2_1920x1230.jpg',
-      'name': 'Matheus e Kauan Forrock',
-      'place': 'Sport Marina',
-      'date': 'Qua, 2 abril - 19:00',
-      'image':
-          'https://uploads.metropoles.com/wp-content/uploads/2019/12/29110853/os-cantores-sertanejos-matheus-e-kauan-respectivamente-1577615861427_v2_1920x1230.jpg'
-    },
-    {
-      'eventAdmin': 'Matheus',
-      'eventDistance': '50m de Distância',
-      'adminImage':
-          'https://i2.wp.com/cadernopop.com.br/wp-content/uploads/2020/03/Jorge-Mateus.jpg?fit=900%2C900&ssl=1',
-      'name': 'Jorge e Mateus',
-      'place': 'Sport Marina Clube',
-      'date': 'Sex, 17 abril - 21:00H',
-      'image':
-          'https://i2.wp.com/cadernopop.com.br/wp-content/uploads/2020/03/Jorge-Mateus.jpg?fit=900%2C900&ssl=1'
-    },
-    {
-      'eventAdmin': 'Moises',
-      'eventDistance': '30m de Distância',
-      'adminImage':
-          'https://uploads.metropoles.com/wp-content/uploads/2019/12/29110853/os-cantores-sertanejos-matheus-e-kauan-respectivamente-1577615861427_v2_1920x1230.jpg',
-      'name': 'Matheus e Kauan Forrock',
-      'place': 'Sport Marina',
-      'date': 'Qua, 2 abril - 19:00H',
-      'image':
-          'https://uploads.metropoles.com/wp-content/uploads/2019/12/29110853/os-cantores-sertanejos-matheus-e-kauan-respectivamente-1577615861427_v2_1920x1230.jpg'
-    }
+    // {
+    //   'eventAdmin': 'Vinicius',
+    //   'eventDistance': '10m de Distância',
+    //   'adminImage':
+    //       'https://uploads.metropoles.com/wp-content/uploads/2019/12/29110853/os-cantores-sertanejos-matheus-e-kauan-respectivamente-1577615861427_v2_1920x1230.jpg',
+    //   'name': 'Matheus e Kauan Forrock',
+    //   'place': 'Sport Marina',
+    //   'date': 'Qua, 2 abril - 19:00',
+    //   'image':
+    //       'https://uploads.metropoles.com/wp-content/uploads/2019/12/29110853/os-cantores-sertanejos-matheus-e-kauan-respectivamente-1577615861427_v2_1920x1230.jpg'
+    // },
+    // {
+    //   'eventAdmin': 'Matheus',
+    //   'eventDistance': '50m de Distância',
+    //   'adminImage':
+    //       'https://i2.wp.com/cadernopop.com.br/wp-content/uploads/2020/03/Jorge-Mateus.jpg?fit=900%2C900&ssl=1',
+    //   'name': 'Jorge e Mateus',
+    //   'place': 'Sport Marina Clube',
+    //   'date': 'Sex, 17 abril - 21:00H',
+    //   'image':
+    //       'https://i2.wp.com/cadernopop.com.br/wp-content/uploads/2020/03/Jorge-Mateus.jpg?fit=900%2C900&ssl=1'
+    // },
+    // {
+    //   'eventAdmin': 'Moises',
+    //   'eventDistance': '30m de Distância',
+    //   'adminImage':
+    //       'https://uploads.metropoles.com/wp-content/uploads/2019/12/29110853/os-cantores-sertanejos-matheus-e-kauan-respectivamente-1577615861427_v2_1920x1230.jpg',
+    //   'name': 'Matheus e Kauan Forrock',
+    //   'place': 'Sport Marina',
+    //   'date': 'Qua, 2 abril - 19:00H',
+    //   'image':
+    //       'https://uploads.metropoles.com/wp-content/uploads/2019/12/29110853/os-cantores-sertanejos-matheus-e-kauan-respectivamente-1577615861427_v2_1920x1230.jpg'
+    // }
   ];
 
   @override
@@ -245,24 +245,26 @@ class _MapPageState extends State<MapPage> {
                     _gmController.complete(controller);
                   },
                 ),
-                Container(
-                  margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.75,
-                  ),
-                  constraints: BoxConstraints(
-                    maxHeight: 130,
-                  ),
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: events.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: EdgeInsets.symmetric(horizontal: 8),
-                        child: card(events[index]),
-                      );
-                    },
-                  ),
-                ),
+                events.length > 0
+                    ? Container(
+                        margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.75,
+                        ),
+                        constraints: BoxConstraints(
+                          maxHeight: 130,
+                        ),
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: events.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              margin: EdgeInsets.symmetric(horizontal: 8),
+                              child: card(events[index]),
+                            );
+                          },
+                        ),
+                      )
+                    : Container()
               ],
             ),
     );
