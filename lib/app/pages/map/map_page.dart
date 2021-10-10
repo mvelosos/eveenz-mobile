@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:party_mobile/app/controllers/profile_controller.dart';
@@ -17,6 +18,33 @@ class _MapPageState extends State<MapPage> {
   ProfileController _meController = locator<ProfileController>();
   MeProfileVM _meProfile = MeProfileVM();
   bool _loadingPosition = true;
+
+  List<dynamic> events = [
+    {
+      'eventAdmin': 'Vinicius',
+      'name': 'Matheus e Kauan Forrock',
+      'place': 'Sport Marina',
+      'date': 'Qua, 2 abril - 19:00',
+      'image':
+          'https://uploads.metropoles.com/wp-content/uploads/2019/12/29110853/os-cantores-sertanejos-matheus-e-kauan-respectivamente-1577615861427_v2_1920x1230.jpg'
+    },
+    {
+      'eventAdmin': 'Matheus',
+      'name': 'Jorge e Mateus',
+      'place': 'Sport Marina Clube',
+      'date': 'Sex, 17 abril - 21:00H',
+      'image':
+          'https://i2.wp.com/cadernopop.com.br/wp-content/uploads/2020/03/Jorge-Mateus.jpg?fit=900%2C900&ssl=1'
+    },
+    {
+      'eventAdmin': 'Moises',
+      'name': 'Matheus e Kauan Forrock',
+      'place': 'Sport Marina',
+      'date': 'Qua, 2 abril - 19:00H',
+      'image':
+          'https://uploads.metropoles.com/wp-content/uploads/2019/12/29110853/os-cantores-sertanejos-matheus-e-kauan-respectivamente-1577615861427_v2_1920x1230.jpg'
+    }
+  ];
 
   @override
   void initState() {
@@ -94,7 +122,7 @@ class _MapPageState extends State<MapPage> {
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
         child: Text(
           text,
-          style: TextStyle(
+          style: GoogleFonts.poppins(
             color: Colors.white,
             fontSize: 12,
           ),
@@ -112,8 +140,78 @@ class _MapPageState extends State<MapPage> {
           Container(width: 5),
           Text(
             information,
-            style: TextStyle(fontSize: 12),
+            style: GoogleFonts.poppins(fontSize: 12),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget card(Map<String, dynamic> event) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(10)),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8),
+              bottomLeft: Radius.circular(8),
+            ),
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              constraints: BoxConstraints(
+                maxHeight: 130.0,
+              ),
+              child: Image.network(
+                event['image'],
+                height: 100,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 15, bottom: 5),
+                  child: eventStatus('10m Distância'),
+                ),
+                Text(
+                  event['name'],
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                eventDescription(Icons.map, event['place']),
+                eventDescription(Icons.timer, event['date']),
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 4),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.network(
+                          'https://pix10.agoda.net/hotelImages/301716/-1/fe9724d8fb4da3dd4590353bd771a276.jpg?s=1024x768',
+                          width: 18,
+                          height: 18,
+                          // height: double.infinity,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      event['eventAdmin'],
+                      style: GoogleFonts.poppins(
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -137,77 +235,23 @@ class _MapPageState extends State<MapPage> {
                   },
                 ),
                 Positioned(
-                    left: 10,
-                    bottom: 10,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(8),
-                              bottomLeft: Radius.circular(8),
-                            ),
-                            child: Container(
-                              height: MediaQuery.of(context).size.height,
-                              constraints: BoxConstraints(
-                                maxHeight: 130.0,
-                              ),
-                              child: Image.network(
-                                'https://pix10.agoda.net/hotelImages/301716/-1/fe9724d8fb4da3dd4590353bd771a276.jpg?s=1024x768',
-                                height: 100,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 15, bottom: 5),
-                                  child: eventStatus('10m Distância'),
-                                ),
-                                Text(
-                                  "FESTA NA PRAIA",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                eventDescription(Icons.map, "Sport Mar"),
-                                eventDescription(Icons.timer, "Qua, 4 maio 10"),
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 4),
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        child: Image.network(
-                                          'https://pix10.agoda.net/hotelImages/301716/-1/fe9724d8fb4da3dd4590353bd771a276.jpg?s=1024x768',
-                                          width: 18,
-                                          height: 18,
-                                          // height: double.infinity,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      "Por Arthur Novais",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    )),
+                  bottom: 10,
+                  child: Container(
+                    constraints: BoxConstraints(
+                      maxHeight: 130,
+                    ),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: events.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(horizontal: 8),
+                          child: card(events[index]),
+                        );
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
     );
