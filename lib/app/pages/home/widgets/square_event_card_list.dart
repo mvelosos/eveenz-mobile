@@ -4,9 +4,48 @@ import 'package:party_mobile/app/shared/constants/app_colors.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SquareEventCardList extends StatelessWidget {
-  final String label;
+  final dynamic card;
 
-  SquareEventCardList({required this.label});
+  SquareEventCardList({required this.card});
+
+  Widget _shimmerCards() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.grey.shade100,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: double.infinity,
+            height: 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+              color: Colors.white,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 20, left: 10),
+            child: Container(
+              height: 13,
+              width: 100,
+              color: Colors.white,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 15, left: 10),
+            child: Container(
+              height: 10,
+              width: 140,
+              color: Colors.white,
+            ),
+          )
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,21 +62,23 @@ class SquareEventCardList extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  label,
+                  card['title'],
                   style: GoogleFonts.inter(
                     fontSize: 13,
                     color: AppColors.darkPurple,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                Text(
-                  'Ver todos',
-                  style: GoogleFonts.inter(
-                    fontSize: 13,
-                    color: AppColors.gray3,
-                    fontWeight: FontWeight.w500,
-                  ),
-                )
+                card['data'].length > 0
+                    ? Text(
+                        'Ver todos',
+                        style: GoogleFonts.inter(
+                          fontSize: 13,
+                          color: AppColors.gray3,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )
+                    : SizedBox.shrink()
               ],
             ),
           ),
@@ -54,42 +95,7 @@ class SquareEventCardList extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
                 ),
-                child: Shimmer.fromColors(
-                  baseColor: Colors.grey.shade300,
-                  highlightColor: Colors.grey.shade100,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                          ),
-                          color: Colors.white,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 20, left: 10),
-                        child: Container(
-                          height: 13,
-                          width: 100,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 15, left: 10),
-                        child: Container(
-                          height: 10,
-                          width: 140,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                child: _shimmerCards(),
               ),
             ),
           )

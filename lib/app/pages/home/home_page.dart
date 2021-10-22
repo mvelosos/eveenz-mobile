@@ -68,15 +68,32 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.only(right: 10),
                     child: Container(
                       child: MaterialButton(
-                        padding: EdgeInsets.only(),
                         minWidth: 0,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: AppColors.purple,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         onPressed: () {
                           Get.to(() => NewEventPage());
                         },
-                        child: Icon(
-                          Icons.add_circle,
-                          size: 35,
-                          color: AppColors.purple,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Criar evento',
+                              style: GoogleFonts.inter(
+                                color: AppColors.purple,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(
+                              Icons.add,
+                              size: 23,
+                              color: AppColors.purple,
+                            ),
+                          ],
                         ),
                       ),
                     ),
