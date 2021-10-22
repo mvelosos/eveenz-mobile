@@ -12,6 +12,8 @@ class ProfileStore {
   RxInt followers = 0.obs;
   RxString avatarUrl = ''.obs;
   RxMap accountSetting = {}.obs;
+  RxDouble latitude = .0.obs;
+  RxDouble longitude = .0.obs;
 
   void setMe(ProfileModel profileModel) {
     uuid.value = profileModel.account.uuid;
@@ -24,6 +26,11 @@ class ProfileStore {
     followers.value = profileModel.account.followers;
     avatarUrl.value = profileModel.account.avatarUrl ?? '';
     accountSetting.value = profileModel.account.accountSetting.toJson();
+  }
+
+  void setLocalization(double lat, double lon) {
+    latitude.value = lat;
+    longitude.value = lon;
   }
 
   void clear() {

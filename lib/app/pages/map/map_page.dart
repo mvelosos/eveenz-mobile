@@ -2,9 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:party_mobile/app/controllers/profile_controller.dart';
 import 'package:party_mobile/app/locator.dart';
-import 'package:party_mobile/app/view_models/me_profile_vm.dart';
+import 'package:party_mobile/app/stores/profile_store.dart';
 
 class MapPage extends StatefulWidget {
   @override
@@ -14,33 +13,39 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   Completer<GoogleMapController> _gmController = Completer();
   CameraPosition? _initialPosition;
-  ProfileController _meController = locator<ProfileController>();
-  MeProfileVM _meProfile = MeProfileVM();
+  ProfileStore _profileStore = locator<ProfileStore>();
   bool _loadingPosition = true;
+  // ProfileController _meController = locator<ProfileController>();
+  // MeProfileVM _meProfile = MeProfileVM();
 
   @override
   void initState() {
     super.initState();
+
     _setUserPosition();
+
+    new Timer.periodic(new Duration(seconds: 15), (timer) {
+      _setUserPosition();
+    });
   }
 
   void _setUserPosition() async {
     Position position = await _determinePosition();
+
+    _profileStore.setLocalization(position.latitude, position.longitude);
+
     setState(() {
       _initialPosition = CameraPosition(
         target: LatLng(position.latitude, position.longitude),
         zoom: 14.4746,
       );
       _loadingPosition = false;
-      _meProfile.latitude = position.latitude;
-      _meProfile.longitude = position.longitude;
-      _updateUserLocalization();
     });
   }
 
-  void _updateUserLocalization() {
-    _meController.updateProfile(_meProfile);
-  }
+  // void _updateUserLocalization() {
+  //   _meController.updateProfile(_meProfile);
+  // }
 
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
