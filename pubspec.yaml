@@ -49,6 +49,7 @@ dependencies:
   action_cable: ^1.2.0
   carousel_slider: ^4.0.0
   shimmer: ^2.0.0
+  mask_text_input_formatter: ^2.0.0
 
 
 dev_dependencies:

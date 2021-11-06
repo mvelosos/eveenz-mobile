@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:party_mobile/app/controllers/signup_controller.dart';
 import 'package:party_mobile/app/controllers/users_controller.dart';
 import 'package:party_mobile/app/locator.dart';
@@ -25,7 +26,8 @@ class _SignUpPage1State extends State<SignUpPage1> {
   bool _hidePassword = true;
   bool _usernameAvailable = false;
   bool _loading = false;
-
+  static final TextEditingController _birthDate = new TextEditingController();
+  final _maskedDateFormat = new MaskTextInputFormatter(mask: "xx/xx/xxxx", filter: { "#": RegExp(r'[0-9]') });
   // Functions
 
   _setLoading(value) {
@@ -126,6 +128,27 @@ class _SignUpPage1State extends State<SignUpPage1> {
           ),
           SizedBox(height: _size.height * .03),
           TextFormField(
+            controller: _birthDate,
+            inputFormatters: [_maskedDateFormat],
+            decoration: InputDecoration(
+              icon: FaIcon(
+                FontAwesomeIcons.calendarWeek,
+                color: AppColors.darkPurple,
+                size: 17,
+              ),
+              labelText: 'Data de nascimento',
+              labelStyle: TextStyle(color: AppColors.darkPurple),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.orange),
+              ),
+            ),
+            keyboardType: TextInputType.datetime,
+            onChanged: (value){
+              _birthDate.value = _maskedDateFormat.updateMask(mask: "##/##/####");
+            },
+          ),
+          SizedBox(height: _size.height * .03),
+          TextFormField(
             textInputAction: TextInputAction.next,
             autocorrect: false,
             enableSuggestions: false,
@@ -152,6 +175,7 @@ class _SignUpPage1State extends State<SignUpPage1> {
               _createUser.email = value;
             },
           ),
+          
           SizedBox(height: _size.height * .03),
           TextFormField(
             obscureText: _hidePassword,
