@@ -128,23 +128,9 @@ class _SignUpPage1State extends State<SignUpPage1> {
           ),
           SizedBox(height: _size.height * .03),
           TextFormField(
+            textInputAction: TextInputAction.next,
             controller: _birthDate,
             inputFormatters: [_maskedDateFormat],
-            validator: (value){
-              if (value!.isEmpty) return null;
-              final components = value.split("/");
-              if (components.length == 3) {
-                final day = int.tryParse(components[0]);
-                final month = int.tryParse(components[1]);
-                final year = int.tryParse(components[2]);
-                if (day != null && month != null && year != null) {
-                  final date = DateTime(year, month, day);
-                  if (date.year == year && date.month == month && date.day == day) {
-                    return null;
-                  }
-                }
-              }
-            },
             decoration: InputDecoration(
               icon: FaIcon(
                 FontAwesomeIcons.calendarWeek,
@@ -157,6 +143,11 @@ class _SignUpPage1State extends State<SignUpPage1> {
                 borderSide: BorderSide(color: AppColors.orange),
               ),
             ),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (value) {
+              if (value!.isEmpty) return "Campo obrigatório!";
+              return null;
+            },
             keyboardType: TextInputType.datetime,
             onChanged: (value){
               _birthDate.value = _maskedDateFormat.updateMask(mask: "##/##/####");
